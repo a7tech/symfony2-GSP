@@ -1,0 +1,73 @@
+name: 'Project Name'
+type: 'Project Type'
+status: Status
+owner: Owner
+client: Client
+manager: Manager
+participants: Participants
+supervisor: 'Project Supervisor'
+start_date: 'Starting date'
+end_date: 'Ending date'
+done_ratio: '% Done'
+gantt: 'Project Gantt'
+manager.office: Office
+terms_and_conditions: 'Terms and conditions'
+description: 'Introduction text'
+category: Category
+category_group: 'Category Group'
+deposit_amount: 'Deposit amount in %'
+invoice_delivery_type: 'Invoicing parameters'
+total_beofre_taxes: Total before taxes
+applicable_taxes: 'Taxes applicable to invoices are'
+applicable_taxes_apply: 'The applicable tax rates are those in force when the contract is signed. If the tax rates change, the invoice will be adjusted based on the government guidelines.'
+members: 'Project members'
+project: Project
+projects: Projects
+project_id: 'Project ID'
+projects_i_created: 'Projects I created'
+materials: Materials
+general: General
+products: Products
+contract_texts: 'Contract texts'
+manage_participants: User/Participants
+overview_costs: 'Overview Costs'
+working_days: 'Working days'
+work_start_time: 'Start time'
+work_end_time: 'End time'
+project_end_date: 'Date of project end'
+select_end_date: 'Or select an "End date"'
+opportunities: Opportunities
+opportunity: Opportunity
+opportunity.expected_close_date: 'Expected close date'
+opportunity.description: Description
+opportunity.expected_value: 'Expected value'
+opportunity.commision: '% of Commision for owner'
+opportunity.progress: Progress
+milestone: Milestone
+milestone.importance: Importance
+task: Task
+tasks: Tasks
+task.start_date: 'Start date'
+task.end_date: 'Due date'
+task.assigned_to: 'Assigned to'
+task.priority: Priority
+task.estimated_time: Estimated time
+manager.phone.mobile: Mobile
+manager.phone.fax: Fax
+menu.milestone: 'Project Milestone'
+menu.tracker: 'Task tracker'
+menu.priority: 'Task priority'
+menu.preset: 'Task preset'
+menu.places: 'Locations groups'
+total: Total
+deposit_amount: Deposit amount
+due: Due
+due_with_taxes: Due with taxes
+summary: Summary
+tax: 'Tax %name% %rate%% (%number%)'
+total_with_taxes: Total with taxes
+deposit_amount_with_taxes: Deposit amount with taxes
+total_due_with_taxes: Total due with taxes
+message_in_project_contract_signature: J'accepte de faire effectuer le travail susmentionné au prix proposé
+contract_signature_client: Signature - Client - Date
+contract_signature: Signature - GSP - Date

@@ -1,0 +1,45 @@
+{% extends 'AppTaskBundle:TaskPriority:layout.html.twig' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row">
+        <div class="row-align">
+            <table id="datatable" class="table table-bordered table-striped"
+                    data-entity-list-route="{{ path('backend_task_priority_datatables') }}"
+            >
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>{{ 'name'|trans({}, "Common") }}</th>
+                    <th>{{ 'description'|trans({}, 'Common') }}</th>
+                    <th>{{ 'color'|trans({}, 'Status') }}</th>
+                    <th>{{ 'value'|trans({}, 'Status')}}</th>
+                </tr>
+                </thead>
+                {% if entities %}
+                <tbody>
+                {% for entity in entities %}
+                    <tr id="{{ entity.id }}">
+                        <td><a href="{{ path('backend_settings_custom_task_priority_show', {id: entity.id}) }}">{{ entity.id }}</a></td>
+                        <td><a href="{{ path('backend_settings_custom_task_priority_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                        <td>{{ entity.description|raw }}</td>
+                        <td style="background-color: #{{ entity.color }}">#{{ entity.color }}</td>
+                        <td>{{ entity.value }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block user_js %}
+
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+
+{% endblock %}

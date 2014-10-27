@@ -1,0 +1,72 @@
+{% extends 'AppProductBundle:BrandGroup:layout.html.twig' %}
+
+{% block actions_main %}
+    <table id="datatable" class="table table-bordered table-striped"
+            data-entity-list-route="{{ path('backend_brand_group_datatables') }}"
+           >
+        <thead>
+        <tr>
+            <th></th>
+            <th>Id</th>
+            <th class="col-md-6">{{ 'name'|trans({}, 'Common') }}</th>
+            <th>Coeff 1 (Purchase)</th>
+            <th>Coeff 2 (Resell)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            {% set link = path('backend_settings_custom_brand_group_show', {id: entity.id}) %}
+            <tr id="{{ entity.id }}">
+                <td><input type="checkbox" id="brand_group_{{ entity.id }}"></td>
+                <td><a href="{{ link }}">{{ entity.id }}</a></td>
+                <td><a href="{{ link }}">{{ entity.title }}</a></td>
+                <td>{{ entity.purchaseCoeff }}</td>
+                <td>{{ entity.resellCoeff }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+    
+    <script type="text/javascript">
+        var inputIdPrefix = 'brand_group_';
+        var $checkboxes = $('input[id^="'+inputIdPrefix+'"]');
+        $(document).ready(function() {
+            $('input[id^="'+inputIdPrefix+'"]').change(function(e) {
+                var $input = $(e.target);
+                var checkboxId = $input.attr('id');
+
+                if ($input.is(':checked')) {
+                    var rowId = $input.parents('tr').data('id');
+
+                    $('input[id!="'+checkboxId+'"][id^="'+inputIdPrefix+'"]').each(function() {
+                        $(this).attr('disabled', true);
+                    });
+
+                    $('li[class*="crud"]').each(function(){
+                        var href = $(this).attr('id')+'/';
+                        $(this).removeClass('disabled');
+                        $(this).children('a').attr('href', href+rowId);
+                    })
+                }
+                else {
+                    $('input[id!="'+checkboxId+'"][id^="'+inputIdPrefix+'"]').each(function() {
+                        $(this).removeAttr('disabled');
+                    });
+
+                    $('li[class*="crud"]').each(function(){
+                        var href = $(this).attr('id')+'/';
+                        $(this).addClass('disabled');
+                        $(this).children('a').removeAttr('href');
+                    })
+                }
+            });
+        });
+    </script>
+{% endblock %}

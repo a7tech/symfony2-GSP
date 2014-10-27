@@ -1,0 +1,67 @@
+{% extends 'AppStatusBundle:Status:layout.html.twig' %}
+{% if group.className == 'project_status' %}
+{% set nav_title = 'Project status' %}
+{% elseif group.className == 'project_types' %}
+{% set nav_title = 'Project Types' %}
+{% elseif group.className == 'purchase_statuses' %}
+{% set nav_title = 'Purchase statuses' %}
+{% elseif group.className == 'sale_order_payment_statuses' %}
+{% set nav_title = 'Sale order payment statuses' %}
+{% elseif group.className == 'task_cost_types' %}
+{% set nav_title = 'Task cost types' %}
+{% elseif group.className == 'task_dependencies' %}
+{% set nav_title = 'Task dependencies' %}
+{% elseif group.className == 'task_status' %}
+{% set nav_title = 'Task status' %}
+{% elseif group.className == 'task_types' %}
+{% set nav_title = 'Task types' %}
+{% else %}
+{% set nav_title = 'Invoice statuses' %}
+{% endif %}
+{% block actions_main %}
+<div class="action-view">
+    <div class="row">
+
+                <table id="datatable" class="table table-bordered table-striped"
+                        data-entity-list-route="{{ path('backend_settings_status_datatables') }}"
+                        {% if className %}
+                        data-classname="{{ className }}"
+                        {% endif %}
+                       >
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Color</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+            {% if entities %}
+                <tbody>
+                {% for entity in entities %}
+                    <tr id="{{ entity.id }}"
+                        data-edit="{{ path('backend_settings_status_edit', {'id': entity.id, 'className': entity.group.className}) }}"
+                        data-show="{{ path('backend_settings_status_show', {'id': entity.id, 'className': entity.group.className}) }}">
+                        <td><a href="{{ path('backend_settings_status_show', { 'id': entity.id, 'className': entity.group.className }) }}">{{ entity.id }}</a></td>
+                        <td>{{ entity.name }}</td>
+                        <td>{{ entity.description }}</td>
+                        <td style="background-color: #{{ entity.color }}">#{{ entity.color }}</td>
+                        <td>{{ entity.value }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% endif %}
+            </table>
+
+    </div>
+</div>
+
+{% endblock %}
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

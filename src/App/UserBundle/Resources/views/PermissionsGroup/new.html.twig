@@ -1,0 +1,73 @@
+{% extends 'AppUserBundle:PermissionsGroup:layout.html.twig' %}
+
+{% set nav_title = 'Group new' %}
+
+{% form_theme form _self %}
+
+{% block choice_widget %}
+{% spaceless %}
+    {% if expanded %}
+        {{ block('choice_widget_expanded') }}
+    {% else %}
+        {{ block('choice_widget_collapsed') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock choice_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    {% set module = ''%}
+    <div class="col-xs-8">
+        <fieldset>
+            <legend>Main</legend>
+            <ul {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    {% set value = child.vars.value %}
+                    {% set newmodule = choices[value].data.module %}
+                    {% if module == '' and newmodule == ''%}
+
+                    {% elseif (module != newmodule) %}
+                        {% set module = newmodule %}
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>{{module}}</legend>
+            <ul {{ block('widget_container_attributes') }}>
+            {% endif %}            
+                <li class='{{choices[value].data.module}} checkbox'>
+                   {{ form_label(child, child.vars.label|default(null), { 'in_list_checkbox' : true, 'widget' : form_widget(child) } ) }}
+                </li>
+        {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-9">
+                        <form class="form-horizontal" action="{{ path('backend_settings_groups_create') }}" method="post" {{ form_enctype(form) }}>
+                        {{ form_row(form.name) }}    
+                        {{ form_widget(form) }}
+                        <div class="row form-group">
+                            <label for="button_form_submit" class="control-label col-xs-3"></label>
+                            <div class="form-actions well">
+                                <input class="btn btn-primary" type="submit" value="Save">
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+{% endblock %}

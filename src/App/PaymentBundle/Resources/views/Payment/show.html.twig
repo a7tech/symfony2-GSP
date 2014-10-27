@@ -1,0 +1,40 @@
+{% extends 'AppPaymentBundle:Payment:layout.html.twig' %}
+
+{% set nav_title = 'Payment overview' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <td>{{ entity.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Payment Method</th>
+                                <td>{{ entity.paymentMethod }}</td>
+                            </tr>
+                            <tr>
+                                <th>Amount</th>
+                                <td>{{ entity.amount }}</td>
+                            </tr>
+                            <tr>
+                                <th>Currency</th>
+                                <td>{{ entity.invoice.currency }}</td>
+                            </tr>
+                            <tr>
+                                <th>Invoice #</th>
+                                <td>{{ entity.invoice }}</td>
+                            </tr>
+                        </tbody>
+                         </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

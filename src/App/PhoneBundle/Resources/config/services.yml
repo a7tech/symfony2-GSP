@@ -1,0 +1,9 @@
+services:
+    app_phone.form.phone:
+        class: App\PhoneBundle\Form\PhoneType
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: phone_form }
+    app_phone.filter.phonetypefilter:
+        class:  App\PhoneBundle\Filter\PhoneTypeFilter
+        parent: app_core.filter.filter

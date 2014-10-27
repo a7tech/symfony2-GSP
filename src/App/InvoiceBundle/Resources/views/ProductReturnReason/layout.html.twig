@@ -1,0 +1,12 @@
+{% extends 'AppBackendBundle:Settings:layout.html.twig' %}
+
+{% block left_column '' %}
+{% block content_class '' %}
+
+{% block actions_nav_block %}
+
+    {% set route_prefix = 'backend_sale_order_product_return_reasons' %}
+    {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+{% endblock %}
+
+{% block create_action %}{% endblock %}

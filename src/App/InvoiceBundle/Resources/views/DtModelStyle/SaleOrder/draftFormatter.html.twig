@@ -1,0 +1,5 @@
+{% if entity.isDraft %}
+    {{'draft'|trans({}, "Common")}}
+{% else %}
+    {{ 'invoice'|trans({}, 'Invoice')}}
+{% endif %}

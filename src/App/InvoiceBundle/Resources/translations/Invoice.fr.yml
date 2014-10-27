@@ -1,0 +1,47 @@
+invoice: Facture
+invoices: Factures
+summary: Résumé
+total_before_taxes: 'Total avant taxes'
+total: Total
+total_minus_deposit: 'Total moins dépôt'
+deposit: Dépôt
+due: Dû
+total_amount: 'Montoant total'
+total_before_discounts: 'Total avant rabais'
+discount: Rabais
+total_minus_deposit_with_taxes: 'Total moins dépôt avec taxes'
+sale_date: 'Date de vente'
+seler: Vendeur
+project_name: 'Nom de projet'
+shipment: Livraison
+total_taxes: 'Total taxes'
+vendor_singnature: 'Signature vendeur'
+customer_signature: 'Signature client'
+company_logo: 'Logo entreprise'
+total_due_with_taxes: 'Total à payer taxes incluses'
+deposit_amount: 'Montant de dépôt'
+taxes: Taxes
+paid: Payé
+due_with_taxes: 'Solde dû taxes incluses'
+customer_info: 'Information client'
+address_info: 'Information adresse'
+invoice_info: 'Information facture'
+product_info: 'Information produit'
+customer: Client
+vendor_company: 'Profile entreprise vendeur'
+invoice_date: 'Date de facturation'
+comment: Commentaire
+add_rbq_number: 'Ajouter numéro d''RBQ'
+add_taxes: 'Ajouter Taxes'
+show_delivery_address: 'Afficher adresse de livraison'
+not_invoiced_tasks: 'Tâches non facturées'
+add_extra_tasks: 'Ajouter une tâche extra'
+specify_products_search_criteria: 'Spécifier le critère de recherche'
+products_search: 'Rechercher produits'
+cart: Panier
+vendor_info: 'Information Entreprise Vendeuse'
+vendor: 'Entreprise Vendeuse'
+type: Type
+relation: Relation
+customer_company: 'Entreprise cliente'
+status: Statut

@@ -1,0 +1,181 @@
+app_place:
+    resource: "@AppPlaceBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_order:
+    resource: "@AppPurchaseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_account_product:
+    resource: "@AppAccountProductBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_task:
+    resource: "@AppTaskBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_project:
+    resource: "@AppProjectBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_calendar:
+    resource: "@AppCalendarBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_email:
+    resource: "@AppEmailBundle/Controller/"
+    type:     annotation
+    prefix:   /
+app_payment:
+    resource: "@AppPaymentBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_invoice:
+    resource: "@AppInvoiceBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_status:
+    resource: "@AppStatusBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_backend:
+    resource: "@AppBackendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_language:
+    resource: "@AppLanguageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_hr:
+    resource: "@AppHrBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_skill:
+    resource: "@AppSkillBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_tax:
+    resource: "@AppTaxBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_license:
+    resource: "@AppLicenseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_person:
+    resource: "@AppPersonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_company:
+    resource: "@AppCompanyBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_product:
+    resource: "@AppProductBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_barcode:
+    resource: "@AppBarcodeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_industry:
+    resource: "@AppIndustryBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_social_media:
+    resource: "@AppSocialMediaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_email:
+    resource: "@AppEmailBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_phone:
+    resource: "@AppPhoneBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_address:
+    resource: "@AppAddressBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app_account:
+    resource: "@AppAccountBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+lexik_translation_edition:
+    resource: "@LexikTranslationBundle/Resources/config/routing.yml"
+    prefix:   /backend/translate
+
+#fos_user_group:
+#    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+#    prefix: /group
+
+sonata_page_cache:
+    resource: '@SonataCacheBundle/Resources/config/routing/cache.xml'
+    prefix: /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+app_user:
+    resource: "@AppUserBundle/Controller/"
+    type: annotation
+    prefix: /
+
+adesigns_calendar:
+  resource: "@ADesignsCalendarBundle/Resources/config/routing.xml"
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+backend_fullcalendar_loader:
+    path: /backend/fc-load-events
+    defaults:  { _controller: ADesignsCalendarBundle:Calendar:loadCalendar }
+    options:
+        expose: true
+
+

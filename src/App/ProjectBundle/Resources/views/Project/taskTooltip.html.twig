@@ -1,0 +1,24 @@
+{% if is_task %}#{{ task.tracker }} <a href="{{ path('backend_tasks_project_edit', {'id': task.id, 'project_id': task.project.id}) }}">{% endif %}{{ gantt_task.name }}{% if is_task %}</a>{% endif %}<br>
+<br>
+
+{% if is_task %}
+    {{ 'project'|trans({}, 'Project') }}: <a href="{{ path('backend_project_show', {'id': task.project.id}) }}">{{ task.project }}</a><br>
+    {{ 'category'|trans({}, 'Project') }}: {{ task.category }}<br>
+    {{ 'status'|trans({}, 'Project') }}: {{ gantt_task.status }}<br>
+{% endif %}
+{% if gantt_task.startDate %}
+{{ 'task.start_date'|trans({}, 'Project' ) }}: {{ gantt_task.startDate|date(datetime_format) }}<br>
+{% endif %}
+
+{% if gantt_task.startDate %}
+{{ 'task.end_date'|trans({}, 'Project' ) }}: {{ gantt_task.endDate|date(datetime_format) }}<br>
+{% endif %}
+
+{% if gantt_task.assigned|length %}
+{{ 'task.assigned_to'|trans({}, 'Project' ) }}: {% for assignee in gantt_task.assigned %}<a href="{{ path('backend_person_show', {'id': assignee.id}) }}">{{ assignee }}</a>{% if not loop.last %}, {% endif %}{% endfor %}<br>
+{% endif %}
+
+{% if is_task %}
+    {{ 'task.priority'|trans({}, 'Project') }}: {{ task.priority }}<br>
+    {{ 'task.estimated_time'|trans({}, 'Project') }}: {{ task.estimatedTime is not null ? task.estimatedTime|interval(task.project.workingHours) : '-' }}
+{% endif %}

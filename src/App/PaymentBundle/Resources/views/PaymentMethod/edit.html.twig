@@ -1,0 +1,12 @@
+{% extends 'AppPaymentBundle:PaymentMethod:layout.html.twig' %}
+
+{% set nav_title = 'Payment method edit' %}
+
+{% block actions_main %}
+
+    <form class="form-horizontal" action="" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <button class="btn" type="submit">Save</button>
+    </form>
+
+{% endblock %}

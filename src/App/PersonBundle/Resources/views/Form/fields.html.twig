@@ -1,0 +1,46 @@
+{% block person_autocomplete_widget %}
+    <div class="person-autocomplete">
+        <input type="text" id="{{ id ~ '_autocomplete' }}"/>
+
+        <script src="{{ asset('bundles/appform/autocomplete_widget.js') }}" type="text/javascript"></script>
+        <script>
+            $(function() {
+                var $input = $("#{{ id ~ '_autocomplete' }}");
+                var form_vars = {
+                    input: $input,
+                    addNew: false,
+                    full_name: '{{ full_name }}',
+                    choices: {{ choices|json_encode|raw }},
+                    value: {{ value|json_encode|raw }}
+                };
+
+                var personCategoryWidget = new AutocompleteWidget.class(form_vars);
+                $input.data('person-widget', personCategoryWidget);
+
+            });
+        </script>
+    </div>
+{% endblock %}
+
+{% block person_notrequired_autocomplete_widget %}
+    <div class="person-autocomplete">
+        <input type="text" id="{{ id ~ '_autocomplete' }}"/>
+        <script src="{{ asset('bundles/appform/autocomplete_widget.js') }}" type="text/javascript"></script>
+        <script>
+            $(function() {
+                var $input = $("#{{ id ~ '_autocomplete' }}");
+                var form_vars = {
+                    input: $input,
+                    addNew: false,
+                    full_name: '{{ full_name }}',
+                    choices: {{ choices|json_encode|raw }},
+                    value: {{ value|json_encode|raw }}
+                };
+
+                var personCategoryWidget = new AutocompleteWidget.class(form_vars);
+                $input.data('person-widget', personCategoryWidget);
+
+            });
+        </script>
+    </div>
+{% endblock %}

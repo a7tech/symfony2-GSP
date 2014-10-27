@@ -1,0 +1,5 @@
+{% if entity.regions|length>0 %}
+    {% for region in entity.regions %}
+        <a href="{{ path('backend_settings_region_show', {'id':region.id}) }}">{{ region }}</a>
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,174 @@
+{% extends "@AppInvoice/SaleOrder/invoiceBody.html.twig" %}
+{% form_theme form _self %}
+
+{% block signatures '' %}
+{% block products_retunrs '' %}
+{% block tasks_refunds '' %}
+
+{% block product_header %}
+    {{ parent() }}
+    <th>{{ 'return_header'|trans({}, 'Invoice') }}</th>
+    <th>{{ 'refund_header'|trans({}, 'Invoice') }}</th>
+{% endblock %}
+
+{% block product_row_attributes %}data-product-id="{{ product.product.id }}"{% endblock %}
+
+{% block new_totals %}{% endblock %}
+
+{% block product_row %}
+    {{ parent() }}
+    <td class="form-inline">
+        <div class="input-prepend">
+            <span class="add-on">-</span>
+            <input type="number" min="0" class="product-return-quantity input-mini">
+        </div>
+    </td>
+    <td class="form-inline">
+        <div class="input-prepend">
+            <span class="add-on">-</span>
+            <input type="number" min="0" class="product-refund-quantity input-mini">
+        </div>
+    </td>
+    <td>
+        <button class="btn add-product-return">{{ 'add_return'|trans({}, 'Invoice') }}</button>
+    </td>
+{% endblock %}
+
+{% block task_header %}
+    {{ parent() }}
+    <th></th>
+{% endblock %}
+
+{% block task_row %}
+    {{ parent() }}
+    <td>
+        <button class="btn add-task-refund"{% if invoice_task.refund is not null %} style="display: none;"{% endif %}>{{ 'add_return'|trans({}, 'Invoice') }}</button>
+    </td>
+{% endblock %}
+
+{% block category_header %}
+    {{ parent() }}
+    <td></td>
+{% endblock %}
+
+{% block setTaskCategoryRowTemplate %}
+    {% set taskCategoryRow = 'AppInvoiceBundle:Returns:taskCategoryRow.html.twig' %}
+    {% set contractedTaskRow = 'AppInvoiceBundle:Returns:contractedTaskRow.html.twig' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block _backend_invoice_return_tasks_row %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('backend_invoice_return_tasks_row')|trim }) %}
+    {% endif %}
+    {% spaceless %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>{{ 'task_name'|trans({}, 'Invoice') }}</th>
+                    <th>{{ 'refund_price'|trans({}, 'Invoice') }}</th>
+                    <th>{{ 'refund_description'|trans({}, 'Invoice') }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody {{ block('widget_container_attributes') }}>
+            {% for child in form.children %}
+                {{ block('backend_invoice_return_tasks_row') }}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+    {{ form_errors(form) }}
+{% endblock %}
+
+{% block backend_invoice_return_tasks_row %}
+    {% set task = child.vars.data is not null ? child.vars.data : null %}
+    <tr class="collection-row"{% if task is not null and task.refund is null %} style="display:none;"{% endif %}{% if task is not null and task.task.id is not null %}data-task-id="{{ task.task.id }}"{% endif %}>
+        <td class="task-id">{% if task is not null and task.task.id is not null %}{{ task.task.id }}{% endif %}</td>
+        <td class="task-name">{% if task is not null and task.task.name is not null %}{{ task.task.name }}{% endif %}</td>
+        <td>
+            <div class="input-prepend">
+                <span class="add-on">-</span>
+                {{ form_widget(child.refund) }}
+            </div>
+            {{ form_errors(child.refund) }}
+        </td>
+        <td>
+            {{ form_widget(child.refundDescription) }}
+            {{ form_errors(child.refundDescription) }}
+        </td>
+        <td>
+            <a class="collection-hide" type="button" href="javascript:void(0)"></a>
+            {{ form_rest(child) }}
+        </td>
+    </tr>
+{% endblock %}
+
+{% block _backend_invoice_return_productReturns_row %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('backend_invoice_return_productReturns_row')|trim }) %}
+    {% endif %}
+    {% spaceless %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ 'name'|trans({}, "Product") }}</th>
+                <th>{{ 'product_return.quantity'|trans({}, 'Invoice') }}</th>
+                <th>{{ 'return_type'|trans({}, 'Invoice') }}</th>
+                <th>{{ 'return_reason'|trans({}, 'Invoice') }}</th>
+                <th>{{ 'refund_price'|trans({}, 'Invoice') }}</th>
+                <th>{{ 'return_description'|trans({}, 'Invoice') }}</th>
+                <th style="width: 30px"></th>
+            </tr>
+            </thead>
+            <tbody {{ block('widget_container_attributes') }}>
+            {% for child in form.children %}
+                {{ block('backend_invoice_return_productReturns_row') }}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+    {{ form_errors(form) }}
+{% endblock %}
+
+{% block backend_invoice_return_productReturns_row %}
+    {% set product = child.vars.data is not null ? child.vars.data.invoiceProduct.product : null %}
+    <tr class='collection-row'>
+        <td class="product-id">{% if product is not null %}<a href="{{ path('backend_account_product_show', {'id': product.id, 'profileId': product.account.id}) }}">{{ product.id }}</a>{% endif %}</td>
+        <td class="product-name">{{ product is not null ? product.product : '' }}</td>
+        <td>
+            <div class="input-prepend">
+                <span class="add-on">-</span>
+                {{ form_widget(child.quantity) }}
+            </div>
+            {{ form_errors(child.quantity) }}
+        </td>
+        <td>
+            {{ form_widget(child.returnType) }}
+            {{ form_errors(child.returnType) }}
+        </td>
+        <td>
+            {{ form_widget(child.returnReason) }}
+            {{ form_errors(child.returnReason) }}
+        </td>
+        <td>
+            <div class="input-prepend">
+                <span class="add-on">-</span>
+                {{ form_widget(child.refundPrice) }}
+            </div>
+            {{ form_errors(child.refundPrice) }}
+        </td>
+        <td>
+            {{ form_widget(child.description) }}
+            {{ form_errors(child.description) }}
+        </td>
+        <td>
+            <a class="collection-delete" type="button" href="javascript:void(0)"></a>
+            {{ form_rest(child) }}
+        </td>
+    </tr>
+{% endblock %}

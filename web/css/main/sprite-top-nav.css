@@ -1,0 +1,210 @@
+.main-menu [class^="icon-"],
+.main-menu [class*=" icon-"] {
+    background-image: url(/images/sprite-top-nav.png);
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.main-menu .icon-calendar {
+    width: 30px;
+    height: 26px;
+    background-position: -5px -5px;
+}
+
+.main-menu .active .icon-calendar, .main-menu li:hover .icon-calendar{
+    width: 30px;
+    height: 26px;
+    background-position: -45px -5px;
+}
+
+.main-menu .icon-charts {
+    width: 29px;
+    height: 26px;
+    background-position: -85px -5px;
+}
+
+.main-menu .icon-charts:active, .main-menu li:hover .icon-charts {
+    width: 29px;
+    height: 26px;
+    background-position: -124px -5px;
+}
+
+.main-menu .icon-company {
+    width: 34px;
+    height: 26px;
+    background-position: -163px -5px;
+}
+
+.main-menu .active .icon-company, .main-menu li:hover .icon-company {
+    width: 34px;
+    height: 26px;
+    background-position: -207px -5px;
+}
+
+.main-menu .icon-configure {
+    width: 26px;
+    height: 26px;
+    background-position: -251px -5px;
+}
+
+.main-menu .icon-configure:active, .main-menu li:hover .icon-configure {
+    width: 26px;
+    height: 26px;
+    background-position: -287px -5px;
+}
+
+.main-menu .icon-contact {
+    width: 22px;
+    height: 26px;
+    background-position: -323px -5px;
+}
+
+.main-menu .active .icon-contact, .main-menu li:hover .icon-contact {
+    width: 22px;
+    height: 26px;
+    background-position: -355px -5px;
+}
+
+.main-menu .icon-contract {
+    width: 25px;
+    height: 26px;
+    background-position: -387px -5px;
+}
+
+.main-menu .icon-contract:active, .main-menu li:hover .icon-contract {
+    width: 25px;
+    height: 26px;
+    background-position: -422px -5px;
+}
+
+.main-menu .icon-dashboard {
+    width: 26px;
+    height: 26px;
+    background-position: -457px -5px;
+}
+
+.main-menu .active .icon-dashboard, .main-menu li:hover .icon-dashboard {
+    width: 26px;
+    height: 26px;
+    background-position: -493px -5px;
+}
+
+.main-menu .icon-deliverry {
+    width: 25px;
+    height: 26px;
+    background-position: -529px -5px;
+}
+
+.main-menu .icon-deliverry:active, .main-menu li:hover .icon-deliverry {
+    width: 25px;
+    height: 26px;
+    background-position: -564px -5px;
+}
+
+.main-menu .icon-delivery_man {
+    width: 26px;
+    height: 26px;
+    background-position: -599px -5px;
+}
+
+.main-menu .icon-delivery_man:active, .main-menu li:hover .icon-delivery_man {
+    width: 26px;
+    height: 26px;
+    background-position: -635px -5px;
+}
+
+.main-menu .icon-invoice {
+    width: 17px;
+    height: 26px;
+    background-position: -671px -5px;
+}
+
+.main-menu .active .icon-invoice, .main-menu li:hover .icon-invoice {
+    width: 17px;
+    height: 26px;
+    background-position: -698px -5px;
+}
+
+.main-menu .icon-new {
+    width: 27px;
+    height: 26px;
+    background-position: -725px -5px;
+}
+
+.main-menu .icon-new:active, .main-menu li:hover .icon-new {
+    width: 27px;
+    height: 26px;
+    background-position: -762px -5px;
+}
+
+.main-menu .icon-order {
+    width: 26px;
+    height: 26px;
+    background-position: -799px -5px;
+}
+
+.main-menu .active .icon-order, .main-menu li:hover .icon-order {
+    width: 26px;
+    height: 26px;
+    background-position: -835px -5px;
+}
+
+.main-menu .active .icon-product, .main-menu li:hover .icon-product {
+    width: 23px;
+    height: 26px;
+    background-position: -871px -5px;
+}
+
+.main-menu .icon-product {
+    width: 23px;
+    height: 26px;
+    background-position: -904px -5px;
+}
+
+.main-menu .icon-project_2 {
+    width: 26px;
+    height: 26px;
+    background-position: -937px -5px;
+}
+
+.main-menu .icon-project_2:active, .main-menu li:hover .icon-project_2 {
+    width: 26px;
+    height: 26px;
+    background-position: -973px -5px;
+}
+
+.main-menu .icon-project {
+    width: 16px;
+    height: 26px;
+    background-position: -1009px -5px;
+}
+
+.main-menu .active .icon-project, .main-menu li:hover .icon-project {
+    width: 16px;
+    height: 26px;
+    background-position: -1035px -5px;
+}
+
+.main-menu .icon-settings {
+    width: 26px;
+    height: 26px;
+    background-position: -1061px -5px;
+}
+
+.main-menu .active .icon-settings, .main-menu .icon-settings:hover {
+    width: 26px;
+    height: 26px;
+    background-position: -1097px -5px;
+}
+
+.main-menu .icon-ticket {
+    width: 19px;
+    height: 26px;
+    background-position: -1133px -5px;
+}
+
+.main-menu .active .icon-ticket, .main-menu .icon-ticket:hover {
+    width: 19px;
+    height: 26px;
+    background-position: -1162px -5px;
+}

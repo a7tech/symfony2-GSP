@@ -1,0 +1,186 @@
+{% extends "AppBackendBundle::base.html.twig" %}
+
+{% block bottom %}
+    {% set route = app.request.attributes.get('_route') %}
+    <div class="">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                                {% if app.request.attributes.get('_route')=='backend_settings'%}
+                                    active
+                                {%endif%}">
+                    <a href="{{ path('backend_settings') }}">All Settings</a>
+                </li>
+                <li class="
+                                {% if app.request.attributes.get('_route')|slice(0,32)=='backend_settings_account_profile'%}
+                                    active
+                                {%endif%}"><a href="{{ path('backend_settings_account_profile') }}">Account Profile</a></li>
+
+
+                <li class="dropdown {% if route in ['backend_settings_language', 'lexik_translation_grid'] %}active{% endif %}"><a class="dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        href="#">Languages
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('backend_settings_language') }}">Languages</a></li>
+                        <li><a href="{{ path('lexik_translation_grid') }}">{{ 'settings.translations'|trans({}, 'Backend') }}</a></li>
+                    </ul>
+                </li>
+
+                <li class="{% if app.request.attributes.get('_route')|slice(0, 22)=='backend_settings_taxes' %}
+                                    active
+                                {%endif%}"><a href="{{ path('backend_settings_taxes') }}">Taxes</a></li>
+
+
+                <li class="dropdown
+                                {% if app.request.attributes.get('_route')|slice(0, 23)=='backend_settings_groups' or
+                app.request.attributes.get('_route')|slice(0, 21)=='backend_settings_user' %}
+                                    active
+                                {%endif%}">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#">Permissions
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('backend_settings_groups') }}">Groups</a></li>
+                        <li><a href="{{ path('backend_settings_user') }}">Users</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown
+                                {% if app.request.attributes.get('_route')|slice(0, 25)=='backend_settings_industry' %}
+                                    active
+                                {%endif%}">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#">
+                        Industries
+                        <b class="caret"></b>
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('backend_settings_industry_sector') }}">Industry Sector</a></li>
+                            <li><a href="{{ path('backend_settings_industry_speciality') }}">Industry Speciality</a></li>
+
+                        </ul>
+                </li>
+                <li class="dropdown
+                                {% if app.request.attributes.get('_route')|slice(0, 25)=='backend_settings_category' %}
+                                    active
+                                {%endif%}">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#">
+                        Categories
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('backend_settings_category_product') }}">Product categories</a></li>
+                        <li><a href="{{ path('backend_settings_category_skill') }}">Skill categories</a></li>
+                        <li><a href="{{ path('backend_settings_category_project') }}">Project categories</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown
+                                {% if app.request.attributes.get('_route')|slice(0, 24)=='backend_settings_country' or
+                                        app.request.attributes.get('_route')|slice(0, 25)=='backend_settings_province' or
+                                        app.request.attributes.get('_route')|slice(0, 23)=='backend_settings_region'%}
+                                    active
+                                {%endif%}">
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           href="#">Locations
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('backend_settings_country') }}">Country</a></li>
+                            <li><a href="{{ path('backend_settings_province') }}">Province</a></li>
+                            <li><a href="{{ path('backend_settings_region') }}">Region</a></li>
+                        </ul>
+                </li>
+
+
+                <li class="dropdown
+                    {% if app.request.attributes.get('_route')|slice(0, 24)=='backend_settings_custom_' %}
+                    active
+                {%endif%}">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#">
+                        Custom fields
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Custom types</li>
+                        <li><a href="{{ path('backend_settings_custom_address_type') }}">Address type</a></li>
+                        <li><a href="{{ path('backend_settings_custom_phone_type') }}">Phone type</a></li>
+                        <li><a href="{{ path('backend_settings_custom_social_media_type') }}">Social Media type</a></li>
+                        <li><a href="{{ path('backend_settings_custom_email_type') }}">Email type</a></li>
+                        <li class="dropdown-header">Codes' types</li>
+                        <li><a href="{{ path('backend_settings_custom_license_type') }}">Licences, Permits, Authorization, & Insurances type</a></li>
+                        <li><a href="{{ path('backend_settings_custom_barcode_type') }}">Barcode types</a></li>
+                        <li class="dropdown-header">Companies' types</li>
+                        <li><a href="{{ path('backend_settings_custom_company_type') }}">Company Profile</a></li>
+                        <li><a href="{{ path('backend_settings_custom_company_group') }}">Company Groups</a></li>
+                        <li><a href="{{ path('backend_settings_custom_department') }}">Company Department</a></li>
+                        <li class="dropdown-header">Contacts' types</li>
+                        <li><a href="{{ path('backend_settings_custom_person_group') }}">Contacts' groups</a></li>
+                        <li class="dropdown-header">Products' types</li>
+                        <li><a href="{{ path('backend_settings_custom_product_type') }}">Product type</a></li>
+                        <li><a href="{{ path('backend_settings_custom_brand_group') }}">Brand groups</a></li>
+                        <li class="dropdown-header">HR' types</li>
+                        <li><a href="{{ path('backend_settings_custom_salary_type') }}">Salary type</a></li>
+                        <li class="dropdown-header">Invoice</li>
+                        <li><a href="{{ path('backend_settings_custom_payment_method') }}">Payment type</a></li>
+                        <li><a href="{{ path('backend_sale_order_product_return_reasons') }}">Return reason</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown
+                    {% if app.request.attributes.get('_route')|slice(0, 23)=='backend_settings_status' %}
+                    active
+                {%endif%}">
+                <a class="dropdown-toggle"
+                   data-toggle="dropdown"
+                   href="#">
+                    Statuses
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    {{ render(controller('AppBackendBundle:Settings:statusesGroups')) }}
+                </ul>
+                </li>
+
+                <li class="dropdown
+                                {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_project_type' or 
+                                    app.request.attributes.get('_route')|slice(0, 38)=='backend_settings_custom_project_status' or 
+                                    app.request.attributes.get('_route')|slice(0, 41)=='backend_settings_custom_project_milestone' or
+                                    app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_task_tracker' or 
+                                    app.request.attributes.get('_route')|slice(0, 37)=='backend_settings_custom_task_priority' or
+                                    app.request.attributes.get('_route')|slice(0, 33)=='backend_settings_custom_task_type' or
+                                    app.request.attributes.get('_route')|slice(0, 35)=='backend_settings_custom_task_preset'
+                                %}
+                                    active
+                                {%endif%}">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#">
+                        Projects
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('backend_settings_custom_project_milestone') }}">{{ 'menu.milestone'|trans({}, 'Project') }}</a></li>
+                        <li><a href="{{ path('backend_settings_custom_task_tracker') }}">{{ 'menu.tracker'|trans({}, 'Project') }}</a></li>
+                        <li><a href="{{ path('backend_settings_custom_task_priority') }}">{{ 'menu.priority'|trans({}, 'Project') }}</a></li>
+                        <li><a href="{{ path('backend_settings_custom_task_preset') }}">{{ 'menu.preset'|trans({}, 'Project') }}</a></li>
+                        <li><a href="{{ path('backend_place') }}">{{ 'menu.places'|trans({}, 'Project') }}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+{% block action_content %}
+
+{% endblock %}
+{% endblock %}

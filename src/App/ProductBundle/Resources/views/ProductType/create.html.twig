@@ -1,0 +1,15 @@
+{% extends 'AppProductBundle:ProductType:layout.html.twig' %}
+
+{% block actions_main %}
+
+    <form class="form-horizontal" action="" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <label for="button_form_submit" class="control-label col-xs-3"></label>
+            <div class="col-xs-6">
+                <input type="submit" value="Save" class="btn btn-default">
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

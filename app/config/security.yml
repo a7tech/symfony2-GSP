@@ -1,0 +1,70 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+ # Roles are now defined user bundle, by using the spomsky role bundle
+ #    role_hierarchy:
+ #        ROLE_ADMIN:       [ROLE_USER, ROLE_VIEW_FRONTEND_PRODUCTS, ROLE_BACKEND_DASHBOARD]
+ #       ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH, ROLE_BACKEND_DASHBOARD, ROLE_BACKEND_ALL_SETTINGS]
+
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        backend:
+            switch_user: true
+            context: user
+            pattern: /backend(.*)
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                check_path: backend_login_check
+                login_path: backend_login
+                default_target_path: backend_dashboard
+
+            logout:
+                path: backend_logout
+                target: backend_login
+            anonymous: true
+
+
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                check_path: fos_user_security_check
+                login_path: fos_user_security_login
+                default_target_path: dashboard
+            logout:
+                path:   fos_user_security_logout
+            anonymous:    true
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    access_control:
+        - { path: /backend/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /backend/request, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /backend/send-email, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /backend/check-email, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /backend/reset/^, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /backend/settings, role: ROLE_BACKEND_ALL_SETTINGS }
+        - { path: /backend, role: ROLE_BACKEND_DASHBOARD }
+        - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.1.1 }

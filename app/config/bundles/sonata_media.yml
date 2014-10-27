@@ -1,0 +1,25 @@
+sonata_media:
+    default_context: default
+    db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
+    contexts:
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+                - sonata.media.provider.youtube
+
+            formats:
+                small: { width: 150, quality: 100}
+                medium:   { width: 290, quality: 100}
+                r_medium: { width: 270, quality: 100}
+                big: {width: 637, quality: 100}
+                avatar: {width: 100, height: 100}
+
+    cdn:
+        server:
+            path: /uploads/media
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../web/uploads/media
+            create:     false

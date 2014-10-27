@@ -1,0 +1,58 @@
+project: Projet
+projects: Projets
+projects_i_created: 'Projet créés par moi'
+project_end_date: 'Date de fin de projet'
+invoice_delivery_type: 'Paramètres de facturation'
+opportunity: Oprtunité
+owner: Propriétaire
+status: Statut
+type: 'Type de Projet'
+done_ratio: '% Effectué'
+start_date: 'Date de début'
+end_date: 'Date de fin'
+select_end_date: 'Ou sélectionner une "date de fin"'
+opportunity.expected_close_date: 'Date de clôture prévue'
+task.start_date: 'Date de début'
+task.end_date: 'Date d''échéance'
+name: 'Nom de Projet'
+client: Client
+manager: Manager
+participants: Participants
+supervisor: 'Superviseur de Projet'
+gantt: 'Gantt du Projet'
+manager.office: Bureau
+terms_and_conditions: 'Termes et conditions'
+description: 'Texte d''introduction'
+category: Catégorie
+category_group: 'Groupe de catégorie'
+deposit_amount: '% de Dépôt'
+members: 'Membres du projet'
+materials: Matériels
+general: Général
+products: Produits
+contract_texts: 'Textes du contrat'
+manage_participants: Utilisateurs/participants
+working_days: 'Jours ouvrés'
+work_start_time: 'Heure de début'
+work_end_time: 'Heure de fin'
+opportunities: Opportunités
+opportunity.description: Description
+opportunity.expected_value: 'Valeur attendue'
+opportunity.commision: '% de commission du propriétaire'
+milestone: Étape
+milestone.importance: Importance
+task: Tâche
+tasks: Tâches
+task.assigned_to: 'Assigné à'
+task.priority: Priorité
+manager.phone.mobile: Mobile
+manager.phone.fax: Fax
+menu.milestone: 'Étape du projet'
+menu.tracker: 'Catégorie de tâche'
+menu.priority: 'Priorité de tâche'
+menu.preset: 'Préparation de tâches'
+menu.places: 'Groupe de lieux'
+overview_costs: 'Aperçu des coûts'
+applicable_taxes_apply: 'Les taux de taxes sont ceux en vigueurs au moment de la signature du contrat. Dans l''éventualité d''un changement de taux, la facturation sera ajustée en conséquence des directives gouvernementales.'
+project_id: 'ID Projet'
+applicable_taxes: 'Les taxes applicables aux factures sont'

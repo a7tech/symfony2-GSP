@@ -1,0 +1,25 @@
+{% extends "AppBackendBundle::base.html.twig" %}
+
+{% block bottom %}
+
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                                {% if app.request.attributes.get('_route')=='backend_dasboards'%}
+                                    active
+                                {% endif %}">
+                    <a href="{{ path('backend_settings') }}">All Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Another Dasboard info</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block actions %}
+    Here will be the actions
+{% endblock %}

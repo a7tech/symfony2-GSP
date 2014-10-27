@@ -1,0 +1,8 @@
+{% if entity.addresses|length>0 %}
+    {% set suite_label = 'suite'|trans({}, 'Address') %}
+    {% for ad in entity.addresses %}
+        {% if ad.isMain %}
+            {{ ad.formatted(suite_label)|raw }}
+        {% endif %}
+    {% endfor %}
+{% endif %}

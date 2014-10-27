@@ -1,0 +1,33 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>{{ 'product_id'|trans({}, 'Product') }}</th>
+            <th>MPN/SKU #</th>
+            <th>{{ 'barcode'|trans({}, 'Product') }}</th>
+            <th>{{ 'name'|trans({}, 'Common') }}</th>
+            <th>{{ 'quantity'|trans({}, 'Product') }}</th>
+            <th>{{ 'price'|trans({}, 'Product') }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in pagination %}
+            {% set images = product.product.images %}
+            {% set price = product.price %}
+            {% set taxes = [] %}
+            {% for tax in product.taxes %}
+                {% set taxes = taxes|merge([tax.id]) %}
+            {% endfor %}
+            <tr data-id="{{ product.id }}" data-taxes='{{ taxes|json_encode }}'>
+                <td class="product-copy" data-target="product-id">{{ product.product.id }}</td>
+                <td class="product-copy" data-target="product-code">{{ product.product.productCode }}</td>
+                <td class="product-copy" data-target="product-barcode">{% for barcode in product.product.barcodes %}{{ barcode }}{% if not loop.last %},{% endif %}{% endfor %}</td>
+                <td class="product-copy" data-target="product-title">{{ product.product.title }}</td>
+                <td><input class="input-mini quantity" value="1" name="quantity" type="text"></td>
+                <td><input class="input-mini price" value="{{ price.purchasePrice is not empty ? price.purchasePrice : price.listPrice }}" name="price" type="text"></td>
+                <td class="product-copy"><button type="button" class="btn add-product">Add</button></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{{  knp_pagination_render(pagination) }}

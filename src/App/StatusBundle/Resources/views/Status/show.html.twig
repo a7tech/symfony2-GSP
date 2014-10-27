@@ -1,0 +1,33 @@
+{% extends 'AppStatusBundle:Status:layout.html.twig' %}
+{% import _self as show %}
+
+{% set nav_title = 'Invoice status overview' %}
+
+{% block actions_main %}
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ entity.name }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ entity.description }}</td>
+                </tr>
+                <tr>
+                    <th>Color</th>
+                    <td style="background-color: #{{ entity.color }}">#{{ entity.color }}</td>
+                </tr>
+                <tr>
+                    <th>Value</th>
+                    <td>{{ entity.value }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+{% endblock %}

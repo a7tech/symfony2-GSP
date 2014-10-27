@@ -1,0 +1,55 @@
+{% extends 'AppPurchaseBundle:Purchase:layout.html.twig' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row" style="padding-left: 20px; width: 98%">
+
+                <table id="datatable" class="table table-bordered table-striped"
+                    data-entity-list-route="{{ path('backend_purchase_datatables') }}"
+                >
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Profile Account</th>
+                        <th>Supplier</th>
+                        <th>Creation date</th>
+                        <th>Edit date</th>
+                        <th>Sent date</th>
+                        <th>Invoice date</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+            {% if entities %}
+                <tbody>
+                {% for entity in entities %}
+                    <tr id="{{ entity.id }}">
+                        <td><a href="{{ path('backend_purchase_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                        <td>{{ entity.accountProfile }} (ID {{ entity.accountProfile.id }})</td>
+                        <td>{% if entity.supplier is not null %}{{ entity.supplier }} (ID {{ entity.supplier.id }}){% endif %}</td>
+                        <td>{{ entity.creationDate|date(date_format) }}</td>
+                        <td>{{ entity.editDate is not null ? entity.editDate|date(date_format) : '-' }}</td>
+                        <td>{{ entity.sentDate is not null ? entity.sentDate|date(date_format) : '-' }}</td>
+                        <td>{{ entity.invoiceDate is not null ? entity.invoiceDate|date(date_format) : '-' }}</td>
+                        <td>{{ entity.isDraft ? 'Draft' : 'Order' }}</td>
+                        <td>
+                            {% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity), entity.status) %}
+                            <span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ entity.status is not empty ? status_info.name : '' }}</span>
+                            {#{{ entity.statusName|capitalize }}#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% endif %}
+            </table>
+
+    </div>
+</div>
+
+{% endblock %}
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

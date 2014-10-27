@@ -1,0 +1,138 @@
+parameters:
+    display.error.custom: true
+
+    locale:             en
+    secret:             ThisTokenIsNotSoSecretChangeIt
+
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: 3306
+    database_name: gsp
+    database_user: root
+    database_password: root
+
+    mailer_transport:   smtp
+    mailer_host:        localhost
+    mailer_user:
+    mailer_password:
+
+    date_format: Y-m-d
+    datetime_format: Y-m-d H:i
+
+    elastica.host: localhost
+    elastica.port: 9200
+    elastica.query.start: 1
+    elastica.query.limit: 1000
+    # fos_elastica.client.class: Lib\Elastica\Client
+    
+    #how many items will be listed per page
+    itemsPerPage: 10
+
+    # executables
+    # The path to the node executable. default: /usr/local/bin/node
+    node:              /usr/local/bin/node
+    node_modules:      /usr/local/lib/node_modules/
+
+    search:
+        limit: 15
+        sort:
+            field: searchOrder
+            option: desc
+        contact:
+            firstName:
+                type: string
+                access: logged
+            lastName:
+                type: string
+                access: logged
+            company:
+                type: string
+                access: logged
+            email:
+                type: string
+                access: logged
+            gender:
+                type: string
+                access: logged
+            language:
+                type: integer
+                access: logged
+            phone:
+                type: string
+                access: logged
+            address:
+                type: string
+                access: logged
+            city:
+                type: string
+                access: logged
+            country:
+                type: integer
+                access: logged
+
+        product:
+            title:
+                type: string
+                access: logged
+            productCode:
+                type: string
+                access: logged
+            categories:
+                type: integer
+                access: logged
+            brandGroup:
+                type: integer
+                access: logged
+            createdAtFrom:
+                type: string
+                access: logged
+            createdAtTo:
+                type: string
+                access: logged
+            isActive:
+                type: integer
+                access: logged
+
+        company:
+            name:
+                type: string
+                access: logged
+            companyType:
+                type: integer
+                access: logged
+            sector:
+                type: integer
+                access: logged
+            specialities:
+                type: integer
+                access: logged
+            phoneType:
+                type: integer
+                access: logged
+            addressType:
+                type: integer
+                access: logged
+            street:
+                type: string
+                access: logged
+            country:
+                type: integer
+                access: logged
+            state:
+                type: string
+                access: logged
+            city:
+                type: string
+                access: logged
+            postcode:
+                type: string
+                access: logged
+            socialMediaType:
+                type: integer
+                access: logged
+            createdAt:
+                type: string
+                access: logged
+            updatedAt:
+                type: string
+                access: logged

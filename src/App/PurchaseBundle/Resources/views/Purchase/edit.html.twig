@@ -1,0 +1,200 @@
+{% extends 'AppPurchaseBundle:Purchase:layout.html.twig' %}
+{% form_theme form _self %}
+
+{% set nav_title =  'Order edit' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div id="account-profile-select" {% if entity.accountProfile is not null %}style="display: none"{% endif %}>
+            {{ form_row(form.accountProfile) }}
+            <a href="#" class="btn btn-primary" id="next-step">Next</a>
+        </div>
+        <div id="edit-purchase" {% if entity.accountProfile is null %}style="display: none"{% endif %}>
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="form-label">Account profile:</label>
+                    <div class="form-group">
+                        <strong><span id="account-profile">{% if entity.accountProfile is not null %}{{ entity.accountProfile }}{% endif %}</span></strong>
+                    </div>
+                </div>
+            </div>
+            <form class="search-form" action="{{ path('backend_purchase_products_search') }}" id="products-search">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(search_form.product_type) }}
+                        {{ form_row(search_form.product_category) }}
+                        {{ form_row(search_form.brand) }}
+                        {{ form_row(search_form.supplier) }}
+                        <div class="search-row">
+                        {{ form_row(search_form.stock_availability) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">{{ form_rest(search_form) }}</div>
+                </div>
+
+                <div class="row form-groups">
+                    <input class="btn btn-primary" type="submit" value="Search">
+                    <input class="btn btn-default" type="reset" value="Reset">
+                </div>
+            </form>
+
+            <ul class="nav nav-tabs" id="order-tabs">
+                <li class="active"><a href="#search-results" id="products-search-tab">Search results</a></li>
+                <li><a href="#cart">Cart</a></li>
+                {#<li><a href="#confirmation">Confirmation</a></li>#}
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="search-results">
+                    Specify criteria
+                </div>
+
+                <form class="form-horizontal" id="product-form" action="" method="post" {{ form_enctype(form) }}>
+                    <div class="tab-pane" id="cart" style="display: none">
+                        <input type="hidden" name="backend_purchase[accountProfile]" id="account-profile-copy" value="{{ form.accountProfile.vars.value }}">
+                        {{ form_row(form.items) }}
+                        <table class="table" id="totals">
+                            <tbody>
+                            <tr>
+                                <th>Total</th>
+                                <td class="net-total number">{{ entity.netTotal|number_format(2) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Taxes</th>
+                                <td class="taxes-total number">{{ entity.taxes|number_format(2) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Total amount</th>
+                                <td class="total number">{{ entity.total|number_format(2) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        {{ form_rest(form) }}
+                    </div>
+                    {#<div class="tab-pane" id="confirmation">#}
+                        {##}
+                    {#</div>#}
+                </form>
+
+
+            </div>
+            <div class="row form-groups">
+                <div class="form-actions well">
+                    {% if entity.isDraft %}
+                        <input class="btn btn-primary save-purchase" name="save" type="submit" value="Save as Draft">
+                    {% endif %}
+                    <input class="btn btn-primary save-purchase" name="proceed" type="submit" value="{% if entity.isDraft %}Proceed{% else %}Save{% endif %} Order">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script src="{{ asset('js/jquery/plugins/select2/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appcore/js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery/plugins/jquery.dotimeout.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appcore/js/costs-calculation.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/apppurchase/js/purchase-edit.js') }}" type="text/javascript"></script>
+    <script>
+        jQuery(function($) {
+            Admin.setup_collections(document);
+            Admin.bind_widgets();
+        });
+    </script>
+{% endblock %}
+
+{% block user_css %}
+
+    <link href="{{ asset('js/jquery/plugins/select2/select2.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('js/jquery/plugins/select2/select2-bootstrap.css') }}" type="text/css" rel="stylesheet">
+    {{ parent() }}
+{% endblock %}
+
+{% block _backend_purchase_items_row %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('backend_purchase_item_row')|trim }) %}
+    {% endif %}
+    {% spaceless %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Image</th>
+                <th>MPN/SKU #</th>
+                <th>Barcode</th>
+                <th>Brand</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Supplier</th>
+                <th>Price</th>
+                <th>Taxes</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody {{ block('widget_container_attributes') }}>
+            {% for child in form.children %}
+                {{ block('backend_purchase_item_row') }}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endspaceless %}
+    {{ form_errors(form) }}
+{% endblock %}
+
+{% block backend_purchase_item_row %}
+    {% spaceless %}
+        {% set product = child.vars.data is not null ? child.vars.data.accountProduct : null %}
+
+        <tr class='collection-row'>
+            <td class="product-id">{{ product is not null ? product.id : '' }}</td>
+            <td class="product-image">
+                {% if product is not null %}
+                    {% set images = product.product.images %}
+                    {% if images|length > 0  %}<img src="/{{ images[0].image.path  }}" width="50">{% else %}-{% endif %}
+                {% endif %}
+            </td>
+            <td class="product-code">{{ product is not null ? product.product.productCode : '' }}</td>
+            <td class="product-barcode">
+                {% if product is not null %}
+                    {% for barcode in product.product.barcodes %}{{ barcode }}{% if not loop.last %},{% endif %}{% endfor %}
+                {% endif %}
+            </td>
+            <td class="product-brand">{{ product is not null ? product.product.brandGroup : '' }}</td>
+            <td class="product-title">{{ product is not null ? product.product.title : '' }}</td>
+            <td class="product-categories">
+                {% if product is not null %}
+                    {% for category in product.product.categories %}{{ category }}{% if not loop.last %},{% endif %}{% endfor %}
+                {% endif %}
+            </td>
+            <td>{{ form_row(child.quantity) }}</td>
+            <td>{{ form_row(child.supplier) }}</td>
+            <td>{{ form_row(child.price) }}</td>
+            <td>{{ form_row(child.taxes) }}</td>
+            <td>
+                <a href="javascript:void(0)" class="collection-delete"></a>
+                {{ form_rest(child) }}
+            </td>
+        </tr>
+    {% endspaceless %}
+{% endblock %}
+
+{% block backend_purchase_payments_widget %}
+{% spaceless %}
+    {% set attr = attr|merge({'data-prototype':  form_row(form.vars.prototype) }) %}
+    <div {{ block('widget_container_attributes') }}>
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block backend_purchase_supplier_payments_row %}
+{% spaceless %}
+    <div class="supplier-payment" data-supplier-id="{{ name }}">
+        {{ form_row(form) }}
+    </div>
+{% endspaceless %}
+{% endblock %}

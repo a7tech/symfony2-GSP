@@ -1,0 +1,143 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions%}
+    <div class="title-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 h3">
+                    <h3>Provinces list</h3>
+                </div>
+                <div class="col-md-4">
+                    <div class="crud-actions">
+                        <ul class="nav-crud">
+                            <li class="active">
+                                <a title="List">
+                                    <i class="icon-crud-list"></i>
+                                    <div>
+                                        <label>List</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="" id="new">
+                                <a href="{{ path('backend_settings_province_new') }}" title="New">
+                                    <i class="icon-crud-new"></i>
+                                    <div>
+                                        <label>New</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="show">
+                                <a   title="Show">
+                                    <i class="icon-crud-show"></i>
+                                    <div>
+                                        <label>Show</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="edit">
+                                <a title="Edit">
+                                    <i class="icon-crud-edit"></i>
+                                    <div>
+                                        <label>Edit</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="delete">
+                                <a title="Delete">
+                                    <i class="icon-crud-delete"></i>
+                                    <div>
+                                        <label>Delete</label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3" id="copy_buttons">
+
+                </div>
+                <div class="col-md-2">
+                    <div class="form-search">
+                        <input type="text" class="form-control" id="search_filter" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="left-menu">
+                            {% block left_menu %}
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li class=""><a href="{{ path('backend_settings_country') }}">Countries</a></li>
+                                    <li class="active"><a >Provinces</a></li>
+                                    <li><a href="{{ path('backend_settings_region') }}">Regions</a></li>
+                                </ul>
+                            {% endblock %}
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-9">
+                        <table id="datatable" class="table table-bordered table-striped"
+                                    data-entity-list-route="{{ path('backend_province_datatables') }}"
+                               >
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>Country</th>
+                                    <th>Alternative Name</th>
+                                    <th>Level Name</th>
+                                    <th>Regions</th>
+                                    <th>
+                                        Char Code
+                                    </th>
+                                    <th>CDHID</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for entity in entities %}
+                                    <tr id="{{entity.id}}">
+                                        <td><a href="{{path('backend_settings_province_show', {'id':entity.id})}}">{{ entity.id }}</a></td>
+                                        <td>{{ entity.name }}</td>
+                                        <td>{{ entity.country }}</td>
+                                        <td>{{ entity.alterName }}</td>
+                                        <td>{{ entity.levelName }}</td>
+                                        <td>
+                                        {% if entity.regions|length>0 %}
+                                            {% for region in entity.regions %}
+                                                <a href="{{ path('backend_settings_region_show', {'id':region.id}) }}">{{ region }}</a>
+                                            {% endfor %}
+                                        {% endif %}
+                                        </td>
+                                        <td>{{ entity.isoCode }}</td>
+                                        <td>{{ entity.cdhId }}</td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

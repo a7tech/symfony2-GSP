@@ -1,0 +1,74 @@
+{% extends 'AppInvoiceBundle:SaleOrder:layout.html.twig' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row" style="padding-left: 20px; width: 98%">
+            <table id="datatable" class="table table-bordered table-striped" 
+                   data-entity-list-route="{{ path('backend_sale_order_datatables') }}"
+                   {% if project is not null %}
+                       data-project-id="{{ project.id}}"
+                   {% elseif all_projects %}
+                       data-project-id="all_projects"
+                   {% endif %}
+                   >
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>{{ 'type'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'relation'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'customer'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'customer_company'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'vendor'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'vendor_company'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'currency'|trans({}, 'Currency') }}</th>
+                        <th>{{ 'total'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'paid'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'due'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'invoice_date'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'status'|trans({}, 'Invoice') }}</th>
+                    </tr>
+                </thead>
+            {% if entities %}
+                <tbody>
+
+                {% for entity in entities %}
+                    {% set total = entity.total %}
+                    {% set paid = entity.paid %}
+                    <tr id="{{ entity.id }}" data-show="{{ path('backend_sale_order_show', {'id': entity.id}) }}" data-edit="{{ path('backend_sale_order_edit', {'id': entity.id}) }}" data-delete="{{ path('backend_sale_order_delete', {'id': entity.id}) }}">
+                        <td><a href="{{ path('backend_sale_order_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                        <td>
+                            {% if entity.isDraft %}
+                                {{'draft'|trans({}, "Common")}}
+                            {% else %}
+                                {{ 'invoice'|trans({}, 'Invoice')}}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% include 'AppInvoiceBundle:DtModelStyle:relationNameFormatter.html.twig' %}
+                        </td>
+                        <td>{{ entity.customerName }}</td>
+                        <td>{{ entity.customerCompanyName }}</td>
+                        <td>{{ entity.vendorName }}</td>
+                        <td>{{ entity.vendorCompanyName }}</td>
+                        {% set currency = entity.currency %}
+                        <td>{{ currency is not null ? currency.symbol~' '~currency.code : '' }}</td>
+                        <td class="number">{{ total|number_format(2)  }}</td>
+                        <td class="number">{{ paid|number_format(2) }}</td>
+                        <td class="number">{{ (total - paid )|round(2, 'ceil')|number_format(2) }}</td>
+                        <td>{{ entity.invoiceDate|date(date_format) }}</td>
+                        <td><span {% if statuses[entity.status].color is not empty %}style="color: {{ statuses[entity.status].color }}"{% endif %}>{{ entity.status is not empty ? statuses[entity.status].name : '' }}</span></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% endif %}
+            </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

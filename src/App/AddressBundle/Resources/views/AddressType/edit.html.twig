@@ -1,0 +1,101 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions%}
+    <div class="title-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 h3">
+                    <h3>Address types list</h3>
+                </div>
+                <div class="col-md-5">
+                    <div class="crud-actions">
+                        <ul class="nav-crud">
+                            <li class="">
+                                <a href="{{ path('backend_settings_custom_address_type') }}" title="List">
+                                    <i class="icon-crud-list"></i>
+                                    <div>
+                                        <label>List</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="" id="new">
+                                <a href="{{ path('backend_settings_custom_address_type_new') }}" title="New">
+                                    <i class="icon-crud-new"></i>
+                                    <div>
+                                        <label>New</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud" id="show">
+                                <a href="{{ path('backend_settings_custom_address_type_show', {'id':entity.id}) }}"  title="Show">
+                                    <i class="icon-crud-show"></i>
+                                    <div>
+                                        <label>Show</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud active" id="edit">
+                                <a title="Edit">
+                                    <i class="icon-crud-edit"></i>
+                                    <div>
+                                        <label>Edit</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud " id="delete">
+                                <a href="{{ path('backend_settings_custom_address_type_delete', {'id': entity.id}) }}" title="Delete">
+                                    <i class="icon-crud-delete"></i>
+                                    <div>
+                                        <label>Delete</label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-search">
+                        <div class="col-xs-10 col-sm-5 col-md-7">
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <button type="submit" class="btn btn-default">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="left-menu">
+                            {% block left_menu %}
+                                {{ include('AppBackendBundle::custom_left_menu.html.twig') }}
+                            {% endblock %}
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-9">
+
+                        <form action="{{ path('backend_settings_custom_address_type_update', { 'id': entity.id }) }}" class="form-horizontal" method="post" {{ form_enctype(edit_form) }}>
+                            <input type="hidden" name="_method" value="PUT" />
+                            {{ form_widget(edit_form) }}
+                            <p>
+                                <button type="submit" class="btn btn-default">Save</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

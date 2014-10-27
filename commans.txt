@@ -1,0 +1,43 @@
+
+php app/console doctrine:fixtures:load --fixtures="src/App/AddressBundle/DataFixtures/ORM"
+
+php app/console doctrine:fixtures:load --fixtures="src/App/PhoneBundle/DataFixtures/ORM" --append
+
+List of the countries with ISO problems
+string(7) "Bolivia"
+string(6) "Brunei"
+string(15) "Burma (Myanmar)"
+string(18) "Congo, Republic of"
+string(43) "Democratic Republic of the Congo (Kinshasa)"
+string(16) "Falkland Islands"
+string(4) "Iran"
+string(11) "Ivory Coast"
+string(6) "Kosovo"
+string(33) "Lao, People's Democratic Republic"
+string(5) "Macau"
+string(9) "Macedonia"
+string(29) "Micronesia, Federal States of"
+string(7) "Moldova"
+string(20) "Netherlands Antilles"
+string(11) "North Korea"
+string(30) "Palestinian National Authority"
+string(15) "Pitcairn Island"
+string(6) "Russia"
+string(12) "Saint Helena"
+string(12) "Saint Martin"
+string(11) "South Korea"
+string(30) "Svalbard and Jan Mayen Islands"
+string(5) "Syria"
+string(6) "Taiwan"
+string(8) "Tanzania"
+string(24) "Timor-Leste (East Timor)"
+string(29) "Vatican City State (Holy See)"
+string(9) "Venezuela"
+string(7) "Vietnam"
+string(24) "Virgin Islands (British)"
+string(21) "Virgin Islands (U.S.)"
+string(25) "Wallis and Futuna Islands"
+string(9) "West Bank"
+------------------------------------------------------------------------------------------
+SQL fix
+------------------------------------------------------------------------------------------

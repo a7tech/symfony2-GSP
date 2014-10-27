@@ -1,0 +1,104 @@
+{% if pdf is not defined %}
+    {% set pdf = false %}
+{% endif %}
+
+{% if pdf %}
+    <style type="text/css">
+        {{ file('css/main/dashboard.css') }}
+        {{ file('css/main/forms.css') }}
+        {{ file('css/main/pdf.css') }}
+    </style>
+{% endif %}
+
+{% set accountCurrency = entity.accountProfile.defaultCurrency %}
+{% set currency = accountCurrency is not null ? accountCurrency.currency : null %}
+{% if pdf %}
+<br/>
+{% endif %}
+ 
+<table class="table-summary" nobr="true">
+<thead>
+    <tr>
+        <th>{{ 'category_group'|trans({}, 'Project') }}</th>
+        <th>{{ 'total'|trans({}, 'Project') }}</th>
+        <th>{{ 'deposit_amount'|trans({}, 'Project') }}</th>
+        <th>{{ 'due'|trans({}, 'Project') }}</th>
+        <th>{{ 'due_with_taxes'|trans({}, 'Project') }}</th>
+    </tr>
+</thead>
+<tbody>
+    {% set net_total = 0 %}
+    {% set deposit_total = 0 %}
+    {% set due_total = 0 %}
+    {% set total_tax_all = 0 %}
+    {% set deposit_with_taxes = 0 %}
+    {% set due_with_taxes_total = 0 %}
+    {% for category in entity.categories %}
+        <tr>
+            {% set deposit = (category.cost.net*entity.depositAmount)|round(2) %}
+            {% set due = category.cost.net - deposit %}
+            {% set due_with_taxes = category.cost.due_with_taxes %}
+            <td>{{ category.category.title }}</td>
+            <td class="number">{{ category.cost.net|number_format(2) }}</td>
+            <td class="number">{{ deposit|number_format(2) }}</td>
+            <td class="number">{{ due|number_format(2) }}</td>
+            <td class="number">{{ due_with_taxes|number_format(2) }}</td>
+            {% set net_total = net_total + category.cost.net %}
+            {% set deposit_total = deposit_total + deposit %}
+            {% set due_total = due_total + due %}
+            {% set due_with_taxes_total = due_with_taxes_total + due_with_taxes %}
+        </tr>
+    {% endfor %}
+</tbody>
+<tfoot>
+    <tr class="summary-line">
+        <td><i>{{ 'summary'|trans({}, 'Project') }}</i> </td>
+        <td class="number">{{ net_total|number_format(2) }}</td>
+        <td class="number">{{ deposit_total|number_format(2) }}</td>
+        <td class="number">{{ due_total|number_format(2) }}</td>
+        <td class="number">{{ due_with_taxes_total|number_format(2) }}</td>
+    </tr>
+</tfoot>
+
+</table>
+
+
+
+<div style="height:15px"></div>
+
+<table class="table-summary" style="margin-bottom: 0px" nobr="true">
+<tbody>
+    <tr class="summary-line">
+        <td>{{ 'total_beofre_taxes'|trans({}, 'Project') }}</td><td class="number">{{ net_total|number_format(2) }}</td>
+    </tr>
+    {% for key, tax in entity.accountProfile.taxation %}
+        {% set deposit_with_taxes = deposit_with_taxes + deposit_total*tax.rate %}
+            {% set tax_current = (net_total * tax.rate) %}
+            {% set total_tax_all = total_tax_all + tax_current %}
+            <tr>
+                <td>{{ 'tax'|trans({'%name%': tax.name, '%rate%': tax.rate*100, '%number%': tax.number}, "Project") }}</td><td class="number">{{ tax_current|number_format(2) }}</td>
+            </tr>
+    {% endfor %}
+    {% set deposit_with_taxes = deposit_with_taxes + deposit_total %}
+    {% set total_tax_all = total_tax_all + net_total %}
+    <tr class="summary-line">
+        <td>{{ 'total_with_taxes'|trans({}, "Project") }} </td><td class="number">{{ total_tax_all|number_format(2) }}</td>
+    </tr>
+    <tr>
+        <td>{{ 'deposit_amount_with_taxes'|trans({}, "Project") }} </td><td class="number">{{ deposit_with_taxes|number_format(2) }}</td>
+    </tr>
+    <tr class="summary-line">
+        <td>{{ 'total_due_with_taxes'|trans({}, "Project") }}</td><td class="number">{{ due_with_taxes_total|number_format(2) }}</td>
+    </tr>
+</tbody>
+</table>
+{{ 'applicable_taxes_apply'|trans({}, "Project") }}
+<br />
+            
+
+{% if pdf %}
+        {#</td>
+    </tr>
+</table>#}
+{% endif %}
+

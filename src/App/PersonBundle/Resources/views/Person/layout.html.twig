@@ -1,0 +1,27 @@
+{% extends 'AppBackendBundle:Dashboard:home.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Contacts') %}
+        {% set route_prefix = 'backend_person' %}
+        {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+    {% endblock %}
+
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}
+
+{% block bottom %}
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                    {% if app.request.attributes.get('_route')|slice(0,14)=='backend_person'%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_person') }}">Contacts</a></li>
+
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+back_to: 'Back to %name%'
+settings.translations: Translations
+confirmation.buttons.confirm: Yes
+confirmation.buttons.cancel: No
+confirmation.delete.title: 'Confirm delete'
+confirmation.delete.body: 'Do you realy want to delete <strong>%name%</strong>?'
+cannot_remove_entity: Cannot remove %name%. It's used in the system.

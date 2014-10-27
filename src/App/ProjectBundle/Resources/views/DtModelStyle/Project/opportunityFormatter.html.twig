@@ -1,0 +1,3 @@
+{% if entity.opportunity %}
+    <a href="{{ path('backend_project_opportunity_show', {'id': entity.opportunity.id}) }}">{{ entity.opportunity }}</a>
+{% endif %}

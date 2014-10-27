@@ -1,0 +1,3 @@
+{% if entity.product.images|length>0 %}
+{{ entity.product.images[0].image|vlabs_filter('resize', {'width': 50, 'height': 50 })|vlabs_media('image') }}
+{% endif %}

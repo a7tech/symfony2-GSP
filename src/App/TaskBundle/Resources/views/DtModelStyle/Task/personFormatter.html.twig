@@ -1,0 +1,6 @@
+{% if entity.assignedTo|length > 0 %}
+    {% for person in entity.assignedTo %}
+        {{ person.firstName }} {{ person.lastName }} 
+        {% if not loop.last %}, {% endif %}
+    {% endfor %}
+{% endif %}

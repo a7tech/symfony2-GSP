@@ -1,0 +1,70 @@
+{% extends 'AppInvoiceBundle:SaleOrder:layout.html.twig' %}
+
+
+{% set nav_title = 'Sale Order overview' %}
+
+{% block actions_main %}
+<div class="col-md-12 invoice">
+    {{ include("AppInvoiceBundle:SaleOrder:invoiceBody.html.twig") }}
+
+
+    {% if not entity.isDraft and not entity.isCredit %}
+        {% set correctedBy = entity.correctedBy %}
+        {% if correctedBy is not null %}
+            <a href="{{ path('backend_sale_order_show', {'id': correctedBy.id}) }}">{{ 'view_correction_invoice'|trans({'%id%': correctedBy.id}, 'Invoice') }}</a>
+        {% else %}
+            {% if not (entity.isDepositInvoice and entity.project.hasContractedRealInvoices) %}
+                <a class="btn" href="{{ path('backend_sale_order_returns_create', {'id': entity.id}) }}">{{ 'create_return'|trans({}, 'Invoice') }}</a><br>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    <br>
+
+    {% if not entity.isDraft and not entity.isCredit %}
+        <div class="invoice-block" id="payments-wrapper" data-goto="{{ goto_form|json_encode }}">
+            <strong>Payments</strong>
+            <form method="post">
+                {{ form_widget(form) }}
+
+                {% set paid = entity.paid %}
+                <table class="table" id="payment-summary" data-total="{{ entity.total }}">
+                    <tbody>
+                    <tr>
+                        <td>{{ 'total_amount'|trans({}, 'Invoice') }}</td>
+                        <td class="number">{{ entity.total|number_format(2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'paid'|trans({}, 'Invoice') }}</td>
+                        <td class="number total-paid">{{ paid|number_format(2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'due'|trans({}, 'Invoice') }}</td>
+                        <td class="number due-total">{{ (entity.total - paid)|number_format(2) }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <input type="submit" class="btn btn-primary" value="{{ 'save'|trans({}, 'Common') }}">
+            </form>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block user_js %}
+    {{ parent() }}
+    {% if not entity.isDraft %}
+        <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery/plugins/jquery.dotimeout.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/appcore/js/payments-calculation.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/appinvoice/js/invoice-show.js') }}" type="text/javascript"></script>
+        <script>
+            jQuery(function($) {
+                Admin.setup_collections(document);
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
+

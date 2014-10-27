@@ -1,0 +1,3 @@
+spomky_role_hierarchy:
+    db_driver: orm       # Driver available: orm
+    role_class:          App\UserBundle\Entity\Role

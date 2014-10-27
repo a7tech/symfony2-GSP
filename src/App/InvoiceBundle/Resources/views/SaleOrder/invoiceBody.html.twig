@@ -1,0 +1,506 @@
+{% import _self as macros %}
+{% set vendorCompany = entity.isDraft ? entity.vendorCompany : entity.vendorCompanyCopy %}
+{% if pdf is not defined %}
+    {% set pdf = false %}
+{% endif %}
+{% set is_correction_invoice = entity.correctionOf is not null %}
+{% set suite_label = 'suite'|trans({}, 'Address')~':' %}
+{% set isCredit = entity.isCredit %}
+
+{% block content %}
+<table {% if not pdf %} style="width: 100%" {% else %} cellspacing="0" {% endif %}>
+    <tbody>
+        <tr>
+            {% block table_column_logo %}
+            <td {% if not pdf %} style="width: 33%" {% endif %} class="invoice-center" {% if pdf %} style="text-align: left; float: left; padding: 0px;" {% endif %}>
+                {% set vendor_main_image = vendorCompany.mainImage %}
+                {% if vendor_main_image is not null %}
+                    {{ vendor_main_image|vlabs_filter('resize', {'height': 150})|vlabs_media('image') }}
+                    <br>
+                {% else %}
+                logo enterprise / company logo{% if not pdf %}<br><br>{% endif %}
+                {% endif %}
+            </td>
+            {% endblock table_column_logo %}
+            <td class="invoice-center" {% if not pdf %} style="width: 33%" {% endif %}>
+                <strong>
+                    {% if entity.isDraft %}
+                        {{ 'draft'|trans({}, "Common")|upper }}
+                    {% else %}
+                        {{ 'invoice'|trans({}, "Invoice")|upper }}
+                    {% endif %}<br>
+                    ID {{ entity.id }}
+                </strong>
+                {% if is_correction_invoice %}
+                    <br><a href="{{ url('backend_sale_order_show', {'id': entity.correctionOf.id}) }}">{{ 'correction_invoice'|trans({'%id%': entity.correctionOf.id }, 'Invoice') }}</a><br>
+                {% endif %}
+            </td>
+            <td class="invoice-center" {% if pdf %} {% endif %}>
+
+                {% set status = statusInfo(constant("STATUSES_GROUP", entity), entity.status) %}
+                {% block grey_font %}
+                <strong>{{ status.name|upper }}</strong><br>
+                <br/>{{ entity.invoiceDate|date(date_format) }}
+                <p>{{ 'sale_date'|trans({}, 'Invoice') }} </p>
+                {% endblock grey_font %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table style="border-collapse: separate; border-spacing: 10px; " {% if pdf %} style="width: 684px; border-spacing: 0 10px;" {% else %} cellspacing="10" {% endif %}>
+    <tbody>
+        <tr>
+            <td class="invoice-block">
+                <br>
+                <table class="dl-table" {% if not pdf %} style="border-collapse: separate; border-spacing: 2px" cellspacing="2" {% else %} style="border-spacing: 10px;" cellspacing="8" {% endif %}>
+                    <tr>
+                        <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'enterprise'|trans({}, 'Invoice') }}:</th>
+                        <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{{ vendorCompany.name }}</td>
+                    </tr>
+                    <tr>
+                        <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'rbq'|trans({}, 'Company') }}:</th>
+                        <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{{ vendorCompany.rbq }}</td>
+                    </tr>
+                    <tr>
+                        <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'seler'|trans({}, 'Invoice')}}:</th>
+                        <td {% if pdf %} style="width: 52%" {% endif %}>{{ vendorCompany.name }}</td>
+                    </tr>
+                    <tr>
+                        <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'address'|trans({}, 'Address') }}:</th>
+                        <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{% set vendor_billing_address = vendorCompany.billingAddress %}{{ vendor_billing_address is not null ? vendor_billing_address.formatted(suite_label)|raw : '-' }}</td>
+                    </tr>
+                </table>
+                {% if not pdf %}
+                <br>
+                {% endif %}
+            </td>
+            {% if pdf %}
+            <td width="10">&nbsp;</td>
+            {% endif %}
+            <td class="invoice-block" {% if pdf %} style="height: 132px; padding: 0 0;" {% endif %}>
+                {% if not pdf %}
+                <br>
+                {% endif %}
+                <table class="dl-table" {% if not pdf %} style="border-collapse: separate; border-spacing: 2px" cellspacing="2" {% else %} cellspacing="8"{% endif %}>
+                    <tr>
+                        <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'company'|trans({}, 'Company') }}:</th>
+                        <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{{ entity.customerCompanyName is not null ? entity.customerCompanyName : '-' }}</td>
+                    </tr>
+                    <tr>
+                        <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'customer'|trans({}, 'Invoice') }}:</th>
+                        <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{{ entity.customerName is not null ? entity.customerName : '-' }}</td>
+                    </tr>
+                    <tr>
+                        <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'billing_address'|trans({}, 'Address') }}:</th>
+                        <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{{ entity.isDraft ? (entity.billing ? entity.billing.formatted(suite_label)|raw : '-') : entity.billingCopy.formatted(suite_label)|raw }}</td>
+                    </tr>
+                    {% set phone = entity.clientPhone %}
+                    {% if phone is not null %}
+                        <tr>
+                            <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'telephone'|trans({}, 'Common') }}</th>
+                            <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{{ phone }}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+                {% if not pdf %}
+                <br>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td class="invoice-block">
+                {% if entity.project %}
+                    <br>
+                    <table class="dl-table" {% if not pdf %} style="border-collapse: separate; border-spacing: 2px" cellspacing="2" {% else %} cellspacing="8" {% endif %} >
+                        <tr>
+                            <th {% if pdf %} style="width: 28%; float: left; text-align: left;" {% endif %}>{{ 'project_id'|trans({}, "Project") }}:</th>
+                            <td {% if pdf %} style="width: 72%; float: left; text-align: left; font-size: 12px;" {% endif %}>{{ entity.project.id }}</td>
+                        </tr>
+                        <tr>
+                            <th {% if pdf %} style="width: 28%; float: left; text-align: left;" {% endif %}>{{ 'project_name'|trans({}, 'Invoice') }}:</th>
+                            <td {% if pdf %} style="width: 72%; float: left; text-align: left; font-size: 12px;" {% endif %}>{{ entity.project.name }}</td>
+                        </tr>
+                        <tr>
+                            <th {% if pdf %} style="width: 28%; float: left; text-align: left;" {% endif %}>{{ 'description'|trans({}, 'Project') }}:</th>
+                            <td {% if pdf %} style="width: 72%; float: left; text-align: left; font-size: 12px;" {% endif %}>{{ entity.project.description|raw }}</td>
+                        </tr>
+                    </table>
+                    <br>
+                {% endif %}
+            </td>
+            {% if pdf %}
+            <td width="10">&nbsp;</td>
+            {% endif %}
+            <td class="invoice-block">
+                {% if entity.shipment and entity.showDeliveryAddress %}
+                    <br>
+                    {% if pdf %}<br>{% endif %}
+                    <table class="dl-table" style="border-collapse: separate; border-spacing: 2px" cellspacing="2">
+                        <tr>
+                            <th {% if pdf %} style="width: 48%; float: left; text-align: left;" {% endif %}>{{ 'shipment'|trans({}, 'Invoice') }}:</th>
+                            <td {% if pdf %} style="width: 52%; float: left; text-align: left;" {% endif %}>{{ entity.isDraft ? entity.shipment.formatted(suite_label)|raw : entity.shipmentCopy.formatted(suite_label)|raw }}</td>
+                        </tr>
+                    </table>
+                    {% if not pdf %}
+                    <br>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% if entity.isDepositInvoice %}
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'deposit'|trans({}, 'Invoice') }}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'taxes'|trans({}, 'Invoice') }}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'total_amount'|trans({}, 'Invoice') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="collection-row">
+            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ entity.depositPosition|number_format(2) }}</td>
+            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ entity.depositTaxesTotal|number_format(2) }}</td>
+            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ entity.total|number_format(2) }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endif %}
+
+{% if entity.products|length > 0 %}
+    <table class="table table-bordered table-striped" {% if pdf %} style="width: 694px;" {% endif %}>
+        <thead>
+        <tr>
+            {% block product_header %}
+            <th {% if pdf %} style="text-align: center;" {% endif %}>Id</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'name'|trans({}, "Product") }}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>SKU</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'qunatiy_shortcut'|trans({}, 'Product')}}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'unit_price'|trans({}, 'Product') }}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'discount'|trans({}, "Product")}}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'total'|trans({}, "Product") }}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'taxes'|trans({}, 'Invoice') }}</th>
+            <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'total_amount'|trans({}, 'Invoice') }}</th>
+            {% endblock %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in entity.products  %}
+            <tr {% block product_row_attributes '' %}>
+                {% block product_row %}
+                <td {% if pdf %} style="text-align: center;" {% endif %} class="product-id"><a href="{{ url('backend_account_product_show', {'id': product.product.id, 'profileId': product.product.account.id}) }}">{{ product.product.id }}</a></td>
+                <td {% if pdf %} style="text-align: center;" {% endif %} class="product-name">{{ product.productName }}</td>
+                <td {% if pdf %} style="text-align: center;" {% endif %}>{{ product.productCode }}</td>
+                <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product.quantity }}</td>
+                <td class="product-price number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product.price|number_format(2) }}</td>
+                <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product.discount*100 }}%</td>
+                <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product.netTotal|number_format(2) }}</td>
+                <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product.taxesTotal|number_format(2) }}</td>
+                <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product.grossTotal|number_format(2) }}</td>
+                {% endblock %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% block products_retunrs %}
+        {% set products_returns = entity.productReturns %}
+        {% if products_returns|length > 0 %}
+            <h3>Returns:</h3>
+            <table class="table table-bordered table-striped" {% if pdf %} style="width: 694px;" {% endif %}>
+                <thead>
+                <tr>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>Id</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'name'|trans({}, "Product") }}</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>SKU</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'qunatiy_shortcut'|trans({}, 'Product')}}</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'unit_price'|trans({}, 'Product') }}</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'discount'|trans({}, "Product")}}</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'total'|trans({}, "Product") }}</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'taxes'|trans({}, 'Invoice') }}</th>
+                    <th {% if pdf %} style="text-align: center;" {% endif %}>{{ 'total_amount'|trans({}, 'Invoice') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for product_return in products_returns %}
+                        {% set invoice_product = product_return.invoiceProduct %}
+                        {% set product = invoice_product.product %}
+                        <tr>
+                            <td {% if pdf %} style="text-align: center;" {% endif %}><a href="{{ url('backend_account_product_show', {'id': product.id, 'profileId': product.account.id}) }}">{{ product.id }}</a></td>
+                            <td {% if pdf %} style="text-align: center;" {% endif %}>{{ invoice_product.productName }}</td>
+                            <td {% if pdf %} style="text-align: center;" {% endif %}>{{ invoice_product.productCode }}</td>
+                            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>-{{ product_return.quantity }}</td>
+                            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product_return.refundPrice|number_format(2) }}</td>
+                            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ invoice_product.discount*100 }}%</td>
+                            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product_return.netTotal|number_format(2) }}</td>
+                            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product_return.taxesTotal|number_format(2) }}</td>
+                            <td class="number" {% if pdf %} style="text-align: center;" {% endif %}>{{ product_return.grossTotal|number_format(2) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endblock %}
+
+    {% if pdf %}
+    <table class="table-striped" style="margin-left:auto; margin-right:auto; width: 694px; font-size: 9px;">
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+    {% endif %}
+{% endif %}
+
+{% if entity.tasks|length > 0 %}
+    {% if not entity.isCredit %}
+        <table id="task-list" class="table table-bordered table-striped" {% if pdf %} style="width: 693px;" {% endif %}>
+            <thead>
+            <tr>
+                {% block task_header %}
+                <th {% if pdf %} style="width: 5%; text-align: center;" {% endif %}>Id</th>
+                <th {% if pdf %} style="width: 59%;" class="text-align-center" {% endif %}>{{ 'task'|trans({}, 'Tasks') }}</th>
+                <th {% if pdf %} style="width: 12%;" class="text-align-center" {% endif %}>{{ 'price'|trans({}, 'Tasks') }}</th>
+                <th {% if pdf %} style="width: 12%;" class="text-align-center" {% endif %}>{{ 'taxes'|trans({}, 'Invoice')}}</th>
+                <th {% if pdf %} style="width: 12%;" class="text-align-center" {% endif %}>{{ 'total'|trans({}, 'Invoice') }}</th>
+                {% endblock %}
+            </tr>
+            </thead>
+            <tbody>
+            {% if tasks_categories is not null%}
+                <tr>
+                    {% block category_header %}
+                        <td {% if pdf %} style="width: 5%;" {% endif %}></td>
+                        <td {% if pdf %} style="width: 59%;" class="text-align-center" {% endif %}>{{ tasks_categories.category }}</td>
+                        <td class="number" {% if pdf %} style="width: 12%; text-align: center;" {% endif %}>{{ tasks_categories.cost.net|number_format(2) }}</td>
+                        <td class="number" {% if pdf %} style="width: 12%; text-align: center;" {% endif %}>{{ tasks_categories.cost.taxes.total|number_format(2) }}</td>
+                        <td class="number" {% if pdf %} style="width: 12%; text-align: center;" {% endif %}>{{ tasks_categories.cost.gross|number_format(2) }}</td>
+                    {% endblock %}
+                </tr>
+                {% block setTaskCategoryRowTemplate %}
+                    {% if taskCategoryRow is not defined %}
+                        {% set taskCategoryRow = 'AppInvoiceBundle:SaleOrder:taskCategoryRow.html.twig' %}
+                    {% endif %}
+                    {% if contractedTaskRow is not defined %}
+                        {% set contractedTaskRow = 'AppInvoiceBundle:SaleOrder:contractedTaskRow.html.twig' %}
+                    {% endif %}
+                    {{ macros.subcategories(tasks_categories, 0, pdf, invoice_tasks, taskCategoryRow, contractedTaskRow) }}
+                {% endblock %}
+
+            {% else %}
+                {% for invoice_task in entity.tasks %}
+                    {% set task = invoice_task.task %}
+                    {% set net = task.netPrice %}
+                    {% set taxes = task.taxesCost(net) %}
+                    <tr data-task-id="{{ task.id }}">
+                        {% block task_row %}
+                            {% set task_link = url('backend_tasks_show', {'id': task.id}) %}
+                            <td {% if pdf %} style="width: 5%; text-align: center;" {% endif %}><a href="{{ task_link }}">{{ task.id }}</a></td>
+                            <td {% if pdf %} style="width: 59%; text-align: left;" {% endif %}>
+                                <a href="{{ task_link }}">{{ task.name }}</a>
+                                {% if task.taskDescription is not null %}
+                                <div class="task-description" {% if pdf %} style="line-height:90%" {% endif %}>{{ task.taskDescription|raw }}</div>
+                                    {% endif %}
+                            </td>
+                            <td class="number" {% if pdf %} style="width: 12%; text-align: center;" {% endif %}>{{ net|number_format(2) }}</td>
+                            <td class="number" {% if pdf %} style="width: 12%; text-align: center;" {% endif %}>{{ taxes|number_format(2) }}</td>
+                            <td class="number" {% if pdf %} style="width: 12%; text-align: center;" {% endif %}>{{ (net+taxes)|number_format(2) }}</td>
+                        {% endblock %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% block tasks_refunds %}
+        {% if entity.hasTasksRefunds %}
+            <table class="table table-bordered table-stripped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>{{ 'task_name'|trans({}, 'Invoice') }}</th>
+                        <th>{{ (isCredit ? 'task_credit' : 'refund_price')|trans({}, 'Invoice') }}</th>
+                        <th>{{ (isCredit ? 'task_credit_description' : 'refund_description')|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'taxes'|trans({}, 'Invoice') }}</th>
+                        <th>{{ 'total_amount'|trans({}, 'Invoice') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for invoice_task in entity.tasks %}
+                        {% set link = url('backend_tasks_show', {'id': invoice_task.task.id}) %}
+                        {% set refund = invoice_task.refund %}
+                        {% if refund > 0 %}
+                            <tr>
+                                <td><a href="{{ link }}">{{ invoice_task.task.id }}</a></td>
+                                <td><a href="{{ link }}">{{ invoice_task.task.name }}</a></td>
+                                <td>{{ refund|number_format(2) }}</td>
+                                <td>{{ invoice_task.refundDescription }}</td>
+                                {% set taxes = invoice_task.task.taxesCost(refund) %}
+                                <td>{{ taxes|number_format(2) }}</td>
+                                <td>{{ (refund+taxes)|number_format(2) }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endblock %}
+
+    {% if pdf %}
+    <table class="table-striped" style="margin-left:auto; margin-right:auto; width: 694px; font-size: 9px;">
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+    {% endif %}
+{% endif %}
+
+{% if is_correction_invoice %}
+    <h4>{{ 'old_summary'|trans({}, 'Invoice') }}</h4>
+{% endif %}
+{% set totals = entity.totals(not is_correction_invoice) %}
+{{ macros.totals(totals, entity, pdf)}}
+{% block new_totals %}
+{% if is_correction_invoice %}
+    <h4>{{ 'new_totals'|trans({}, 'Invoice') }}</h4>
+    {% set new_totals = entity.totals(true) %}
+    {% set minus_totals = entity.returnTotalsDifference %}
+    {{ macros.totals(new_totals, entity, pdf, minus_totals)}}
+{% endif %}
+{% endblock %}
+
+{% if entity.comment %}
+    <div class="row" nobr="true">
+        <div class="col-md-12 invoice-block" style="padding:8px; line-height: 40px;">
+            <strong>{{ 'comment'|trans({}, 'Invoice') }}:</strong> {{ entity.comment }}
+        </div>
+    </div>
+{% endif %}
+{% if pdf %}
+<table class="table-striped" style="margin-left:auto; margin-right:auto; width: 694px; font-size: 9px;">
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+{% endif %}
+<br>
+{% block signatures %}
+<table class="signatures" nobr="true" {% if pdf %} style="width: 100%;" {% else %}style="width: 100%"  {% endif %}>
+    <tr>
+        <td class="signature" style="width: 40%">
+            {% if pdf %}<br><br><br><br><br>{% endif %}
+            {{ 'vendor_singnature'|trans({}, 'Invoice')}}
+        </td>
+
+        <td style="width: 20%; text-align: center">
+            {% if entity.correctedBy is not null %}
+                <img src="/images/cancelled.png" />
+
+                <a href="{{ url('backend_sale_order_show', {id: entity.correctedBy.id }) }}">{{ 'stamp_cancelled_link'|trans({'%id%': entity.correctedBy.id}, 'Invoice') }}</a>
+            {% elseif entity.status == constant("STATUS_PAID", entity) %}
+                <img src="/images/paid-ok.png" />
+            {% endif %}
+        </td>
+
+        <td class="signature right" style="width: 40%">
+            {% if pdf %}<br><br><br><br><br>{% endif %}
+            {{ 'customer_signature'|trans({}, 'Invoice') }}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+<br>
+{% endblock content %}
+
+
+
+{% macro subcategories(category, indent, pdf, invoice_tasks, category_template, task_template) %}
+    {# Indent is done on spaces, because TCPDF doesn't support padding #}
+    {% set indent_size = (indent+1)*10 %}
+    {% import _self as macros %}
+    {% if category.children|length > 0 %}
+        {% for child_category in category.children %}
+            <tr>
+                {% include category_template %}
+            </tr>
+            {{ macros.subcategories(child_category, indent+1, pdf, invoice_tasks, category_template, task_template) }}
+        {% endfor %}
+    {% endif %}
+    {% if category.tasks|length > 0 %}
+        {% for task in category.tasks %}
+            {% set invoice_task = invoice_tasks[task.id] %}
+            <tr data-task-id="{{ task.id }}">
+                {% include task_template %}
+            </tr>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% macro totals(totals, entity, pdf, minus_totals = null) %}
+    <table class="table table-bordered table-striped" nobr="true" {% if pdf %} style="margin-left:auto; margin-right:auto; width: 694px; font-size: 11px; page-break-inside:avoid;" {% endif %}>
+        <tr>
+            <th>{{ 'total_before_taxes'|trans({}, 'Invoice') }}</th>
+            {% if minus_totals is not null %}
+                <td class="number">{{ minus_totals.net < 0 ? '+' : '' }}{{ (minus_totals.net*-1)|number_format(2) }}</td>
+            {% endif %}
+            <td class="number" {% if pdf %} style="font-weight: bold;" {% endif %}>{{ totals.net|number_format(2) }}</td>
+        </tr>
+        {% if not entity.isCredit %}
+            {% set taxes = totals.taxes %}
+            {% set taxation = entity.isDraft and entity.correctionOf is null ? entity.vendorCompany.taxation : entity.vendorCompanyCopy.taxation %}
+            {% for tax in taxation %}
+                <tr>
+                    <th>{{ 'tax'|trans({}, 'Tax') }} {{ tax.name }} {{ tax.rate*100 }}% ({{ tax.number }})</th>
+                    {% if minus_totals is not null %}
+                        <td class="number">{{ minus_totals.taxes[tax.id] < 0 ? '+' : '' }}{{ (minus_totals.taxes[tax.id]*-1)|number_format(2) }}</td>
+                    {% endif %}
+                    <td class="number">{{ taxes[tax.id]|number_format(2) }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        <tr>
+            <th>{{ 'total_taxes'|trans({}, 'Invoice') }}</th>
+            {% if minus_totals is not null %}
+                <td class="number">{{ minus_totals.taxes.total < 0 ? '+' : '' }}{{ (minus_totals.taxes.total*-1)|number_format(2) }}</td>
+            {% endif %}
+            <td class="number">{{ totals.taxes.total|number_format(2) }}</td>
+        </tr>
+        {% set depositReturnTotal = entity.depositReturnTotal %}
+        {% if depositReturnTotal is not null %}
+            <tr>
+                <th>{{ 'total_before_deposit'|trans({}, 'Invoice') }}</th>
+                {% if minus_totals is not null %}
+                    <td class="number"></td>
+                {% endif %}
+                <td class="number">{{ totals.total_before_deposit|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'deposit'|trans({}, 'Invoice') }}</th>
+                {% if minus_totals is not null %}
+                    <td class="number"></td>
+                {% endif %}
+                <td class="number">-{{ depositReturnTotal|number_format(2) }}</td>
+            </tr>
+
+        {% endif %}
+        <tr>
+            {% set currency = entity.currency %}
+            <th>{{ 'total_amount'|trans({}, 'Invoice') }} {% if currency is not null %}({{ currency.symbol }} {{ currency.code }}){% endif %}</th>
+            {% if minus_totals is not null %}
+                <td class="number">{{ minus_totals.total < 0 ? '+' : '' }}{{ (minus_totals.total*-1)|number_format(2) }}</td>
+            {% endif %}
+            <td class="number" {% if pdf %} style="font-weight: bold;" {% endif %}>{{ totals.total|number_format(2) }}</td>
+        </tr>
+    </table>
+{% endmacro %}

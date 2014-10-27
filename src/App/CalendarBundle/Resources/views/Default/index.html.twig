@@ -1,0 +1,32 @@
+{% extends 'AppCalendarBundle::layout.html.twig' %}
+
+ {% block calendercontent %}
+     {% if project is not null %}
+         <a href="{{ path('backend_project_show', {'id': project.id}) }}">Back to {{ project }} project</a><br>
+         <br>
+     {% endif %}
+
+    {% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+ {% endblock %}
+
+{% block calendar_filters %}
+    {{ form_widget(filters_form) }}
+{% endblock %}
+
+{% block user_js %}
+    {{ parent() }}
+    <script src="{{ asset('js/jquery/plugins/select2/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function(){
+            Admin.bind_widgets();
+        });
+    </script>
+{% endblock %}
+
+{% block user_css %}
+
+    <link href="{{ asset('js/jquery/plugins/select2/select2.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('js/jquery/plugins/select2/select2-bootstrap.css') }}" type="text/css" rel="stylesheet">
+    {{ parent() }}
+{% endblock %}

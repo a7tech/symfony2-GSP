@@ -1,0 +1,48 @@
+{% extends 'AppCalendarBundle::layout.html.twig' %}
+
+{% block calendercontent %}
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-9">
+            <table id="datatable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Url</th>
+                        <th>Bgcolor</th>
+                        <th>Fgcolor</th>
+                        <th>Cssclass</th>
+                        <th>Startdatetime</th>
+                        <th>Enddatetime</th>
+                        <th>Allday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                        <tr id="{{ entity.id }}">
+                            <td><a href="{{ path('backend_calendar_event_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                            <td>{{ entity.title }}</td>
+                            <td>{{ entity.url }}</td>
+                            <td>{{ entity.bgColor }}</td>
+                            <td>{{ entity.fgColor }}</td>
+                            <td>{{ entity.cssClass }}</td>
+                            <td>{% if entity.startDatetime %}{{ entity.startDatetime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{% if entity.endDatetime %}{{ entity.endDatetime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{{ entity.allDay }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block user_js %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

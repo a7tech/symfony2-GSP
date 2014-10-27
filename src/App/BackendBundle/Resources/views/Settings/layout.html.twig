@@ -1,0 +1,23 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}{% endblock %}
+
+    <div class="action-view">
+        <div class="row">
+            {% block left_column %}
+                <div class="col-md-3">
+                    <div class="left-menu">
+                        {% block left_menu %}{% endblock %}
+                        {% block total %}{% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+            <div class="{% block content_class 'col-md-9' %}">
+                {% block actions_main %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

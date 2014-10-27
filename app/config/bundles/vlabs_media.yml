@@ -1,0 +1,6 @@
+vlabs_media:
+    image_cache:
+        cache_dir: files/cache
+    mapping:
+        media_image:
+            class: App\MediaBundle\Entity\Image

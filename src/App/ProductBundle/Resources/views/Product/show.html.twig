@@ -1,0 +1,253 @@
+{% extends 'AppProductBundle:Product:layout.html.twig' %}
+{% import _self as show %}
+
+{% set nav_title = 'Product overview' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="left-menu">
+                    <ul id="product-tabs" class="left-nav-tabs nav nav-pills nav-stacked">
+                        <li><a href="#tab-product-info">Product info</a></li>
+                        {% if not entity.price.isEmpty() %}
+                            <li><a href="#tab-prices">Prices</a></li>
+                        {% endif %}
+                        {#<li><a href="#tab-taxes">Taxes</a></li>#}
+                        <li><a href="#tab-codes-barcode">Codes / Barcode</a></li>
+                        {#{% if entity.productType.isStockable and entity.hasWeightAndSize() %}#}
+                            {#<li><a href="#tab-weight-size">Weight & Size</a></li>#}
+                        {#{% endif %}#}
+                        {% if entity.categories|length > 0 or entity.brandGroup %}
+                            <li><a href="#tab-groups">Groups</a></li>
+                        {% endif %}
+                        {#{% if entity.canBeOrderedFromSupplier %}#}
+                            {#<li><a href="#tab-suppliers">Suppliers</a></li>#}
+                        {#{% endif %}#}
+                        {#{% if entity.productType.isStockable %}#}
+                            {#<li><a href="#tab-stocks">Stocks</a></li>#}
+                        {#{% endif %}#}
+                        {#{% if entity.buyers|length > 0 %}#}
+                            {#<li><a href="#tab-buyers">Product exclusive for this buyers</a></li>#}
+                        {#{% endif %}#}
+                        <li><a href="#tab-visibility">Visibility</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h3 id="tab-product-info" class="h3-form">Product info</h3>
+                <div class="contact-card">
+                    <dl class="dl-horizontal">
+                        <dt>Id:</dt>
+                        <dd>{{ entity.id }}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Product Title:</dt>
+                        <dd>{{ entity.title }}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Product Type:</dt>
+                        <dd>{{ entity.productType }}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Description:</dt>
+                        <dd>{{ entity.description|raw }}</dd>
+                    </dl>
+                    {{ show.optional('MetaTitle', entity.metaTitle) }}
+                    {{ show.optional('MetaKeywords', entity.metaKeywords) }}
+                    {{ show.optional('MetaDescription', entity.metaDescription|raw) }}
+                    <dl class="dl-horizontal">
+                        <dt>Slug:</dt>
+                        <dd>{{ entity.slug }}</dd>
+                    </dl>
+                    {{ show.optional('Video Link', entity.videoLink) }}
+                    {% if entity.images|length > 0 %}
+                        <dl class="dl-horizontal">
+                            <dt>Images:</dt>
+                            <dd>
+                                {% for image in entity.images %}
+                                    {{ image.image|vlabs_filter('resize', {'width': 90, 'height': 90 })|vlabs_media('image') }}
+                                {% endfor %}
+                            </dd>
+                        </dl>
+                    {% endif %}
+                </div>
+
+                {% if not entity.price.isEmpty() %}
+                    {% set price = entity.price %}
+                    <h3 id="tab-prices" class="h3-form">Prices</h3>
+                    <div class="contact-card">
+                        {{ show.optional('List Price', price.listPrice) }}
+                        {{ show.optional('Purchase Price', price.purchasePrice) }}
+                        {{ show.optional('Sell Price', price.sellPrice) }}
+                        {% if price.sellPrice %}
+                            {{ show.flag('Dont apply calculations on Sell Price', price.calcOnSellPrice) }}
+                        {% endif %}
+                        {{ show.optional('Special Price', price.specialPrice) }}
+                        {% if price.specialPrice %}
+                            {{ show.date('Special Price From Date', price.sppDateFrom) }}
+                            {{ show.date('Special Price To Date', price.sppDateTo) }}
+                        {% endif %}
+                        {% if price.sellPrice %}
+                            {{ show.flag('Dont show sell price on front', price.dontShowOnFront) }}
+                        {% endif %}
+                        {{ show.optional('Employee Commision', price.employeeCommision) }}
+                    </div>
+                {% endif %}
+
+                {#<h3 id="tab-taxes" class="h3-form">Taxes</h3>#}
+                {#<div class="contact-card">#}
+                    {#<dl class="dl-horizontal">#}
+                        {#<dt>Taxable:</dt>#}
+                        {#<dd>{{ entity.isTaxable ? 'Taxable' : 'Not taxable good' }}</dd>#}
+                    {#</dl>#}
+                    {#{{ show.collection('Taxes', entity.taxes) }}#}
+                {#</div>#}
+
+                <h3 id="tab-codes-barcode" class="h3-form">Codes / Barcode</h3>
+                <div class="contact-card">
+                    <dl class="dl-horizontal">
+                        <dt>Product Code:</dt>
+                        <dd>{{ entity.productCode }}</dd>
+                    </dl>
+                    {{ show.collection('Barcodes', entity.barcodes) }}
+                </div>
+
+                {#{% if entity.productType.isStockable and entity.hasWeightAndSize() %}#}
+                    {#<h3 id="tab-weight-size" class="h3-form">Weight & Size</h3>#}
+                    {#<div class="contact-card">#}
+                        {#{{ show.optional('Width', entity.width) }}#}
+                        {#{{ show.optional('Height', entity.height) }}#}
+                        {#{{ show.optional('Depth', entity.depth) }}#}
+                        {#{{ show.optional('Weight', entity.weight) }}#}
+                    {#</div>#}
+                {#{% endif %}#}
+
+                {% if entity.categories|length > 0 or entity.brandGroup %}
+                    <h3 id="tab-groups" class="h3-form">Groups</h3>
+                    <div class="contact-card">
+                        {{ show.collection('Categories', entity.categories) }}
+                        {% if entity.brandGroup %}
+                            <dl class="dl-horizontal">
+                                <dt>Brand Group:</dt>
+                                <dd>{{ entity.brandGroup }}</dd>
+                            </dl>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {#{% if entity.canBeOrderedFromSupplier %}#}
+                    {#<h3 id="tab-suppliers" class="h3-form">Suppliers</h3>#}
+                    {#<div class="contact-card">#}
+                        {#{{ show.flag('Can be ordered from supplier', entity.canBeOrderedFromSupplier) }}#}
+                        {#{{ show.collection('Suppliers', entity.suppliers) }}#}
+                    {#</div>#}
+                {#{% endif %}#}
+
+                {#{% if entity.productType.isStockable %}#}
+                    {#<h3 id="tab-stocks" class="h3-form">Stocks</h3>#}
+                    {#<div class="contact-card">#}
+                        {#{{ show.flag('Can Be Stocked', entity.canBeStocked) }}#}
+                        {#{{ show.optional('Sell Qty Unit', entity.sellQtyUnit) }}#}
+                        {#{{ show.flag('Can be delivered', entity.canBeDelivered) }}#}
+                        {#{{ show.optional('Min Qty In Stock', entity.minQtyInStock) }}#}
+                        {#{{ show.optional('Restocking Qty', entity.restockingQty) }}#}
+                        {#<dl class="dl-horizontal">#}
+                            {#<dt>Stock Availability:</dt>#}
+                            {#<dd>{{ entity.stockAvailability ? 'In stock' : 'Out of stock/discontinued' }}</dd>#}
+                        {#</dl>#}
+                        {#<dl class="dl-horizontal">#}
+                            {#<dt>Sell Out Of Stock:</dt>#}
+                            {#<dd>{{ entity.sellOutOfStock ? 'Yes' : 'No' }}</dd>#}
+                        {#</dl>#}
+                    {#</div>#}
+                {#{% endif %}#}
+
+                {#{% if entity.buyers|length > 0 %}#}
+                    {#<h3 id="tab-buyers" class="h3-form">Product exclusive for this buyers</h3>#}
+                    {#<div class="contact-card">#}
+                        {#{{ show.collection('Buyers', entity.buyers) }}#}
+                    {#</div>#}
+                {#{% endif %}#}
+
+                <h3 id="tab-visibility" class="h3-form">Visibility</h3>
+                <div class="contact-card">
+                    {{ show.optional('livetime', entity.livetime) }}
+                    {{ show.optional('Production Time', entity.productionTime) }}
+                    {{ show.date('New From Date', entity.newFromDate) }}
+                    {{ show.date('New To Date', entity.newToDate) }}
+                    {{ show.optional('Manufacture Country', entity.manufactureCountry) }}
+                    <dl class="dl-horizontal">
+                        <dt>Show On Front:</dt>
+                        <dd>{{ entity.showOnFront ? 'Yes' : 'No' }}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Online Purchaseable:</dt>
+                        <dd>{{ entity.onlinePurchaseable ? 'Yes' : 'No' }}</dd>
+                    </dl>
+                    {{ show.flag('Is active', entity.isActive) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script>
+        $(document).ready(function() {
+            var $navbar = $("#product-tabs");
+            var offset = $navbar.offset();
+            var $span3 = $navbar.parents('.col-md-3');
+
+            $(window).bind('scroll', function() {
+                $navbar.width($span3.width());
+                if ($(this).scrollTop() > offset.top) {
+                    $navbar.addClass('top-fixed col-md-3');
+                }
+                else {
+                    $navbar.removeClass('top-fixed col-md-3');
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% macro optional(title, value) %}
+    {% if value %}
+        <dl class="dl-horizontal">
+            <dt>{{ title }}:</dt>
+            <dd>{{ value }}</dd>
+        </dl>
+    {% endif %}
+{% endmacro %}
+
+{% macro collection(title, collection) %}
+    {% if collection|length > 0 %}
+        <dl class="dl-horizontal">
+            <dt>{{ title }}:</dt>
+            <dd>
+                {% for item in collection %}
+                    {{ item }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            </dd>
+        </dl>
+    {% endif %}
+{% endmacro %}
+
+{% macro flag(title, value) %}
+    <dl class="dl-horizontal">
+        <dt>{{ title }}:</dt>
+        <dd>
+            <i class="{{ value ? 'icon-ok' : 'icon-ban-circle' }}"></i>
+        </dd>
+    </dl>
+{% endmacro %}
+
+{% macro date(title, value) %}
+    {% if value %}
+        <dl class="dl-horizontal">
+            <dt>{{ title }}:</dt>
+            <dd>{{ value|date('d-m-Y') }}</dd>
+        </dl>
+    {% endif %}
+{% endmacro %}

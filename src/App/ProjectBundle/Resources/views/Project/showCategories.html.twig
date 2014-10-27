@@ -1,0 +1,71 @@
+{% import _self as macros %}
+
+{% if pdf is not defined %}
+    {% set pdf = false %}
+{% endif %}
+
+{% if pdf %}
+    <style type="text/css">
+        {{ file('css/main/dashboard.css') }}
+        {{ file('css/main/forms.css') }}
+        {{ file('css/main/pdf.css') }}
+    </style>
+{% endif %}
+
+<div style="margin:0px;">
+    <ul class="main-project-categories" id="main-project-categories" data-task-order-url="{{ path('backend_tasks_set_order') }}">
+        {% for category in entity.categories() %}
+            <li class="project-category-wrapper">
+                <span class="category-summary">{{ category.category.title }} - {{ category.cost.net|number_format(2) }}$</span>
+                {{ macros.subcategories(category, pdf) }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% macro subcategories(category, pdf) %}
+    {% import _self as macros %}
+    {% if category.without_place|length > 0 %}
+        <ul class="project-tasks sortable-list" style="list-style-type: square">
+            {% for task in category.without_place %}
+                <li class="task-sortable-item" data-order="{{ task.order }}" data-id="{{ task.id }}">
+                    <a href="{{ path('backend_tasks_show', {'id': task.id}) }}">{{ task.name }} (Id {{ task.id }})</a>
+                    {% if task.taskDescription is not null %}
+                        <div class="task-description">
+                            {{ task.taskDescription|raw }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if category.children|length > 0 %}
+        <ul class="project-categories">
+            {% for child_category in category.children %}
+                <li class="project-category-wrapper">
+                    <span class="project-category">{{ child_category.category.title }}</span>
+                    {{ macros.subcategories(child_category, pdf) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <ul class="project-categories" style="{% if pdf %}list-style-type:img|png|3|3|images/star-bullet.png{% else %}list-style-image: url('/images/star-bullet.png'){% endif %}">
+        {% for place_array in category.places %}
+            <li>
+                <span class="project-category">{{ place_array.place }}</span>
+                <ul class="project-tasks sortable-list" style="list-style-type: square">
+                    {% for task in place_array.tasks %}
+                        <li class="task-sortable-item" data-order="{{ task.order }}" data-id="{{ task.id }}">
+                            <a href="{{ path('backend_tasks_show', {'id': task.id}) }}">{{ task.name }} (Id {{ task.id }})</a>
+                            {% if task.taskDescription is not null %}
+                                <div class="task-description">
+                                    {{ task.taskDescription|raw }}
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}

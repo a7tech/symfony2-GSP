@@ -1,0 +1,5 @@
+services:
+    app_employment.form.employment_person:
+        class: App\EmploymentBundle\Form\EmploymentPersonType
+        tags:
+            - { name: form.type, alias: employment_person_form }

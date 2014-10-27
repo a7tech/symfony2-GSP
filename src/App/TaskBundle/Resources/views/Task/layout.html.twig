@@ -1,0 +1,36 @@
+{% extends 'AppBackendBundle:Settings:layout.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Tasks') %}
+        {% set route_prefix = project is not null ? 'backend_tasks_project' : 'backend_tasks' %}
+        {% include 'AppBackendBundle:Settings:nav.html.twig' with {'route_params': {
+            'project_id': project is not null ? project.id : null
+        }} %}
+
+    {% endblock %}
+
+    {% if project is not null %}
+        <a href="{{ path('backend_project_show', {'id': project.id}) }}">{{ 'back_to'|trans({'%name%': project}, 'Backend') }}</a>
+    {% endif %}
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}
+
+{% block bottom %}
+    {% set currRoute = app.request.attributes.get('_route') %}
+
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                    {% if currRoute|slice(0,13) == 'backend_tasks' %}
+                        active
+                    {% endif %}">
+                    <a href="{{ path('backend_tasks') }}">Tasks</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

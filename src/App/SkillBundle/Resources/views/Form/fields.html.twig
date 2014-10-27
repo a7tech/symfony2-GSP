@@ -1,0 +1,18 @@
+{% block skill_category_autocomplete_widget %}
+    <input type="text" id="{{ id ~ '_autocomplete' }}" />
+    <script src="{{ asset('bundles/appform/autocomplete_widget.js') }}" type="text/javascript"></script>
+    <script>
+        $(function() {
+            var $input = $("#{{ id ~ '_autocomplete' }}");
+            var form_vars = {
+                input: $input,
+                addNew: true,
+                full_name: '{{ full_name }}',
+                choices: {{ choices|json_encode|raw }},
+                value: {{ value|json_encode|raw }}
+            };
+            var skillCategoryWidget = new AutocompleteWidget.class(form_vars);
+            $input.data('skill-category-widget', skillCategoryWidget);
+        });
+    </script>
+{% endblock %}

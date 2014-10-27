@@ -1,0 +1,91 @@
+{% import "@AppBackend/progress.html.twig" as _pm %}
+{% if isPresetTaskList is not defined %}
+    {% set isPresetTaskList = false %}
+{% endif %}
+
+<table id="datatable" class="table table-bordered table-striped" 
+       data-entity-list-route="{{ path('backend_task_datatables') }}"
+        {% if project is defined and project is not null %}
+           data-project-id="{{ project.id}}"
+        {% endif %}
+       >
+    <thead>
+    <tr>
+        <th style="width:20px">Id</th>
+        <th>{{ 'name'|trans({}, 'Common') }}</th>
+        {% if isTaskList is defined %}
+            <th>{{ 'project'|trans({}, "Project") }}</th>
+        {% endif %}
+        <th>{{ 'category'|trans({}, 'Project') }}</th>
+        <th>{{ 'type'|trans({}, 'Tasks') }}</th>
+        <th>{{ 'status'|trans({}, 'Tasks') }}</th>
+        <th>{{ 'tracker'|trans({}, 'Tasks') }}</th>
+        <th>{{ 'priority'|trans({}, 'Tasks') }}</th>
+        <th>{{ 'assignee'|trans({}, 'Tasks')}}</th>
+        {% if not isPresetTaskList %}
+            <th>{{ 'done_ratio'|trans({}, 'Tasks') }}</th>
+            <th>{{ 'invoice'|trans({}, 'Invoice') }}</th>
+        {% endif %}
+        <th>{{ 'start_date'|trans({}, 'Tasks')}}</th>
+        <th>{{ 'update_date'|trans({}, 'Tasks') }}</th>
+    </tr>
+    </thead>
+    <tbody>
+
+{% if entities %}
+    {% for entity in entities %}
+        <tr id="{{ entity.id }}">
+            
+            {% if isTaskList is defined %}
+                <td><a href="{{ path('backend_tasks_edit', {id: entity.id}) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('backend_tasks_show', {id: entity.id}) }}">{{ entity.name }}</a></td>
+                <td><a href="{{ path('backend_project_show', {id: entity.project.id}) }}">{{ entity.project.name }} (Id {{ entity.project.id }})</a></td>
+            {% elseif isPresetTaskList %}
+                <td><a href="{{ path('backend_settings_custom_task_preset_show', {id: entity.id}) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('backend_settings_custom_task_preset_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            {% endif %}
+
+            <td>{{ entity.category.title }}</td>
+            <td>
+                {% set type_info = statusInfo(constant('TYPES_GROUP_NAME', entity), entity.type) %}
+                {{ type_info.name }}
+            </td>
+            <td>
+                {% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity), entity.status) %}
+                <span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ entity.status is not empty ? status_info.name : '' }}</span>
+            </td>
+            <td>{% if entity.tracker %}{{ entity.tracker.name }}{% endif %}</td>
+            <td>{% if entity.priority %}{{ entity.priority.name }}{% endif %}</td>
+            <td>
+                {% if entity.assignedTo|length > 0 %}
+                    {% for person in entity.assignedTo %}
+                        {{ person.firstName }} {{ person.lastName }} 
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </td>
+            {% if not isPresetTaskList %}
+                <td>
+                    {{ _pm.progress(entity.doneRatio(true)) }}
+                </td>
+                <td>
+                    {% if entity.invoicesTasks|length > 0 %}
+                        {% for invoiceTask in entity.invoicesTasks %}
+                            {% if invoiceTask.order.visible %}
+                                <a href="{{ path('backend_project_sale_order_show', {'id': invoiceTask.order.id, 'project_id': entity.project.id}) }}">
+                                    {{ invoiceTask.order.id }}
+                                </a>
+                                {% if not loop.last %}, {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </td>
+            {% endif %}
+            <td>{% if entity.startDate %}{{ entity.startDate|date(datetime_format) }}{% endif %}</td>
+            <td>{% if entity.updatedAt %}{{ entity.updatedAt|date(datetime_format) }}{% endif %}</td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+{% endif %}
+</table>

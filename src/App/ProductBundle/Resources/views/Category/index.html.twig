@@ -1,0 +1,117 @@
+{% extends 'AppProductBundle:Category:layout.html.twig' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row">
+    <div class="ajax-wheel" id="ajax-wheel"></div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-1"></th>
+                <th class="col-md-1">Up</th>
+                <th class="col-md-1">Down</th>
+                <th class="col-md-1">Left</th>
+                <th class="col-md-1">Right</th>
+                <th class="col-md-1">Id</th>
+                <th class="col-md-1">Position</th>
+                <th class="col-md-4">Title</th>
+                <th class="col-md-4">Products</th>
+            </tr>
+        </thead>
+        <tbody class="main-categories" id="main-categories" data-task-order-url="{{ path('backend_settings_category_product_set_order') }}">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>ROOT</td>
+                <td></td>
+            </tr>
+            {% for cat in category_list %}
+                {% set link = path('backend_settings_category_product_show', {id: cat.id}) %}
+                {% set has_prev = tree_wrapper.hasPrevSibling(cat) %}
+                {% set has_next = tree_wrapper.hasNextSibling(cat) %}
+                <tr data-id="{{ cat.id }}" data-order="{{ cat.position }}" class="task-sortable-item">
+                    <td><input type="checkbox" id="category_{{ cat.id }}"></td>
+                    <td>
+                        {% if has_prev %}
+                            <a class="btn btn-default" href="{{ path('backend_settings_category_product_moveup', {id: cat.id}) }}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if has_next %}
+                            <a class="btn btn-default" href="{{ path('backend_settings_category_product_movedown', {id: cat.id}) }}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if cat.level > 0 %}
+                            <a class="btn btn-default" href="{{ path('backend_settings_category_product_moveleft', {id: cat.id}) }}"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if has_prev %}
+                            <a class="btn btn-default" href="{{ path('backend_settings_category_product_moveright', {id: cat.id}) }}"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ link }}">{{ cat.id }}</a></td>
+                    <td {% if cat.level == 0 %} style="font-weight: bold;" {% endif %}>{{ cat.position }}</td>
+                    <td {% if cat.level == 0 %} style="white-space: nowrap; font-weight: bold;" {% else %} style="white-space: nowrap" {% endif %}>{{ '- '|repeat(2*(cat.level+1))|raw }}<a href="{{ link }}">{{ cat.title }}</a></td>
+                    <td>
+                        {% if cat.products|length > 0 %}
+                            {% for prod in cat.products %}
+                                <a href="{{ path('backend_project_show', {id: prod.id}) }}" >
+                                        {{ prod }} - ID{{ prod.id }}
+                                </a>
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="/bundles/appproject/js/category-show.js"></script>
+    <script type="text/javascript">
+        var inputIdPrefix = 'category_';
+        var $checkboxes = $('input[id^="'+inputIdPrefix+'"]');
+        $(document).ready(function() {
+            $('input[id^="'+inputIdPrefix+'"]').change(function(e) {
+                var $input = $(e.target);
+                var checkboxId = $input.attr('id');
+
+                if ($input.is(':checked')) {
+                    var rowId = $input.parents('tr').data('id');
+
+                    $('input[id!="'+checkboxId+'"][id^="'+inputIdPrefix+'"]').each(function() {
+                        $(this).attr('disabled', true);
+                    });
+
+                    $('li[class*="crud"]').each(function(){
+                        var href = $(this).attr('id')+'/';
+                        $(this).removeClass('disabled');
+                        $(this).children('a').attr('href', href+rowId);
+                    })
+                }
+                else {
+                    $('input[id!="'+checkboxId+'"][id^="'+inputIdPrefix+'"]').each(function() {
+                        $(this).removeAttr('disabled');
+                    });
+
+                    $('li[class*="crud"]').each(function(){
+                        var href = $(this).attr('id')+'/';
+                        $(this).addClass('disabled');
+                        $(this).children('a').removeAttr('href');
+                    })
+                }
+            });
+        });
+    </script>
+{% endblock %}

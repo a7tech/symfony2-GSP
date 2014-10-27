@@ -1,0 +1,44 @@
+{% extends 'AppUserBundle:PermissionsGroup:layout.html.twig' %}
+
+{% set nav_title = 'Groups list' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row" style="padding-left: 20px; width: 98%">
+
+
+            <table id="datatable" class="table table-bordered table-striped"
+                   data-entity-list-route="{{ path('backend_group_datatables') }}"
+                   >
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Roles</th>
+                        <th>Id</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                    <tr id="{{ entity.id }}">
+                        <td><a href="{{ path('backend_settings_groups_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                        <td>
+                        {% for role in entity.roles %}
+                        {{role.description}} ({{ role }})
+                        {% endfor %}
+                        </td>
+                        <td>{{ entity.id }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

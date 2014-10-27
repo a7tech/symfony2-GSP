@@ -1,0 +1,4 @@
+{% if user %}
+    {% set person = user.person %}
+    {{ person.firstName }} {{ person.lastName }} (Id {{person.id}})
+{% endif %}

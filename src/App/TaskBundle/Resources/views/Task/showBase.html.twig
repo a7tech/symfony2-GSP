@@ -1,0 +1,234 @@
+{% import "@AppBackend/progress.html.twig" as _pm %}
+{% if entity %}
+{% if showAll is not defined  %}
+    {% set showAll = false %}
+{% endif %}
+<table class="table table-bordered table-striped">
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'name'|trans({}, 'Common') }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'task_details'|trans({}, 'Tasks') }}</th>
+        <td>{{ entity.taskDescription|raw }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'category'|trans({}, 'Project') }}</th>
+        <td>{{ entity.category.title }}</td>
+    </tr>
+    {% if showAll and entity.contractCategory is not null %}
+        <tr>
+            <th>{{ 'contracted_category'|trans({}, 'Tasks') }}</th>
+            <td>{{ entity.contractCategory }}</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <th>{{ 'position_in_category'|trans({}, 'Tasks') }}</th>
+        <td>{{ entity.order }}</td>
+    </tr>
+
+    {% if showAll %}
+        <tr>
+            <th>{{ 'project'|trans({}, 'Project') }}</th>
+            <td>{{ entity.project.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'invoice'|trans({}, 'Invoice') }}</th>
+            <td>
+                {% if entity.invoicesTasks|length > 0 %}
+                    {% for invoiceTask in entity.invoicesTasks %}
+                        <a href="{{ path('backend_project_sale_order_show', {'id': invoiceTask.order.id, 'project_id': entity.project.id}) }}">
+                            {{ invoiceTask.order.id }}
+                        </a>
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </td>
+        </tr>
+    {% endif %}
+
+    <tr>
+        <th>{{ 'tracker'|trans({}, 'Tasks') }}</th>
+        <td>{{ entity.tracker.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'place'|trans({}, 'Place') }}</th>
+        <td>{{ entity.place }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'status'|trans({}, 'Tasks') }}</th>
+        <td>
+            {% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity), entity.status) %}
+            <span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ entity.status is not empty ? status_info.name : '' }}</span>
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'priority'|trans({}, 'Tasks') }}</th>
+        <td>{{ entity.priority is not null ? entity.priority.name : '-' }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'type'|trans({}, 'Tasks') }}</th>
+        {% set type_info = statusInfo(constant('TYPES_GROUP_NAME', entity), entity.type) %}
+        <td>{{ type_info.name }}</td>
+    </tr>
+    {% if entity.type != constant('TYPE_FREE', entity) %}
+        <tr>
+            <th>{{ 'cost_type'|trans({}, 'Tasks') }}</th>
+            {% set cost_type_info = statusInfo(constant('COST_TYPES_GROUP_NAME', entity), entity.costType) %}
+            <td>{{ cost_type_info.name }}</td>
+        </tr>
+
+        {% if entity.costType != constant('COST_TYPE_FIXED', entity) %}
+            <tr>
+                <th>{{ 'unit_price_without_profit'|trans({}, 'Tasks') }}</th>
+                <td>{{ entity.unitPrice|number_format(2) }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ 'quantity'|trans({}, 'Tasks') }}</th>
+                <td>{{ entity.unitQuantity }}</td>
+            </tr>
+        {% endif %}
+
+        <tr>
+            <th>{{ 'cost_without_profit'|trans({}, 'Tasks') }}</th>
+            <td>{{ entity.netPrice(false)|number_format(2) }}</td>
+        </tr>
+
+        <tr>
+            <th>{{ 'mark_up'|trans({}, 'Tasks')}}</th>
+            <td>{{ entity.profit*100 }}%</td>
+        </tr>
+
+        <tr>
+            <th>{{ 'profit'|trans({}, 'Tasks')}}</th>
+            <td>{{ entity.realProfit*100 }}%</td>
+        </tr>
+
+        <tr style="color: #0088CC">
+            <th>{{ 'selling_price'|trans({}, 'Tasks')}}</th>
+            <td>{{ entity.netPrice|number_format(2) }}</td>
+        </tr>
+
+        {% if showAll %}
+            <tr>
+                <th>Taxes</th>
+                <td>{{ entity.taxesCost(entity.netPrice)|number_format(2) }}</td>
+            </tr>
+
+            <tr>
+                <th style="white-space:nowrap;">Selling price with taxes</th>
+                <td>{{ entity.grossPrice|number_format(2) }}</td>
+            </tr>
+        {% endif %}
+    {% endif %}
+    <tr>
+        <th>Assigned to</th>
+        <td>
+        {% for person in entity.assignedTo %}
+            {{ person.firstName }} {{ person.lastName }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        {% set workingHours = entity.project is defined ? entity.project.workingHours : 8 %}
+        <th>Estimated time</th>
+        <td>{{ entity.estimatedTime|interval(workingHours) }}</td>
+    </tr>
+    <tr>
+        <th>Estimated price</th>
+        <td>{{ entity.estimatedPrice is not null ? entity.estimatedPrice|number_format : '' }}</td>
+    </tr>
+    {% if showAll %}
+        <tr>
+            <th>%&nbsp;Done</th>
+            <td>
+                {{ _pm.progress(entity.doneRatio(true)) }}
+            </td>
+        </tr>
+    {% endif %}
+    <tr>
+        <th>Start date</th>
+        <td>
+            {% if showAll %}
+                {% if entity.estimatedStart %}{{ entity.estimatedStart|date(datetime_format) }}{% endif %}
+            {% else %}
+                {% if entity.startDate %}{{ entity.startDate|date(datetime_format) }}{% endif %}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Due date</th>
+        <td>
+            {% if showAll %}
+                {% if entity.estimatedEnd %}{{ entity.estimatedEnd|date(datetime_format) }}{% endif %}
+            {% else %}
+                {% if entity.dueDate %}{{ entity.dueDate|date(datetime_format) }}{% endif %}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Created</th>
+        <td>{% if entity.createdAt %}{{ entity.createdAt|date(datetime_format) }}{% endif %}</td>
+    </tr>  
+    <tr>
+        <th>Updated</th>
+        <td>{% if entity.updatedAt %}{{ entity.updatedAt|date(datetime_format) }}{% endif %}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>{{ entity.description|raw }}</td>
+    </tr>
+
+    {% if showAll and entity.pid is not null %}
+        <tr>
+            <th>{{ 'parent'|trans({}, 'Tasks') }}</th>
+            <td><a href="{{ path('backend_tasks_project_show', {'id': entity.pid.id}) }}">{{ entity.pid }}</a></td>
+        </tr>
+        <tr>
+            <th>{{ 'dependency.type'|trans({}, 'Tasks') }}</th>
+            <td>{{ statusInfo(constant('DEPENDENCY_GROUP_NAME', entity), entity.dependency).name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'dependency.lag'|trans({}, 'Tasks') }}</th>
+            <td>{{ entity.lag|interval(24) }}</td>
+        </tr>
+    {% endif %}
+
+    {% if entity.files is defined and entity.files|length > 0 %}
+    <tr>
+        <th style="white-space:nowrap;">Files attached</th>
+        <td>
+        <dl class="dl-horizontal">
+            <dt>Images:</dt>
+            {% for xfile in entity.files %}
+                {% if (xfile.file.contentType|slice(0, 5) == 'image') %}
+                    <dd style="margin-bottom: 5px;"><a href="/{{xfile.file.path}}" target="_blank">{{ xfile.file|vlabs_filter('resize', {'width': 40, 'height': 50 })|vlabs_media('image') }}</a>
+                    <br/>{{xfile.file.contentType}}, ({{(xfile.file.size / 1024)|number_format(2, '.', '')}} KB), {{ xfile.file.createdAt|date('d/m/Y H:i') }}
+                    </dd>
+                {% endif %}
+            {% endfor %}
+        
+            <div style="margin-bottom: 20px;"></div>
+            <dt>Documents:</dt>
+            {% for xfile in entity.files %}
+                {% if (xfile.file.contentType|slice(0, 5) != 'image') %}
+                    <dd style="margin-bottom: 5px;">
+                    {{xfile.file.contentType}}, ({{(xfile.file.size / 1024)|number_format(2, '.', '')}} KB), <a href="/{{xfile.file.path}}" target="_blank">View</a>
+                    </dd>
+                {% endif %}
+            {% endfor %}
+        </dl>
+        </td>
+    </tr>
+    {% endif %}
+
+
+    </tbody>
+</table>
+{% endif %}

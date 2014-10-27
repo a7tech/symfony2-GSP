@@ -1,0 +1,109 @@
+{% extends 'AppBackendBundle:Dashboard:home.html.twig' %}
+{% block actions %}
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default(account~' products') %}
+        {% set route_prefix = 'backend_account_product' %}
+
+        {% set list_route = route_prefix %}
+        {% set create_route = route_prefix ~ '_create' %}
+        {% set show_route = route_prefix ~ '_show' %}
+        {% set edit_route = route_prefix ~ '_edit' %}
+        {% set delete_route = route_prefix ~ '_delete' %}
+        {% set current_route = app.request.attributes.get('_route') %}
+        {% set entity_exists = entity is defined and entity.id %}
+        <div class="title-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3 h3">
+                        <h3>{{ nav_title|default('Title') }}</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="crud-actions">
+                            <ul class="nav-crud">
+                                {% set list_active = current_route == list_route %}
+                                <li class="{% if list_active %}active{% endif %}">
+                                    <a {% if not list_active %} href="{{ path(list_route, {'profileId' : profile_id})}}" {% endif %} title="List">
+                                        <i class="icon-crud-list"></i>
+                                        <div>
+                                            <label>List</label>
+                                        </div>
+                                    </a>
+                                </li>
+                                {% set create_active = current_route == create_route %}
+                                <li class="{% if create_active %}active{% endif %}" id="new">
+                                    <a {% if not create_active %} href="{{ path(create_route, {'profileId' : profile_id}) }}" {% endif %} title="New">
+                                        <i class="icon-crud-new"></i>
+                                        <div>
+                                            <label>New</label>
+                                        </div>
+                                    </a>
+                                </li>
+                                {% set show_active = current_route == show_route %}
+                                <li class="crud {% if show_active %}active{% endif %}{% if not entity_exists %}disabled{% endif %}" id="show">
+                                    <a {% if not show_active and entity_exists %} href="{{ path(show_route, {'profileId' : profile_id, id: entity.id}) }}" {% endif %} title="Show">
+                                        <i class="icon-crud-show"></i>
+                                        <div>
+                                            <label>Show</label>
+                                        </div>
+                                    </a>
+                                </li>
+                                {% set edit_active = current_route == edit_route %}
+                                <li class="crud {% if edit_active %}active{% endif %}{% if not entity_exists %}disabled{% endif %}" id="edit">
+                                    <a {% if not edit_active and entity_exists %} href="{{ path(edit_route, {'profileId' : profile_id, id: entity.id}) }}" {% endif %} title="Edit">
+                                        <i class="icon-crud-edit"></i>
+                                        <div>
+                                            <label>Edit</label>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="crud {% if not entity_exists %}disabled{% endif %}" id="delete">
+                                    <a {% if entity_exists %} href="{{ path(delete_route, {'profileId' : profile_id, id: entity.id}) }}" {% endif %} title="Delete">
+                                        <i class="icon-crud-delete"></i>
+                                        <div>
+                                            <label>Delete</label>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {% if entity is not defined %}
+                        <div class="col-md-3" id="copy_buttons">
+
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-search">
+                                <input type="text" class="form-control" id="search_filter" placeholder="Search">
+                            </div>
+
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}
+
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}
+
+{% block bottom %}
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                    {% if app.request.attributes.get('_route')|slice(0,16)=='backend_products'%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_products') }}">Products</a></li>
+                {% for prof in profiles %}
+                    <li class="
+                    {% if app.request.get('profileId') == prof.id%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_account_product', {'profileId':prof.id}) }}">{{ prof.name }} products</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

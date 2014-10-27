@@ -1,0 +1,117 @@
+{% extends 'AppBackendBundle:Dashboard:home.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets filter='cssrewrite' output='resources/css/appcalendar.css' 
+	    'components/fullcalendar/fullcalendar/fullcalendar.css'
+	    'bundles/appcalendar/css/calendar.css'
+	%}
+	<link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    <!-- JSrouting, needed for fullcalendar bundle -->
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+	{{ parent() }}
+    <script type="text/javascript" src="/bundles/appform/autocomplete_widget.js"></script>
+
+    {% javascripts output='resources/js/appcalendar.js'
+        'components/fullcalendar/fullcalendar/fullcalendar.min.js'
+        'bundles/appcalendar/js/calendar-settings.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Calendar') %}
+        {% set route_prefix = 'backend_calendar_event' %}
+        {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+    {% endblock %}
+
+    {% block actions_main %}{% endblock %}
+    {# These categories are show as selectboxes in the calendar view, so are hidden here #}
+    {# These need to be updated when that data is available in the project module #}
+    <form class='hide form-horizontal filters calendar-filters' id="calendar-filters">
+        {% block calendar_filters '' %}
+    </form>
+ 
+ <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% block calendercontent %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Create a calendar event</h3>
+            </div>
+            <div class="modal-body">
+              <p>Loading add task form, please wait</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom %}
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+
+                <li class="
+                                {% if app.request.attributes.get('_route')|slice(0,15)=='backend_calendar'%}
+                                    active
+                                {%endif%}"><a href="{{ path('backend_calendar') }}">Month Calendar</a></li>
+                <li class="
+                                {% if app.request.attributes.get('_route')|slice(0,15)=='backend_calendar_daily'%}
+                                    active
+                                {%endif%}"><a href="{{ path('backend_calendar_day') }}">Daily Calendar</a></li><li class="
+                                {% if app.request.attributes.get('_route')|slice(0,15)=='backend_calendar_daily'%}
+                                    active
+                                {%endif%}"><a href="{{ path('backend_calendar') }}">Tasks</a></li>                                
+                                <li class="
+                                {% if app.request.attributes.get('_route')|slice(0,15)=='backend_calendar_daily'%}
+                                    active
+                                {%endif%}"><a href="{{ path('backend_calendar') }}">Categories</a></li>
+
+
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block user_js %}
+<script>
+$('#new').click(function(){
+    var date = new Date();
+    $('#myModal .modal-body').load(
+        Routing.generate('backend_calendar_event_new', {'date': date}), 
+        function(e){
+            $('#myModal').modal('show');
+    });
+    return false;
+});
+</script>
+{% endblock %}
+

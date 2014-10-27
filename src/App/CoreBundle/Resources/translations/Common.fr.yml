@@ -1,0 +1,15 @@
+name: Nom
+description: Description
+date: Date
+telephone: Téléphone
+email: Email
+add_filter: 'Ajouter filtre'
+save: Enregistrer
+draft: Devis
+next: Suivant
+interval.hours: heures
+interval.days: jours
+interval.short.days: d
+interval.short.hours: h
+interval.short.minutes: m
+file.image: Image/dossier

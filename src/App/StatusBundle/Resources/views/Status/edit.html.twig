@@ -1,0 +1,26 @@
+{% extends 'AppStatusBundle:Status:layout.html.twig' %}
+
+{% set nav_title =  'Invoice status edit' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <form class="form-horizontal" id="product-form" action="" method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+            <div class="row form-groups">
+                <div class="form-actions well">
+                    <input class="btn btn-primary" type="submit" value="Save">
+                </div>
+
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script>
+        jQuery(function($) {
+            Admin.setup_collections(document);
+        });
+    </script>
+{% endblock %}

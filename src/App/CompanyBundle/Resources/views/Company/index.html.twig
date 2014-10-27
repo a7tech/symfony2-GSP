@@ -1,0 +1,84 @@
+{% extends 'AppCompanyBundle:Company:layout.html.twig' %}
+
+{% block actions_main %}
+
+    <div class="action-view">
+        <div class="row">
+            <div class="row-align">
+                <!-- Search Filter -->
+                <div class="search-container">
+                    <div class="search-filter-container inactive">
+                        <form class="form-horizontal" method="get" action=".">
+                            {{ form_rest(form) }}
+                            <input class="btn btn-primary" type="submit"  name="submit-filter" value="Filter"/>
+                            <input class="btn" type="reset"  name="reset-filter" value="Reset"/>
+                            <input class="btn search-filter-hide" type="button"  name="hide-filter" value="Hide"/>
+                        </form>
+                    </div>
+                </div>
+
+                <table id="datatable" class="table table-bordered table-striped" data-entity-list-route="{{ path('backend_company_datatables') }}">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Company Profile</th>
+                        <th>Industry Sector</th>
+                        <th>Phones</th>
+                        <th>Main address</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in entities %}
+                    <tr id="{{ entity.id }}">
+                        <td><a href="{{ path('backend_company_show', {'id':entity.id}) }}">{{ entity.id }}</a></td>
+                        <td>{{ entity.name }}</td>
+                        <td>
+                            {% if entity.companyType|length > 0 %}
+                                {{ entity.companyType.name }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if entity.sector|length > 0 %}
+                                {{ entity.sector.title }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if entity.phones|length>0 %}
+                                {% for phone in entity.phones %}
+                                    {% include '@AppPhone/Partials/short.html.twig' with {phone: phone} %}<br>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if entity.addresses|length>0 %}
+                                {% set suite_label = 'suite'|trans({}, 'Address') %}
+                                {% for ad in entity.addresses %}
+                                    {% if ad.isMain %}
+                                        {{ ad.formatted(suite_label)|raw }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+
+                        <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/searchFilter.js') }}"></script>
+{% endblock %}

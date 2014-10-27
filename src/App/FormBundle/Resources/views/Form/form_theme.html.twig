@@ -1,0 +1,240 @@
+{% form_theme form _self %}
+
+{% block form_row %}
+{% spaceless %}
+<div class="form-group">
+        {#{ form_label(form, label|default(null), { 'label_attr': { 'class': 'form-label' } }) }#}
+        {{ form_label(form, label|default(null)) }}
+            {{ form_widget(form) }}
+        {{ form_errors(form) }}
+</div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        <ul class="errors">
+        {% for error in errors %}
+                <li>{{
+                error.messagePluralization is null
+                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+            }}</li>
+        {% endfor %}
+                </ul>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block usertype_widget_row %}
+    {% spaceless %}
+        <div class="usertype-row">
+
+            <a href="javascript:void(0)" class="usertype-delete btn">Delete</a>
+            <div class="{{attr}}_row">
+                {{ form_label(form) }}
+                {{ form_widget(form) }}
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block usertype_widget %}
+    {% spaceless %}
+
+        {% set attr = attr|merge({'data-prototype': block('usertype_widget_row') }) %}
+
+        <div {{ block('widget_container_attributes') }}>
+
+        <div class="addIco"><a href="javascript:void(0)" class="usertype-add btn">Add</a></div>
+
+        </div>
+    {% endspaceless %}
+{% endblock usertype_widget %}
+
+{% block collection_widget_row %}
+{% spaceless %}
+    <div class="collection-row">
+
+        <a href="javascript:void(0)" class="collection-delete"></a>
+
+        <div class="collection_row">
+            {{ form_widget(child) }}
+            <div class="clear"></div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block collection_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('collection_widget_row') }) %}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            {{ block('collection_widget_row') }}
+        {% endfor %}
+        {{ form_rest(form) }}
+
+        {% if allow_add and show_add %}
+            <div class="addIco"><a href="javascript:void(0)" class="collection-add"></a></div>
+
+        {% endif %}
+    </div>
+{% endspaceless %}
+{% endblock collection_widget %}
+
+{% block form_label %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+            {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " control-label col-xs-3" }) %}
+
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+
+            {% if in_list_checkbox is defined and in_list_checkbox and widget is defined %}
+                <label{% for attrname,attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
+                {{ widget|raw }}
+                <span>
+
+                        {{- label|trans({}) -}}
+
+                </span>
+                </label>
+            {% else %}
+                <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+
+                {{- label|trans({}, translation_domain) -}}
+
+                {{ required ? '*' : '' }}
+                </label>
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_label %}
+
+{% block widget_container_attributes_choice_widget %}
+    {% spaceless %}
+        id="{{ id }}"
+        {% for attrname,attrvalue in attr %}{{attrname}}="{% if attrname == 'class' %} list-unstyled {% endif%}{{attrvalue}}" {% endfor %}
+        {% if "class" not in attr %}class="list-unstyled"{%endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <ul {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                <li>
+                    {{ form_widget(child) }}
+                    {{ form_label(child) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block taxes_widget %}
+    {% spaceless %}
+        <ul {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                <li>
+                    {{ form_label(child, child.vars.label|default(null), { 'in_list_checkbox' : true, 'widget' : form_widget(child) } ) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endspaceless %}
+{% endblock taxes_widget %}
+
+{% block choice_widget %}
+    {% spaceless %}
+        {% if expanded %}
+            <ul {{ block('widget_container_attributes_choice_widget') }}>
+                {% for child in form %}
+                    <li>
+                        {{ form_label(child, child.vars.label|default(null), { 'in_list_checkbox' : true, 'widget' : form_widget(child) } ) }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="col-xs-6">
+                <select {{ block('widget_attributes') }} {% if multiple %} multiple="multiple"{% endif %}>
+                    {% if empty_value is not none %}
+                        <option value="">{{ empty_value|trans }}</option>
+                    {% endif %}
+                    {% if preferred_choices|length > 0 %}
+                        {% set options = preferred_choices %}
+                        {{ block('choice_widget_options') }}
+                        {% if choices|length > 0 %}
+                            <option disabled="disabled">{{ separator }}</option>
+                        {% endif %}
+                    {% endif %}
+                    {% set options = choices %}
+                    {{ block('choice_widget_options') }}
+                </select>
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock choice_widget %}
+
+{% block entity_search_row %}
+    <div class="search-row">
+        {{ form_label(form) }}
+        <span class="search-input operation">
+            {{ form_row(form.children.operation, {'attr': {'class': 'form-control'}}) }}
+        </span>
+        <span class="search-input">
+            {{ form_row(form.children.value) }}
+        </span>
+        {{ form_rest(form) }}
+    </div>
+{% endblock %}
+
+{% block text_search_row %}
+    <div class="search-row">
+        {{ form_label(form) }}
+        <span class="search-input operation">
+            {{ form_row(form.children.operation, {'attr': {'class': 'form-control'}}) }}
+        </span>
+        <span class="search-input">
+            {{ form_row(form.children.value) }}
+        </span>
+        {{ form_rest(form) }}
+    </div>
+{% endblock %}
+
+{% block number_search_widget %}
+{% spaceless %}
+    
+    
+    {% for child in form %} 
+        {% if child.vars.id == 'backend_calendar_filter_doneRatio_value' %}
+        <div class="col-xs-5">
+        {% else %}
+        <div class="col-xs-3">
+        {% endif %}
+            {{ form_row(child) }}
+        </div>
+        
+    {% endfor %}
+    
+        
+        
+{% endspaceless %}
+{% endblock %}
+

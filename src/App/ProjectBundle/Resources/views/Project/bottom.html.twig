@@ -1,0 +1,43 @@
+{% set currRoute = app.request.attributes.get('_route') %}
+
+<div class="tab-content">
+    <div class="tab-pane active">
+        <ul class="nav nav-pills">
+            <li class="
+                {% if ( currRoute|slice(0,15) == 'backend_project' or currRoute|slice(0,20) == 'backend_project_task' )
+                    and currRoute|trim != 'backend_project_owner' and currRoute|trim != 'backend_project_task_assigned' 
+                    and currRoute|trim != 'backend_project_task_owner' and currRoute|trim != 'backend_project_opportunity'
+                    and currRoute|trim != 'backend_project_opportunity_create' and currRoute|trim != 'backend_project_opportunity_owner'
+                    and currRoute|trim != 'backend_project_opportunity_edit' and currRoute|trim != 'backend_project_opportunity_show'
+                %}
+                    active
+                {% endif %}">
+                <a href="{{ path('backend_project') }}">{{ 'projects'|trans({}, 'Project') }}</a>
+            </li>
+            <li class="
+                {% if currRoute|trim == 'backend_project_owner' %}
+                    active
+                {% endif %}">
+                <a href="{{ path('backend_project_owner') }}">{{ 'projects_i_created'|trans({}, 'Project') }}</a>
+            </li>
+            <li class="
+                {% if currRoute|slice(0,27) == 'backend_project_opportunity' %}
+                    active
+                {% endif %}">
+                <a href="{{ path('backend_project_opportunity') }}">{{ 'opportunities'|trans({}, 'Project') }}</a>
+            </li>
+            <li class="
+                {% if currRoute|trim == 'backend_project_task_assigned' %}
+                    active
+                {% endif %}">
+                <a href="{{ path('backend_project_task_assigned') }}">Assigned tasks - To delete?</a>
+            </li>
+            <li class="
+                {% if currRoute|trim == 'backend_project_task_owner' %}
+                    active
+                {% endif %}">
+                <a href="{{ path('backend_project_task_owner') }}">My project's tasks - To delete?</a>
+            </li>
+        </ul>
+    </div>
+</div>

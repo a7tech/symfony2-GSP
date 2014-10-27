@@ -1,0 +1,45 @@
+{% extends 'AppUserBundle:User:layout.html.twig' %}
+
+{% set nav_title = 'User edit' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-9">
+                        <form class="form-horizontal" action="{{ path('backend_settings_user_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+                            {{ form_row(form.person) }}
+                            {{ form_rest(form) }}
+                            <div class="row form-groups">
+                                <div class="form-actions well">
+                                    <input class="btn btn-primary" type="submit" value="Save">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery/plugins/select2/select2.min.js') }}" type="text/javascript"></script>
+    <script>
+        jQuery(function($) {
+            $('#app_usertype_person').select2();
+        });
+    </script>
+{% endblock %}
+{% block user_css %}
+
+    <link href="{{ asset('js/jquery/plugins/select2/select2.css') }}" type="text/css" rel="stylesheet">
+    {#<link href="{{ asset('js/jquery/plugins/select2/select2-bootstrap.css') }}" type="text/css" rel="stylesheet">#}
+    {{ parent() }}
+{% endblock %}

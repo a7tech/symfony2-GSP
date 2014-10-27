@@ -1,0 +1,49 @@
+{% extends 'AppProjectBundle:Project:layout.html.twig' %}
+
+{% set nav_title = 'Project show' %}
+
+{% block actions_main %}
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    {{ include(
+                        'AppProjectBundle:Project:sideBar.html.twig',
+                        { 'id': id}
+                    ) }}
+                    <div class="col-md-9">
+                        <div style="border: 1px solid #f1f1f1; padding: 10px">
+                            <div id="project-info" data-estimate="{{ entity.estimate|json_encode }}"></div>
+                            <div style="height:5px"></div>
+                            {% include 'AppProjectBundle:Project:showClientInfo.html.twig' %}
+                            <div style="height:10px"></div>
+                            {% include 'AppProjectBundle:Project:showCategories.html.twig' %}
+                            <div style="height:10px"></div>
+                            {% include 'AppProjectBundle:Project:showTerms.html.twig' %}
+                        </div>
+                        <div style="height:30px"></div>
+                        {% include 'AppProjectBundle:Project:showSummary.html.twig' %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block user_css %}
+<style>
+.table-info{width:100%;}
+.table-info tr{border:solid black 0px;}
+.table-info td{border:solid black 0px;}
+.table-info td.wLeft{width:130px;}
+</style>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="/bundles/appproject/js/project-show.js"></script>
+{% endblock %}
+
+

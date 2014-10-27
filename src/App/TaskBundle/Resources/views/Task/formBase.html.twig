@@ -1,0 +1,93 @@
+
+{% set attrIdName = "task-form" %}
+{% if idName is defined %}
+    {% set attrIdName = idName %}
+{% endif %}
+
+<form class="form-horizontal" id="{{ attrIdName }}" action="" method="post" {{ form_enctype(form) }}>
+    {% if isTask is defined or isProjectTask is defined %}
+        {{ form_row(form.project, {'attr' : {'class' : 'form-control'} }) }}
+        
+    {% endif %}
+    
+    {{ form_row(form.category) }}
+    
+    {% if entity.contractCategory is defined and entity.contractCategory is not null %}
+        <div class="form-group">
+            <label class="form-label" for="">{{ 'contracted_category'|trans({}, 'Tasks')}}</label>
+            <div class="checkbox">
+                {{ entity.contractCategory }}
+            </div>
+        </div>
+    {% endif %}
+    
+    {{ form_row(form.order) }}
+    
+    {{ form_row(form.tracker) }}
+    
+    {{ form_row(form.place) }}
+    
+    {{ form_row(form.name) }}
+    {{ form_row(form.taskDescription) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.status, {'attr' : {'class' : 'form-control'} }) }}
+    
+    {% if form.vars.dependant_tasks is defined and form.vars.dependant_tasks|length > 0 %}
+        <div class="dependant-tasks controls control-group" {% if entity.status != constant('STATUS_CANCELLED', entity) %}style="display: none"{% endif %}>
+            {{ 'dependant_tasks_warning'|trans({}, 'Tasks') }}:<br>
+            {% for dependant_task in form.vars.dependant_tasks %}
+                <a target="_blank" href="{{ path('backend_tasks_project_show', {'id': dependant_task.id, 'project_id': dependant_task.project.id}) }}">
+                    {{ dependant_task }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {{ form_row(form.priority) }}
+    {{ form_row(form.type, {'attr' : {'class' : 'form-control'} }) }}
+    
+    <div class="payment" {% if entity.type == constant('TYPE_FREE', entity) %}style="display: none"{% endif %} data-free="{{ constant('TYPE_FREE', entity) }}">
+        {{ form_row(form.costType, {'attr' : {'class' : 'form-control'} }) }}
+        
+        {{ form_row(form.unitPrice) }}
+        <div class="payment-quantity" {% if entity.costType == constant('COST_TYPE_FIXED', entity) %}style="display: none"{% endif %} data-fixed="{{ constant('COST_TYPE_FIXED', entity) }}">
+            {{ form_row(form.unitQuantity) }}
+        </div>
+        {{ form_row(form.profit) }}
+        {{ form_row(form.realProfit) }}
+        <div class="form-group">
+            <label class="control-label col-xs-3">Selling price</label>
+            <div class="col-xs-6" id="selling-price-display">
+                {{ entity.netPrice|number_format(2) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_row(form.assignedTo) }}
+            
+    {{ form_row(form.estimatedPrice) }}
+    {{ form_row(form.estimatedTime) }}
+    {% if isTask is defined or isProjectTask is defined %}
+        {{ form_row(form.doneRatio) }}
+        {{ form_row(form.startDate) }}
+        {{ form_row(form.dueDate) }}
+        {{ form_row(form.pid) }}
+        
+        {{ form_row(form.dependency) }}
+        
+        
+            {{form_row(form.lag)}}
+        
+        <div class="lag-message form-notifications">
+            <span class="start" style="display: none">{{ 'lag_not_respected_start'|trans({}, 'Tasks') }}</span>
+            <span class="end" style="display: none">{{ 'lag_not_respected_end'|trans({}, 'Tasks') }}</span>
+        </div>
+    {% endif %}
+    
+    {#{ form_widget(form) }#}
+
+    <div class="form-group">
+        <label class="control-label col-xs-3" for="button_form_submit"></label>
+        <div class="col-xs-6"><input class="btn btn-primary" type="submit" value="Save"></div>
+    </div>
+
+</form>

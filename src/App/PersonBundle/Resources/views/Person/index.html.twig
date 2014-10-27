@@ -1,0 +1,102 @@
+{% extends 'AppPersonBundle:Person:layout.html.twig' %}
+
+{% set nav_title = 'Contacts list' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row">
+            <div class="row-align">
+                    
+                <!-- Search Filter -->
+                <div class="search-container">
+                    <div class="search-filter-container inactive">
+                        <form class="form-horizontal" method="get" action=".">
+                            {{ form_rest(form) }}
+                            <input class="btn btn-primary" type="submit"  name="submit-filter" value="Filter"/>
+                            <input class="btn" type="reset"  name="reset-filter" value="Reset"/>
+                            <input class="btn search-filter-hide" type="button"  name="hide-filter" value="Hide"/>
+                        </form>
+                    </div>
+                </div>
+            
+                <table id="datatable" class="table table-bordered table-striped" data-entity-list-route="{{ path('backend_person_datatables') }}">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Contact Group</th>
+                            <th>Phones</th>
+                            <th>Main adress</th>
+                            <th>Employments</th>
+                            <th>Emails</th>
+                            <th>Gender</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in entities %}
+                        <tr id="{{ entity.id }}">
+                            <td><a href="{{ path('backend_person_show', {'id':entity.id}) }}">{{ entity.id }}</a></td>
+                            <td>{{ entity.firstName }}</td>
+                            <td>{{ entity.lastName }}</td>
+                            <td>{% if entity.personGroup|length > 0 %}
+                                    {% for group in entity.personGroup %}
+                                        {{ group.name }}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entity.phones|length > 0 %}
+                                    {% for phone in entity.phones %}
+                                        {% include "@AppPhone/Partials/short.html.twig" with {phone: phone} %}<br/>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% set main_address = entity.mainAddress %}
+                                {{ main_address ? main_address.formatted('suite'|trans({}, 'Address'))|raw : '-' }}
+                            </td>
+                            <td>
+                                {% if entity.employments|length > 0 %}
+                                    {% for em in entity.employments %}
+                                        <a href="{{ path('backend_company_show', {'id': em.id}) }}">{{ em.company.name }}</a><br/>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% for email in entity.emails %}
+                                    {% include "@AppEmail/Partials/short.html.twig" with {email: email} %}<br/>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% if entity.gender == "m" %}
+                                    <i class="icon-contact-sex_male"></i>Male
+                                {% elseif entity.gender == "f" %}
+                                    <i class="icon-contact-sex_female"></i>Female
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ entity.createdAt|format_date(date_format) }}
+                            </td>
+                            <td>
+                                {{ entity.updatedAt|format_date(date_format) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/searchFilter.js') }}"></script>
+{% endblock %}
+

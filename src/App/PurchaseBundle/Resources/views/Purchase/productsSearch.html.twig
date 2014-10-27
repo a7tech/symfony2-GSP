@@ -1,0 +1,43 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Image</th>
+            <th>MPN/SKU #</th>
+            <th>Barcode</th>
+            <th>Brand</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Minimum quantity</th>
+            <th>Restocking quantity</th>
+            <th>Quantity to order</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in pagination %}
+            {% set images = product.product.images %}
+            {% set price = product.price %}
+            {% set taxes = [] %}
+            {% for tax in product.taxes %}
+                {% set taxes = taxes|merge([tax.id]) %}
+            {% endfor %}
+            <tr data-id="{{ product.id }}" data-suppliers="{% for supplier in product.suppliers %}<option value='{{ supplier.id }}'>{{ supplier }}</option>{% endfor %}" data-taxes="{{ taxes|json_encode }}">
+                <td class="product-copy" data-target="product-id">{{ product.product.id }}</td>
+                <td class="product-copy" data-target="product-image">{% if images|length > 0  %}<img src="/{{ images[0].image.path  }}" width="50">{% else %}-{% endif %}</td>
+                <td class="product-copy" data-target="product-code">{{ product.product.productCode }}</td>
+                <td class="product-copy" data-target="product-barcode">{% for barcode in product.product.barcodes %}{{ barcode }}{% if not loop.last %},{% endif %}{% endfor %}</td>
+                <td class="product-copy" data-target="product-brand">{{ product.product.brandGroup }}</td>
+                <td class="product-copy" data-target="product-title">{{ product.product.title }}</td>
+                <td class="product-copy" data-target="product-categories">{% for category in product.product.categories %}{{ category }}{% if not loop.last %},{% endif %}{% endfor %}</td>
+                <td>{{ product.minQtyInStock }}</td>
+                <td>{{ product.restockingQty }}</td>
+                <td><input class="form-control quantity" value="1" name="quantity" type="text"></td>
+                <td><input class="form-control price" value="{{ price.purchasePrice is not empty ? price.purchasePrice : price.listPrice }}" name="price" type="text"></td>
+                <td><button type="button" class="btn btn-default">Add</button></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{{  knp_pagination_render(pagination) }}

@@ -1,0 +1,6 @@
+a2lix_translation_form:
+    #locale: fr         # [Optionnal] Default to 'en'
+    locales: [en]                    # [Optionnal] Array of translations locales. Can be specified in the form.
+    default_required: false          # [Optionnal] Default to false. In this case, translation fields are not mark as required with html5
+
+# Template

@@ -1,0 +1,9 @@
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        [ AppBackendBundle,AppCalendarBundle, AppUserBundle ]
+    filters:
+        less:
+            node: %node%
+            node_paths: [ %node_modules% ]
+            apply_to: "\.less$"

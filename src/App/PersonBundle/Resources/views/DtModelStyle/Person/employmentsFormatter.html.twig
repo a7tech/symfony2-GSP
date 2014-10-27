@@ -1,0 +1,5 @@
+{% if entity.employments|length > 0 %}
+    {% for em in entity.employments %}
+        <a href="{{ path('backend_company_show', {'id': em.id}) }}">{{ em.company.name }}</a><br/>
+    {% endfor %}
+{% endif %}

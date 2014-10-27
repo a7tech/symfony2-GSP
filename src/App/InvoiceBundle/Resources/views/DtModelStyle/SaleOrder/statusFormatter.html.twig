@@ -1,0 +1,1 @@
+<span {% if statuses[entity.status].color is not empty %}style="color: {{ statuses[entity.status].color }}"{% endif %}>{{ entity.status is not empty ? statuses[entity.status].name : '' }}</span>

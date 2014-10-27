@@ -1,0 +1,14 @@
+{% extends '@AppBackend/base.html.twig' %}
+
+{% block content %}
+    {% if project.estimate %}
+        Project "<b>{{ project }}</b>" is estimate
+    {% else %}
+        Do you really want to rollback project "<b>{{ project }}</b>" to draft?<br>
+        This will delete all invoices and reset tasks progress
+        <form method="post">
+            <button>Confirm</button>
+        </form>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,3 @@
+{% for status_group in statuses_groups %}
+    <{{ wrapper }}><a href="{{ path('backend_settings_status', {'className': status_group.className}) }}">{{ status_group.name }}</a></{{ wrapper }}>
+{% endfor %}

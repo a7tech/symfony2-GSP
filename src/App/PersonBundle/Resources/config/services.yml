@@ -1,0 +1,32 @@
+services:
+    app_person.form.person:
+        class: App\PersonBundle\Form\PersonType
+        tags:
+            - { name: form.type, alias: person_form }
+
+    app_person.form.person_image:
+            class: App\PersonBundle\Form\PersonImageType
+            tags:
+                - { name: form.type, alias: person_image_form }
+
+    app_person.form.person_autocomplete:
+        class: App\PersonBundle\Form\Type\PersonUserAutocompleteType
+        tags:
+           -  { name: form.type, alias: person_autocomplete }
+
+    app_person.search.manager:
+        class: App\PersonBundle\Manager\SearchManager
+        arguments: [ @service_container]
+
+    app_person.form.person_notrequired_autocomplete:
+        class: App\PersonBundle\Form\Type\PersonUserNotRequiredAutocompleteType
+        tags:
+           -  { name: form.type, alias: person_notrequired_autocomplete }
+           
+    app_person.filter.personfilter:
+        class:  App\PersonBundle\Filter\PersonFilter
+        parent: app_core.filter.filter
+    app_person.filter.persongroupfilter:
+        class:  App\PersonBundle\Filter\PersonGroupFilter
+        parent: app_core.filter.filter
+

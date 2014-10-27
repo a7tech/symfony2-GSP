@@ -1,0 +1,3 @@
+{% for cat in entity.product.categories %}
+    {{ cat.title }}{% if not loop.last %},{% endif %}
+{% endfor %}

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -x
+
+sudo chmod 777 -R app/cache
+sudo chmod 777 -R app/logs
+if [ $1 == "0" ]; then
+    exit 0
+fi;
+#sudo rm -R app/cache/*
+if [ "$1" == "1" ]; then
+    exit 0
+fi;
+sudo rm -R app/logs/*
+if [ "$1" == "2" ]; then
+    exit 0
+fi;
+#php app/console --env=dev assets:install web
+#php app/console --env=prod assets:install web
+php app/console assets:install web
+php app/console assetic:dump
+php app/console mopa:bootstrap:symlink:less
+sudo rm -R app/cache/*
+sudo chmod 777 -R app/cache
+sudo chmod 777 -R app/logs
+
+
+

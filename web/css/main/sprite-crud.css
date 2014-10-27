@@ -1,0 +1,148 @@
+[class^="icon-crud-"],
+[class*="icon-crud-"] {
+    background-image: url(/images/sprite-crud.png);
+    background-repeat: no-repeat;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: bottom;
+    position: relative;
+}
+
+.icon-crud-delete {
+    width: 12px;
+    height: 17px;
+    background-position: -5px -5px;
+}
+
+.active .icon-crud-delete, li:hover .icon-crud-delete {
+    width: 12px;
+    height: 17px;
+    background-position: -27px -5px;
+}
+
+.disabled .icon-crud-delete, li:hover.disabled .icon-crud-delete {
+    width: 12px;
+    height: 17px;
+    background-position: -49px -5px;
+}
+
+.disabled .icon-crud-edit, li:hover.disabled .icon-crud-edit {
+    width: 16px;
+    height: 17px;
+    background-position: -71px -5px;
+}
+
+.icon-crud-edit {
+    width: 16px;
+    height: 17px;
+    background-position: -97px -5px;
+}
+
+.active .icon-crud-edit, li:hover .icon-crud-edit {
+    width: 16px;
+    height: 17px;
+    background-position: -123px -5px;
+}
+
+.icon-crud-list {
+    width: 19px;
+    height: 17px;
+    background-position: -149px -5px;
+}
+
+.active .icon-crud-list, li:hover .icon-crud-list {
+    width: 19px;
+    height: 17px;
+    background-position: -178px -5px;
+}
+
+.active .icon-crud-new, li:hover .icon-crud-new {
+    width: 17px;
+    height: 17px;
+    background-position: -207px -5px;
+}
+
+.disabled .icon-crud-new, li:hover.disabled .icon-crud-new {
+    width: 17px;
+    height: 17px;
+    background-position: -234px -5px;
+}
+
+.icon-crud-new {
+    width: 17px;
+    height: 17px;
+    background-position: -261px -5px;
+}
+
+.disabled .icon-crud-printer, li:hover.disabled .icon-crud-printer {
+    width: 17px;
+    height: 17px;
+    background-position: -288px -5px;
+}
+
+.icon-crud-printer {
+    width: 17px;
+    height: 17px;
+    background-position: -315px -5px;
+}
+
+.active .icon-crud-printer, li:hover .icon-crud-printer {
+    width: 17px;
+    height: 17px;
+    background-position: -342px -5px;
+}
+
+.icon-crud-search {
+    width: 13px;
+    height: 14px;
+    background-position: -369px -5px;
+}
+
+.active .icon-crud-search {
+    width: 13px;
+    height: 14px;
+    background-position: -392px -5px;
+}
+
+.icon-crud-search-white {
+    width: 13px;
+    height: 14px;
+    background-position: -415px -5px;
+}
+
+.disabled .icon-crud-show, li:hover.disabled .icon-crud-show {
+    width: 22px;
+    height: 17px;
+    background-position: -438px -5px;
+}
+
+.icon-crud-show {
+    width: 22px;
+    height: 17px;
+    background-position: -470px -5px;
+}
+
+li.active  .icon-crud-show, li:hover  .icon-crud-show{
+    width: 22px;
+    height: 17px;
+    background-position: -502px -5px;
+}
+
+.icon-crud-show_contact_17h_979797 {
+    width: 20px;
+    height: 17px;
+    background-position: -534px -5px;
+}
+
+.icon-crud-show_contact_17h_black {
+    width: 20px;
+    height: 17px;
+    background-position: -564px -5px;
+}
+
+.icon-crud-show_contact_17h_bleu_14a4ec {
+    width: 20px;
+    height: 17px;
+    background-position: -594px -5px;
+}

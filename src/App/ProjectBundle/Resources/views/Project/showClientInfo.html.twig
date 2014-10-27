@@ -1,0 +1,206 @@
+{% set hasClient = false %}
+{% set hasManager = false %}
+
+{% if entity.client|length>0 and entity.client is defined and entity.client.person|length>0 %}
+    {% set hasClient = true %}
+{% endif %}
+{% if entity.manager|length>0 and entity.manager.person|length>0 %}
+    {% set hasManager = true %}
+{% endif %}
+{% if pdf is not defined %}
+    {% set pdf = false %}
+{% endif %}
+
+{% if pdf %}
+    <style type="text/css">
+        {{ file('css/main/dashboard.css') }}
+        {{ file('css/main/forms.css') }}
+        {{ file('css/main/pdf.css') }}
+    </style>
+{% endif %}
+
+<style>
+.table-info{border-spacing: 0px; width:100%; }
+.table-info td{vertical-align: top }
+.table-info td.wleft1{white-space:nowrap; font-weight: bold; width:120px;}
+.table-info td.wleft2{white-space:nowrap; font-weight: bold; width:150px;}
+.table-info td.wright1{white-space:nowrap; text-align: left;  width:200px;}
+.table-info td.wright2{white-space:nowrap; text-align: left;  width:180px;}
+</style>
+
+<table {% if pdf %} class="font-size-project" style="width:100%; border-spacing: 0px 0px;" {% else %} style="width: 100%;"{% endif %}>
+{% if pdf %}
+<tr>
+    <td colspan="4"></td>
+</tr>
+<tr>
+    <td colspan="4"></td>
+</tr>
+<tr>
+    <td colspan="4"></td>
+</tr>
+<tr>
+    <td colspan="4"></td>
+</tr>
+<tr>
+    <td colspan="4"></td>
+</tr>
+{% endif %}
+<tr>
+    <td {% if pdf %} style="text-align:right; font-size: 13px;" colspan="4"  {% else %} colspan="2"  style="text-align:right;" {% endif %}>
+    
+        {% set type_info = statusInfo(constant('TYPE_GROUP_NAME', entity), entity.type) %}
+        <b>{{ type_info.name }}</b> # {{ entity.id }}
+
+        <br/><br/>
+    </td>
+</tr>
+{% block header_table %}
+<tr>
+    <td>
+    <table class="table-info">
+    <tr>
+        <td class="wleft1">{{ 'client'|trans({}, 'Project') }}:</td>
+        <td class="wright1">{% spaceless %}
+            {% if hasClient == true and entity.client.person.name|length>0 %}
+                {{ entity.client.person.name }}
+            {% endif %}
+        {% endspaceless %}</td>
+        </tr>
+    <tr>
+        <td class="wleft1">{{ 'billing_address'|trans({}, 'Address') }}:</td>
+        <td class="wright1">{% spaceless %}
+        {% if hasClient == true %}
+            {% set billing_address =  entity.client.person.billingAddress %}
+            {% if billing_address is not empty %}
+                {{ billing_address.formatted('suite'|trans({}, 'Address')~':')|raw }}
+            {% endif %}
+        {% else %}
+            -
+        {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft1">{{ 'shipping_address'|trans({}, 'Address') }}:</td>
+        <td class="wright1">{% spaceless %}
+            {% if hasClient == true %}
+                {% set shipping_address =  entity.client.person.shippingAddress %}
+                {% if shipping_address is null and billing_address is not null %}
+                    {% set shipping_address = billing_address %}
+                {% endif %}
+                {% if shipping_address is not null %}
+                    {{ shipping_address.formatted('suite'|trans({}, 'Address')~':')|raw }}
+                {% else %}
+                    -
+                {% endif %}
+            {% else %}
+                -
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft1">{{ 'telephone'|trans({}, 'Common') }}:</td>
+        <td class="wright1">{% spaceless %}
+            {% if hasClient == true and entity.client.person.phones|length>0 %}
+                {% for phone in entity.client.person.phones %}
+                    {{ phone.number }}&nbsp;({{ phone.phoneType.name }}){% if not loop.last %}, {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft1">{{ 'email'|trans({}, 'Common') }}:</td>
+        <td class="wright1">{% spaceless %}
+            {% if hasClient == true  and entity.client.person.emails|length>0 %}
+                {% for email in entity.client.person.emails %}
+                {{ email.email }}<br/>
+                {% endfor %}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    </table>
+    </td>
+    <td>
+        <table class="table-info" {% if pdf %}style="border-spacing: 0px 0px;" cellspacing="0"{% endif %}>
+    <tr>
+        <td class="wleft2">{{ 'date'|trans({}, 'Common') }}:</td>
+        <td class="wright2">{% spaceless %}
+        {{ (entity.estimate ? "now" : entity.projectDate)|date('d/m/Y') }}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft2">{{ 'manager'|trans({}, 'Project') }}:</td>
+        <td class="wright2">{% spaceless %}
+            {% if hasManager == true and entity.manager.person.name|length>0 %}
+                {{ entity.manager.person.name }}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft2">{{ 'manager.phone.mobile'|trans({}, 'Project') }}:</td>
+        <td class="wright2">{% spaceless %}
+            {% if hasManager == true  and entity.manager.person.phones|length>0 %}
+                {% for phone in entity.manager.person.phones %}
+                {% if phone.phoneType.id == 3 %}
+                    {{ phone.number }}
+                {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft2">{{ 'manager.office'|trans({}, 'Project') }}:</td>
+        <td class="wright2">{% spaceless %}
+            {% if hasManager == true  and entity.manager.person.phones|length>0 %}
+                {% for phone in entity.manager.person.phones %}
+                {% if phone.phoneType.id == 1 %}
+                    {{ phone.number }}
+                {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft2">{{ 'manager.phone.fax'|trans({}, 'Project') }} :</td>
+        <td class="wright2">{% spaceless %}
+            {% if hasManager == true  and entity.manager.person.phones|length>0 %}
+                {% for phone in entity.manager.person.phones %}
+                {% if phone.phoneType.id == 5 %}
+                    {{ phone.number }}
+                {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft2">{{ 'email'|trans({}, 'Common') }}:</td>
+        <td class="wright2">{% spaceless %}
+            {% if hasManager == true  and entity.manager.person.emails|length>0 %}
+                {% for email in entity.manager.person.emails %}
+                {{ email.email }}<br/>
+                {% endfor %}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+    </table>
+    </td>
+</tr>
+{% endblock header_table %}
+</table>
+
+{% if pdf %} 
+<span style="margin: 0px 0px 0px 0px; line-height: 50%;">{% spaceless %}
+{#        <br/>#}
+    <b>{{ 'name'|trans({}, 'Project') }}:</b> {{ entity.name }}
+{% endspaceless %}</span>
+<span style="height: 20px;">
+{{ entity.description|raw }}
+</span>
+{% else %}
+<div style="margin: 10px 0 10px 0;">{% spaceless %}
+    <b>{{ 'name'|trans({}, 'Project') }}:</b> {{ entity.name }}
+{% endspaceless %}</div>
+<div>
+{{ entity.description|raw }}
+</div>
+{% endif %}

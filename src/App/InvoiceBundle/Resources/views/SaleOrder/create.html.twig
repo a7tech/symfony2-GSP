@@ -1,0 +1,461 @@
+{% extends 'AppInvoiceBundle:SaleOrder:layout.html.twig' %}
+{% form_theme form _self %}
+{% import _self as macros %}
+{% if entity.isCredit %}
+    {% set nav_title = 'create_credit_invoice'|trans({}, 'Invoice')  %}
+{% else %}
+    {% set nav_title = entity.id ? 'Sale Order edit' : 'Sale Order new' %}
+{% endif %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <form class="form-horizontal row" id="product-form" action="" method="post" {{ form_enctype(form) }}>
+
+            <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="left-menu">
+                    <ul id="app_invoicebundle_saleorder_tabs" class="left-nav-tabs nav nav-pills nav-stacked">
+                        <li id="btn-customer"><a href="#tab-customer">{{ 'customer_info'|trans({}, 'Invoice') }}</a></li>
+                        <li id="btn-address"><a href="#tab-address">{{ 'address_info'|trans({}, 'Invoice') }}</a></li>
+                        <li id="btn-vendor"><a href="#tab-vendor">{{ 'vendor_info'|trans({}, 'Invoice') }}</a></li>
+                        <li id="btn-invoice"><a href="#tab-invoice">{{ 'invoice_info'|trans({}, 'Invoice') }}</a></li>
+                        <li id="btn-product"><a href="#tab-product">{{ 'product_info'|trans({}, 'Invoice') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div id="account-profile-select" {% if entity.vendorCompany is not null %}style="display: none"{% endif %}>
+                    {{ form_row(form.vendorCompany) }}
+                    
+                    <a href="#" class="btn btn-primary" id="next-step">{{ 'next'|trans({}, 'Common') }}</a>
+                </div>
+                <div id="edit-purchase" {% if entity.vendorCompany is null %}style="display: none"{% endif %}>
+                    <h3 id="tab-customer" class="h3-form">{{ 'customer_info'|trans({}, "Invoice") }}</h3>
+                    {{ form_row(form.customerCompany) }}
+                    {{ form_row(form.customer) }}
+                    <h3 id="tab-address" class="h3-form">{{ 'address_info'|trans({}, "Invoice") }}</h3>
+                    {#{ form_row(form.shipment) }#}
+                    <div class="form-group">
+                        {{ form_label(form.shipment,null,{ 'attr' : { 'class' : 'form-label col-xs-3' }}) }}
+                        <div class="input-group">
+                            {{ form_errors(form.shipment) }}
+                            {{ form_widget(form.shipment,{ 'attr' : { 'class' : 'form-control' }}) }}
+                        </div>
+                    </div>
+                    {#{ form_row(form.billing) }#}
+                    <div class="form-group">
+                        {{ form_label(form.billing,null,{ 'attr' : { 'class' : 'form-label col-xs-3' }}) }}
+                        <div class="input-group">
+                            {{ form_errors(form.billing) }}
+                            {{ form_widget(form.billing,{ 'attr' : { 'class' : 'form-control' }}) }}
+                        </div>
+                    </div>
+                    <h3 id="tab-vendor" class="h3-form">{{ 'vendor_info'|trans({}, "Invoice") }}</h3>
+                    <div class="form-group">
+                        <label class="form-label col-xs-3">{{ 'vendor_company'|trans({}, 'Invoice') }}:</label>
+                        <div class="form-group">
+                            <strong><span id="vendorCompany">{% if entity.vendorCompany is not null %}{{ entity.vendorCompany }}{% endif %}</span></strong>
+                        </div>
+                    </div>
+                    {{ form_row(form.invoiceDate) }}
+                    {{ form_row(form.comment) }}
+                    <h3 id="tab-invoice" class="h3-form">{{ 'invoice_info'|trans({}, 'Invoice') }}</h3>
+                    {{ form_row(form.isRbq,{ 'attr' : { 'class' : 'form-control checkbox' }}) }}
+                    {{ form_row(form.isTaxable) }}
+                    {{ form_row(form.showDeliveryAddress) }}
+
+                    <div id="edit-purchase">
+                        {% if not is_project_invoice %}
+                            <h3 id="tab-product" class="h3-form">{{ 'products_search'|trans({}, 'Invoice') }}</h3>
+                            <div class="search-form" data-action="{{ path('backend_sale_order_products_search') }}" id="products-search">
+                                <div class="row">
+                                    {{ form_widget(search_form) }}
+                                </div>
+                                <div class="row form-groups">
+                                    <div class="btn btn-primary" id="btn-search">Search</div>
+                                    <div class="btn btn-default" id="btn-reset">Reset</div>
+                                </div>
+                            </div>
+                        {% elseif entity.isCredit %}
+                            <h3 class="h3-form">{{ 'add_credit_tasks'|trans({}, 'Invoice') }}</h3>
+                            {{ form_row(form.not_credited_tasks) }}
+                        {% else %}
+                            {% if form.not_invoiced_tasks is defined and not entity.isDepositInvoice %}
+                                <h3 class="h3-form">{{ 'add_extra_tasks'|trans({}, 'Invoice') }}</h3>
+                                {{ form_row(form.not_invoiced_tasks) }}
+                            {% endif %}
+                        {% endif %}
+                        <ul class="nav nav-tabs" id="order-tabs">
+                            {% if not is_project_invoice %}
+                                <li class="active"><a href="#search-results" id="products-search-tab">Search results</a></li>
+                            {% endif %}
+                            <li {% if is_project_invoice %}class="active"{% endif %}>
+                                <a href="#cart">{{ 'cart'|trans({}, 'Invoice') }}</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
+                            {% if not is_project_invoice %}
+                                <div class="tab-pane active" id="search-results">
+                                    {{ 'specify_products_search_criteria'|trans({}, "Invoice") }}
+                                </div>
+                            {% endif %}
+
+                            <div class="tab-pane {% if is_project_invoice %} active{% endif %}" id="cart" {% if not is_project_invoice %}style="display: none"{% endif %}>
+                                <div {% if entity.depositInvoice %}style="display: none"{% endif %}>
+                                    <h3>{{ 'products'|trans({}, "Product") }}</h3>
+                                    {{ form_row(form.products) }}
+                                </div>
+
+
+                                {% if is_project_invoice %}
+                                    {% if entity.isDepositInvoice %}
+                                        <table class="table bordered" id="deposit-position">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ 'deposit_amount'|trans({}, 'Invoice') }}</th>
+                                                    <th>{{ 'deposit_amount_percentage'|trans({}, 'Invoice') }}</th>
+                                                    <th>{{ 'taxes'|trans({}, 'Invoice') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="collection-row">
+                                                    <td>{{ form_row(form.depositPosition) }}</td>
+                                                    <td>{{ form_row(form.percent) }}</td>
+                                                    <td>
+                                                        {{ form_row(form.depositTaxes) }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    {% elseif entity.isCredit %}
+                                        <h3>{{ 'tasks'|trans({}, 'Tasks') }}</h3>
+                                        {{ form_row(form.credit_tasks) }}
+                                    {% else %}
+                                        <h3>{{ 'tasks'|trans({}, 'Tasks') }}</h3>
+                                        {{ form_row(form.tasks) }}
+                                    {% endif %}
+                                {% endif %}
+
+                                <h3>{{ 'summary'|trans({}, 'Invoice') }}</h3>
+                                <table class="table" id="totals">
+                                    <tbody>
+                                        {% if not entity.depositInvoice %}
+                                            <tr>
+                                                <th>{{ 'total_before_discounts'|trans({}, 'Invoice') }}</th>
+                                                <td class="net-without-discounts-total number">{{ entity.netTotal(false)|number_format(2) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ 'discount'|trans({}, 'Invoice') }}</th>
+                                                <td class="discount-total number">{{ entity.discount|number_format(2) }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <th>{{ 'total'|trans({}, 'Invoice') }}</th>
+                                            <td class="net-total number">{{ entity.netTotal|number_format(2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'taxes'|trans({}, 'Invoice') }}</th>
+                                            <td class="taxes-total number">{{ entity.taxes|number_format(2) }}</td>
+                                        </tr>
+                                        {% set depositReturnTotal = entity.depositReturnTotal %}
+                                        {% if depositReturnTotal is not null and depositReturnTotal > 0  %}
+                                            <tr>
+                                                <th>{{ 'total_before_deposit'|trans({}, 'Invoice') }}</th>
+                                                <td class="number total-before-deposit">{{ entity.totals.total_before_deposit|number_format(2) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ 'deposit'|trans({}, 'Invoice') }}</th>
+                                                <td class="number deposit">-{{ depositReturnTotal|number_format(2) }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <th>{{ 'total_amount'|trans({}, 'Invoice') }}</th>
+                                            <td class="total number">{{ entity.total|number_format(2) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-groups">
+                        <div class="form-actions well">
+                            {{ form_rest(form) }}
+                            <input class="btn btn-primary" name="save" type="submit" value="Save as Draft">
+                            <input class="btn btn-primary" name="proceed" type="submit" value="Proceed Invoice">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block user_js %}
+    <script src="{{ asset('bundles/appinvoice/js/customer-filter.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appcompany/company_address_form.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery/plugins/select2/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery/plugins/jquery.dotimeout.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appcore/js/costs-calculation.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appinvoice/js/invoice-edit.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appinvoice/js/deposit-invoice.js') }}" type="text/javascript"></script>
+    <script>
+
+        $(function () {
+            $('.ui-autocomplete-input').addClass('form-control');
+            $('.person-autocomplete').addClass('col-xs-6');
+            Admin.setup_collections(document);
+            Admin.bind_widgets();
+
+            var $navbar = $("#app_invoicebundle_saleorder_tabs");
+            var offset = $navbar.offset();
+            var $span3 = $navbar.parents('.col-md-3');
+            $(window).bind('scroll', function () {
+                $navbar.width($span3.width());
+                if ($(this).scrollTop() > offset.top) {
+                    $navbar.addClass('top-fixed col-md-3');
+                }
+                else {
+                    $navbar.removeClass('top-fixed col-md-3');
+                }
+            });
+
+            if (jQuery('input[id*="_customerCompany_autocomplete"]').val() == '' && jQuery('input[id*="_customer_autocomplete"]').val() == '') {
+                jQuery('select[id*="invoice_billing"]').attr('disabled', 'disabled');
+                jQuery('select[id*="invoice_shipment"]').attr('disabled', 'disabled');
+            }
+
+            initCompanyAddressForm(
+                    '{{ url('ajax_company_shipping_address', {'companyId': '__company_id__'}) }}', '{{ url('ajax_company_billing_address', {'companyId': '__company_id__'}) }}'
+            );
+            initCustomerAddressForm(
+                    '{{ url('ajax_customer_shipping_address', {'customerId': '__customer_id__'})}}', '{{ url('ajax_customer_billing_address', {'customerId': '__customer_id__'}) }}'
+            );
+            initCustomerFilter('{{  url('ajax_customer_by_company', {'companyId': '__companyId_'})}}');
+
+
+        });
+    </script>
+
+
+{% endblock %}
+
+{% block user_css %}
+    <link href="{{ asset('js/jquery/plugins/select2/select2.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('js/jquery/plugins/select2/select2-bootstrap.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block _invoice_products_row %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('invoice_product_row')|trim }) %}
+    {% endif %}
+    {% spaceless %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{{ 'barcode'|trans({}, 'Product') }}</th>
+                <th>{{ 'name'|trans({}, 'Common') }}</th>
+                <th>{{ 'quantity'|trans({}, 'Product') }}</th>
+                <th>{{ 'price'|trans({}, 'Product') }}</th>
+                <th>{{ 'discount'|trans({}, 'Product') }}</th>
+                <th>{{ 'taxes'|trans({}, 'Product') }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody {{ block('widget_container_attributes') }}>
+            {% for child in form.children %}
+                {{ block('invoice_product_row') }}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+    {{ form_errors(form) }}
+{% endblock %}
+
+{% block invoice_product_row %}
+    {% spaceless %}
+        {% set product = child.vars.data is not null ? child.vars.data.product : null %}
+
+        <tr class='collection-row'>
+            <td class="product-id">{{ product is not null ? product.id : '' }}</td>
+            <td class="product-barcode">
+                {% if product is not null %}
+                    {% for barcode in product.product.barcodes %}{{ barcode }}{% if not loop.last %},{% endif %}{% endfor %}
+                {% endif %}
+            </td>
+           <td class="product-title">{{ product is not null ? product.product.title : '' }}</td>
+            <td>{{ form_row(child.quantity) }}</td>
+            <td>{{ form_row(child.price) }}</td>
+            <td>{{ form_row(child.discount) }}</td>
+            <td>{{ form_row(child.taxes) }}</td>
+            <td>
+                <a href="javascript:void(0)" class="collection-delete"></a>
+                {{ form_rest(child) }}
+            </td>
+        </tr>
+    {% endspaceless %}
+{% endblock %}
+
+{% block _invoice_tasks_row %}
+    {% import _self as macros %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('invoice_task_row')|trim }) %}
+    {% endif %}
+    {% spaceless %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{{ 'task'|trans({}, 'Tasks') }}</th>
+                <th>{{ 'total'|trans({}, 'Invoice')}}</th>
+                <th>{{ 'taxes'|trans({}, 'Invoice') }}</th>
+                {% if tasks_categories is defined %}
+                    <th>{{ 'total_amount'|trans({}, 'Invoice') }}</th>
+                {% endif %}
+                <th></th>
+            </tr>
+            </thead>
+            <tbody {{ block('widget_container_attributes') }}>
+                {% if tasks_categories is defined %}
+                    <tr id="tasks-totals">
+                        <td></td>
+                        <td>{{ tasks_categories.category }}</td>
+                        <td class="net-total">{{ tasks_categories.cost.net|number_format(2) }}</td>
+                        <td class="taxes-total">{{ tasks_categories.cost.taxes.total|number_format(2) }}</td>
+                        <td class="total">{{ tasks_categories.cost.gross|number_format(2) }}</td>
+                    </tr>
+                    {{ macros.subcategories(tasks_categories, 0, child_forms) }}
+                {% else %}
+                    <tr id="tasks-totals" style="display: none">
+                        {% set sale_order = form.parent.vars.data %}
+                        <td class="net-total">{{ sale_order.totals.tasks.net|number_format(2) }}</td>
+                        <td class="taxes-total">{{  sale_order.totals.tasks.taxes.total|number_format(2) }}</td>
+                        <td class="total">{{  sale_order.totals.tasks.total|number_format(2) }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% for child in form.children %}
+                        {{ block('invoice_task_row') }}
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+    {{ form_errors(form) }}
+{% endblock %}
+
+{% block invoice_task_row %}
+{% spaceless %}
+    {% set task = child.vars.data is not null ? child.vars.data.task : null %}
+
+    <tr class='collection-row'>
+        <td class="task-id">{{ task is not null ? task.id : '' }}</td>
+        <td>
+            <span class="task-name">
+                {{ task is not null ? task.name : '' }}
+            </span>
+            <div class="task-description">
+                {{ task is not null ? task.taskDescription|raw : '' }}
+            </div>
+        </td>
+        <td class="task-net number price">{{ task is not null ? task.netPrice : '' }}</td>
+        <td>{{ form_widget(child) }}</td>
+        <td>
+            <a href="javascript:void(0)" class="collection-delete"></a>
+            {{ form_rest(child) }}
+
+        </td>
+    </tr>
+{% endspaceless %}
+{% endblock %}
+
+{% block _invoice_credit_tasks_row %}
+    {% import _self as macros %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('invoice_credit_task_row')|trim }) %}
+    {% endif %}
+    {% spaceless %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{{ 'task'|trans({}, 'Tasks') }}</th>
+                <th>{{ 'task_net_price'|trans({}, 'Invoice')}}</th>
+                <th>{{ 'task_credit'|trans({}, 'Invoice') }}</th>
+                <th>{{ 'task_credit_description'|trans({}, 'Invoice') }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody {{ block('widget_container_attributes') }}>
+                {% for child in form.children %}
+                    {{ block('invoice_credit_task_row') }}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+    {{ form_errors(form) }}
+{% endblock %}
+
+{% block invoice_credit_task_row %}
+    {% spaceless %}
+        {% set task = child.vars.data is not null ? child.vars.data.task : null %}
+
+        <tr class='collection-row'>
+            <td class="task-id">{{ task is not null ? task.id : '' }}</td>
+            <td>
+                <span class="task-name">
+                    {{ task is not null ? task.name : '' }}
+                </span>
+                <div class="task-description">
+                    {{ task is not null ? task.taskDescription|raw : '' }}
+                </div>
+            </td>
+            <td class="task-net number price">{{ task is not null and task.type == constant('TYPE_ADJUSTMENT', task)? task.netPrice : '-' }}</td>
+            <td>{{ form_widget(child.refund) }}</td>
+            <td>{{ form_widget(child.refundDescription) }}</td>
+            <td>
+                <a href="javascript:void(0)" class="collection-delete"></a>
+                {{ form_rest(child) }}
+
+            </td>
+        </tr>
+    {% endspaceless %}
+{% endblock %}
+
+{% macro subcategories(category, indent, forms) %}
+    {% import _self as macros %}
+    {% set indent_size = (indent+1)*30 %}
+    {% if category.children|length > 0 %}
+        {% for child_category in category.children %}
+            <tr data-category-id="{{ child_category.category.id }}">
+                <td></td>
+                <td colspan="4" style="padding-left: {{ indent_size }}px">{{ child_category.category.title }}</td>
+            </tr>
+            {{ macros.subcategories(child_category, indent+1, forms) }}
+        {% endfor %}
+    {% endif %}
+    {% if category.tasks|length > 0 %}
+        {% for task in category.tasks %}
+            <tr data-task-id="{{ task.id }}" class='collection-row'>
+                <td>{{ task.id }}</td>
+                <td colspan="2" style="padding-left: {{ indent_size }}px">- {{ task.name }}</td>
+                <td>{{ form_widget(forms[task.id]) }}</td>
+                <td>
+                    <input type="hidden" class="price" value="{{ task.netPrice(true) }}">
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}

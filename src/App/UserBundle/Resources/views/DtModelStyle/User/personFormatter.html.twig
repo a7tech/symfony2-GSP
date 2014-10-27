@@ -1,0 +1,5 @@
+{% if entity.person is defined and entity.person != null %}
+<a href="{{ path('backend_person_show', { 'id': entity.person.id }) }}">{{ entity.person.firstName }} {{ entity.person.lastName }}</a>
+{% else %}
+N/A
+{% endif %}

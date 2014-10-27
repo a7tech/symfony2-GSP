@@ -1,0 +1,67 @@
+[class^="icon-contact-"],
+[class*="icon-contact-"] {
+    background-image: url(/images/sprite-contact.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.icon-contact-actif_no {
+    width: 16px;
+    height: 16px;
+    background-position: -5px -5px;
+}
+
+.icon-contact-actif_yes {
+    width: 16px;
+    height: 16px;
+    background-position: -31px -5px;
+}
+
+.icon-contact-address {
+    width: 18px;
+    height: 16px;
+    background-position: -57px -5px;
+}
+
+.icon-contact-birthday {
+    width: 14px;
+    height: 16px;
+    background-position: -85px -5px;
+}
+
+.icon-contact-cell {
+    width: 9px;
+    height: 16px;
+    background-position: -109px -5px;
+}
+
+.icon-contact-e-mail {
+    width: 16px;
+    height: 16px;
+    background-position: -128px -5px;
+}
+
+.icon-contact-google_maps {
+    width: 10px;
+    height: 16px;
+    background-position: -154px -5px;
+}
+
+.icon-contact-phone {
+    width: 17px;
+    height: 16px;
+    background-position: -174px -5px;
+}
+
+.icon-contact-sex_female {
+    width: 9px;
+    height: 16px;
+    background-position: -201px -5px;
+}
+
+.icon-contact-sex_male {
+    width: 16px;
+    height: 16px;
+    background-position: -220px -5px;
+}

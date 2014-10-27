@@ -1,0 +1,32 @@
+parameters:
+#    app_product.example.class: App\ProductBundle\Example
+
+services:
+    app_product.form.product:
+        class: App\ProductBundle\Form\ProductType
+        tags:
+            - { name: form.type, alias: product_form }
+
+    app_product.form.price:
+        class: App\ProductBundle\Form\PriceType
+        tags:
+           -  { name: form.type, alias: price_form }
+
+    app_product.form.product_type:
+        class: App\ProductBundle\Form\Type\ProductTypeType
+        tags:
+           -  { name: form.type, alias: product_type }
+
+    app_product.search.manager:
+        class: App\ProductBundle\Manager\SearchManager
+        arguments: [ @service_container]
+        
+    app_product.filter.productfilter:
+        class:  App\ProductBundle\Filter\ProductFilter
+        parent: app_core.filter.filter
+    app_product.filter.producttypefilter:
+        class:  App\ProductBundle\Filter\ProductTypeFilter
+        parent: app_core.filter.filter
+    app_product.filter.brandgroupfilter:
+        class:  App\ProductBundle\Filter\BrandGroupFilter
+        parent: app_core.filter.filter

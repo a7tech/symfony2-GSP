@@ -1,0 +1,13 @@
+{% extends 'AppBackendBundle:Settings:layout.html.twig' %}
+
+{% block actions %}
+
+	{% block actions_nav_block %}
+	    {% set nav_title = nav_title|default('Skill categories') %}
+	    {% set route_prefix = 'backend_settings_category_skill' %}
+	    {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+	{% endblock %}
+
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}

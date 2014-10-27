@@ -1,0 +1,26 @@
+{% extends 'AppBackendBundle:Dashboard:home.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Company') %}
+        {% set route_prefix = 'backend_company' %}
+        {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+    {% endblock %}
+
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}
+
+{% block bottom %}
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                    {% if app.request.attributes.get('_route')|slice(0,15)=='backend_company'%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_company') }}">Companie</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

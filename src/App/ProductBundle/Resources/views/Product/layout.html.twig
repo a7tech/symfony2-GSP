@@ -1,0 +1,32 @@
+{% extends 'AppBackendBundle:Dashboard:home.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Products') %}
+        {% set route_prefix = 'backend_products' %}
+        {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+    {% endblock %}
+
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}
+
+{% block bottom %}
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                    {% if app.request.attributes.get('_route')|slice(0,16)=='backend_products'%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_products') }}">Products</a></li>
+                {% for prof in profiles %}
+                    <li class="
+                    {% if app.request.get('profileId') == prof.id%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_account_product', {'profileId':prof.id}) }}">{{ prof.name }} products</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

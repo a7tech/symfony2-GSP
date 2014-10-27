@@ -1,0 +1,2 @@
+{% set currency = entity.currency %}
+{{ currency is not null ? currency.symbol~' '~currency.code : '' }}

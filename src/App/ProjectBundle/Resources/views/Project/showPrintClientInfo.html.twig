@@ -1,0 +1,115 @@
+{% extends 'AppProjectBundle:Project:showClientInfo.html.twig' %}
+
+{% block header_table %}
+    <tr>
+        <td class="wleft1 font-weight-bold">{{ 'client'|trans({}, 'Project') }}:</td>
+        <td class="wright1">{% spaceless %}
+                {% if hasClient == true and entity.client.person.name|length>0 %}
+                    {{ entity.client.person.name }}
+                {% endif %}
+            {% endspaceless %}</td>
+        <td class="wleft2 font-weight-bold">{{ 'date'|trans({}, 'Common') }}:</td>
+        <td class="wright2">{% spaceless %}
+                {{"now"|date('d/m/Y')}}
+            {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft1 font-weight-bold">{{ 'address'|trans({}, 'Address') }}:</td>
+        <td class="wright1">{% spaceless %}
+                {% if hasClient == true %}
+                    {% set billing_address =  entity.client.person.billingAddress %}
+                    {% if billing_address is not empty %}
+                        {{ billing_address.formatted('suite'|trans({}, 'Address')~':')|raw }}
+                    {% endif %}
+                {% else %}
+                    -
+                {% endif %}{% endspaceless %}
+        </td>
+        <td class="wleft2 font-weight-bold">{{ 'manager'|trans({}, 'Project') }}:</td>
+        <td class="wright2">{% spaceless %}
+                {% if hasManager == true and entity.manager.person.name|length>0 %}
+                    {{ entity.manager.person.name }}
+                {% endif %}
+            {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft1 font-weight-bold">{{ 'shipping_address'|trans({}, 'Address') }}:</td>
+        <td class="wright1">{% spaceless %}
+                {% if hasClient == true %}
+                    {% set shipping_address =  entity.client.person.shippingAddress %}
+                    {% if shipping_address is null and billing_address is not null %}
+                        {% set shipping_address = billing_address %}
+                    {% endif %}
+                    {% if shipping_address is not null %}
+                        {{ shipping_address.formatted('suite'|trans({}, 'Address')~':')|raw }}
+                    {% else %}
+                        -
+                    {% endif %}
+                {% else %}
+                    -
+                {% endif %}{% endspaceless %}
+        </td>
+        <td class="wleft2 font-weight-bold">{{ 'manager.phone.mobile'|trans({}, 'Project') }}:</td>
+        <td class="wright2">{% spaceless %}
+                {% if hasManager == true  and entity.manager.person.phones|length>0 %}
+                    {% for phone in entity.manager.person.phones %}
+                        {% if phone.phoneType.id == 3 %}
+                            {{ phone.number }}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft1 font-weight-bold">{{ 'telephone'|trans({}, 'Common') }}:</td>
+        <td class="wright1">{% spaceless %}
+                {% if hasClient == true and entity.client.person.phones|length>0 %}
+                    {% for phone in entity.client.person.phones %}
+                        {{ phone.number }}&nbsp;({{ phone.phoneType.name }}){% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endspaceless %}</td>
+        <td class="wleft2 font-weight-bold">{{ 'manager.office'|trans({}, 'Project') }}:</td>
+        <td class="wright2">{% spaceless %}
+                {% if hasManager == true  and entity.manager.person.phones|length>0 %}
+                    {% for phone in entity.manager.person.phones %}
+                        {% if phone.phoneType.id == 1 %}
+                            {{ phone.number }}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td class="wleft1 font-weight-bold">{{ 'email'|trans({}, 'Common') }}:</td>
+        <td class="wright1">{% spaceless %}
+                {% if hasClient == true  and entity.client.person.emails|length>0 %}
+                    {% for email in entity.client.person.emails %}
+                        {{ email.email }}<br/>
+                    {% endfor %}
+                {% endif %}{% endspaceless %}
+        </td>
+        <td class="wleft2 font-weight-bold">{{ 'manager.phone.fax'|trans({}, 'Project') }} :</td>
+        <td class="wright2">{% spaceless %}
+                {% if hasManager == true  and entity.manager.person.phones|length>0 %}
+                    {% for phone in entity.manager.person.phones %}
+                        {% if phone.phoneType.id == 5 %}
+                            {{ phone.number }}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endspaceless %}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td class="wleft2 font-weight-bold">{{ 'email'|trans({}, 'Common') }}:</td>
+        <td class="wright2">{% spaceless %}
+            {% if hasManager == true  and entity.manager.person.emails|length>0 %}
+                {% for email in entity.manager.person.emails %}
+                    {{ email.email }}<br/>
+                {% endfor %}
+            {% endif %}
+        {% endspaceless %}</td>
+    </tr>
+{% endblock header_table %}

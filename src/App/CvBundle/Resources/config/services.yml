@@ -1,0 +1,38 @@
+parameters:
+#    app_cv.example.class: App\CvBundle\Example
+
+services:
+    app_cv.form.education:
+        class: App\CvBundle\Form\EducationType
+        tags:
+            - { name: form.type, alias: education_form }
+
+    app_cv.form.lang_experience:
+        class: App\CvBundle\Form\LangExperienceType
+        tags:
+            - { name: form.type, alias: lang_experience_form }
+
+    app_cv.form.certification:
+        class: App\CvBundle\Form\CertificationType
+        tags:
+            - { name: form.type, alias: certification_form }
+
+    app_cv.form.work_experience:
+        class: App\CvBundle\Form\WorkExperienceType
+        tags:
+            - { name: form.type, alias: work_experience_form }
+
+    app_cv.form.association:
+        class: App\CvBundle\Form\AssociationType
+        tags:
+            - { name: form.type, alias: association_form }
+
+    app_cv.form.military_history:
+        class: App\CvBundle\Form\MilitaryHistoryType
+        tags:
+            - { name: form.type, alias: military_history_form }
+
+    app_cv.form.reference:
+        class: App\CvBundle\Form\ReferenceType
+        tags:
+            - { name: form.type, alias: reference_form }

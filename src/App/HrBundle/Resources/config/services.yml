@@ -1,0 +1,17 @@
+parameters:
+#    app_hr.example.class: App\HrBundle\Example
+
+services:
+    app_hr.form.hr_info:
+        class: App\HrBundle\Form\HrInfoType
+        tags:
+            - { name: form.type, alias: hr_info_form }
+
+    app_hr.form.salary_info:
+        class: App\HrBundle\Form\SalaryInfoType
+        tags:
+            - { name: form.type, alias: salary_info_form }
+            
+    app_hr.filter.salarytypefilter:
+        class:  App\HrBundle\Filter\SalaryTypeFilter
+        parent: app_core.filter.filter

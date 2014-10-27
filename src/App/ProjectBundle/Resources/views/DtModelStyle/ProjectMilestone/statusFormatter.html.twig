@@ -1,0 +1,2 @@
+{% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity), entity.status) %}
+<span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ entity.status is not empty ? status_info.name : '' }}</span>

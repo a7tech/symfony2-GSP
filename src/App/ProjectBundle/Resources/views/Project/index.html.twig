@@ -1,0 +1,81 @@
+{% extends 'AppProjectBundle:Project:layout.html.twig' %}
+{% import "@AppBackend/progress.html.twig" as _pm %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row">
+            <div class="row-align">
+                <table id="datatable" class="table table-bordered table-striped" data-entity-list-route="{{ path('backend_project_datatables') }}">
+                    <thead>
+                    <tr>
+                        <th style="width:20px">Id</th>
+                        <th>{{ 'name'|trans({}, 'Common') }}</th>
+                        <th>{{ 'type'|trans({}, 'Project') }}</th>
+                        <th>{{ 'status'|trans({}, 'Project') }}</th>
+                        <th>{{ 'account_profile'|trans({}, 'AccountProfile') }}</th>
+                        <th>{{ 'opportunity'|trans({}, 'Project') }}</th>
+                        <th>{{ 'owner'|trans({}, 'Project') }}</th>
+                        <th>{{ 'client'|trans({}, 'Project') }}</th>
+                        <th>{{ 'manager'|trans({}, 'Project') }}</th>
+                        <th>{{ 'start_date'|trans({}, 'Project') }}</th>
+                        <th>{{ 'end_date'|trans({}, 'Project') }}</th>
+                        <th>{{ 'done_ratio'|trans({}, 'Project') }}</th>
+                    </tr>
+                    </thead>
+                    {% if entities %}
+                    <tbody>
+                    {% for entity in entities %}
+                        <tr id="{{ entity.id }}">
+                            <td><a href="{{ path('backend_project_edit', {id: entity.id}) }}">{{ entity.id }}</a></td>
+                            <td><a href="{{ path('backend_project_show', {id: entity.id}) }}">{{ entity.name }}</a></td>
+                            {% set type_info = statusInfo('project_types', entity.type) %}
+                            <td>{{ type_info.name }}</td>
+                            <td>
+                                {% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity), entity.status) %}
+                                <span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ status_info.name }}</span>
+                            </td>
+                            <td>
+                                {% if entity.accountProfile %}
+                                    {{ entity.accountProfile.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entity.opportunity %}
+                                    <a href="{{ path('backend_project_opportunity_show', {'id': entity.opportunity.id}) }}">{{ entity.opportunity }}</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entity.owner %}
+                                    {% set ownerPerson = entity.owner.person %}
+                                    {{ ownerPerson.firstName }} {{ ownerPerson.lastName }} (Id {{ownerPerson.id}})
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entity.client is not null %}
+                                    {{ entity.client.person.name}} (Id {{entity.client.person.id}})
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entity.manager is not null %}
+                                    {{ entity.manager.person.name }} (Id {{ entity.manager.client.name }})
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ _pm.progress(entity.progress(true)) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    {% endif %}                        
+                </table>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

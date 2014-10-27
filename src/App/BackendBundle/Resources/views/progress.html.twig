@@ -1,0 +1,8 @@
+{% macro progress(progress, show_progress = true, full_width = false) %}
+    <div class="progress{% if not full_width %} fixed-size{% endif %}">
+        <div class="progress-bar" style="width: {{ progress }}%;"></div>
+        {% if show_progress %}
+            <span>{{ progress }}%</span>
+        {% endif %}
+    </div>
+{% endmacro %}

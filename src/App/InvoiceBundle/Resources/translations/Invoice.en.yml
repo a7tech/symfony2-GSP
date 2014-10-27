@@ -1,0 +1,87 @@
+deposit_amount_with_taxes: 'Deposit amount with taxes'
+tax: 'Tax %name% %rate%% (%number%)'
+total_with_taxes: 'Total with taxes'
+total: Total
+total_before_deposit: Total before deposit
+total_amount: 'Total amount'
+total_before_discounts: 'Total before discounts'
+total_before_taxes: 'Total before taxes'
+total_minus_deposit: 'Total minus deposit'
+discount: Discount
+total_minus_deposit_with_taxes: 'Total minus deposit with taxes'
+total_due_with_taxes: 'Total Due with Taxes'
+deposit: 'Deposit Amount'
+deposit_amount: 'Deposit Amount'
+taxes: Taxes
+due: Due
+paid: Paid
+due_with_taxes: 'Due with Taxes'
+summary: Summary
+invoice: Invoice
+invoices: Invoices
+correction_invoice: Correction if %id%
+customer_info: 'Customer info'
+address_info: 'Address info'
+vendor_info: 'Vendor Info'
+invoice_info: 'Invoice info'
+product_info: 'Product info'
+customer: Customer
+vendor: Vendor
+vendor_company: 'Vendor company'
+invoice_date: 'Invoice date'
+comment: Comment
+add_rbq_number: 'Add RBQ number'
+add_taxes: 'Add Taxes'
+show_delivery_address: 'Show delivery address'
+not_invoiced_tasks: 'Not Invoiced Tasks'
+add_extra_tasks: 'Add extra task'
+add_credit_tasks: 'Add credit task'
+specify_products_search_criteria: 'Specify search criteria'
+products_search: 'Products search'
+cart: Cart
+type: Type
+relation: Relation
+customer_company: 'Customer company'
+status: Status
+sale_date: 'Sale date'
+seler: Seler
+project_name: 'Project name'
+shipment: Shipment
+total_taxes: 'Total taxes'
+vendor_singnature: 'Vendor signature'
+customer_signature: 'Customer signature'
+company_logo: 'Company logo'
+create_return: Create return
+product_return_reason.name: Name
+product_return_reason.is_stock_increased: Increase stock
+product_return_reason.is_stock_blocked: Stock blocked
+product_return_reason.title.list: Invoice return reasons
+product_return_reason.title.edit: Product return reason edit
+return.cannot_create_return_from_draft: Cannot create return invoice from draft %id%
+return.cannot_create_return_from_credit: Cannot create return invoice from credit invoice %id%
+return.cannot_create_deposit_return: Cannot create deposit return, because of already invoiced contracted tasks
+return_header: Return Qty.
+refund_header: Refund Qty.
+add_return: Add
+return_type: Return type
+return_reason: Return reason
+return_description: Description
+return_type.return: Return
+return_type.refund: Refund
+refund_price: Refund price
+product_return.quantity: Quantity
+view_correction_invoice: View correction invoice (Id: %id%)
+enterprise: Entreprise
+old_summary: Old summary
+new_totals: New totals
+task_name: Task name
+refund_description: Description
+deposit_amount: Deposit amount
+deposit_amount_percentage: Deposit amount in %
+stamp_cancelled_link: Corrected by %id%
+corrected_by: Corrected by %id%
+task_credit: Credit
+task_credit_description: Credit Description
+task_net_price: Net price
+not_credited_tasks: Add credit task
+create_credit_invoice: Create credit invoice

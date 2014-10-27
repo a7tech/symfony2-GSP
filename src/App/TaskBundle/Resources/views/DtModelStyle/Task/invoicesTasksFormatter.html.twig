@@ -1,0 +1,10 @@
+{% if entity.invoicesTasks|length > 0 %}
+    {% for invoiceTask in entity.invoicesTasks %}
+        {% if invoiceTask.order.visible %}
+            <a href="{{ path('backend_project_sale_order_show', {'id': invoiceTask.order.id, 'project_id': entity.project.id}) }}">
+                {{ invoiceTask.order.id }}
+            </a>
+            {% if not loop.last %}, {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}

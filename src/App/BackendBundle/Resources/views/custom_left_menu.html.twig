@@ -1,0 +1,108 @@
+{% block left_menu %}
+<ul class="nav nav-pills nav-stacked">
+    <li class="nav-header">Custom types</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_address_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_address_type') }}">Address type</a>
+    </li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 34)=='backend_settings_custom_phone_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_phone_type') }}">Phone type</a>
+    </li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 41)=='backend_settings_custom_social_media_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_social_media_type') }}">Social Media type</a>
+    </li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 34)=='backend_settings_custom_email_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_email_type') }}">Email type</a></li>
+    <li class="nav-header">Codes' types</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_license_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_license_type') }}">Licences, Permits, Authorization, & Insurances type</a></li>
+
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_barcode_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_barcode_type') }}">Barcode Types</a></li>
+    <li class="nav-header">Companies' types</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_company_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_company_type') }}">Company Profile</a></li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 37)=='backend_settings_custom_company_group' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_company_group') }}">Company Groups</a></li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 37)=='backend_settings_custom_department' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_department') }}">Company Departments</a></li>
+    <li class="nav-header">Contacts' types</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_person_group' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_person_group') }}">Contacts' groups</a></li>
+    <li class="nav-header">Products' types</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_product_type' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_product_type') }}">Product type</a></li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 35)=='backend_settings_custom_brand_group' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_brand_group') }}">Brand groups</a></li>
+    <li class="nav-header">HR' types</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 30)=='backend_settings_custom_salary' %}
+                                        active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_salary_type') }}">Salary type</a></li>
+    <li class="nav-header">Invoice</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 38)=='backend_settings_custom_payment_method' %}
+            active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_payment_method') }}">Payment method</a></li>
+    {# <li class="nav-header">Project</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_project_type' %}
+            active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_project_type') }}">Project type</a></li>
+    <li class="nav-header">Task</li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 36)=='backend_settings_custom_task_status' %}
+            active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_task_status') }}">Task status</a></li>
+    <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 37)=='backend_settings_custom_task_priority' %}
+            active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_task_priority') }}">Task priority</a></li>
+   <li class="
+            {% if app.request.attributes.get('_route')|slice(0, 31)=='backend_settings_custom_tracker' %}
+            active
+            {%endif%}">
+        <a href="{{ path('backend_settings_custom_tracker') }}">Tracker</a></li>
+     #}
+</ul>
+{% endblock %}

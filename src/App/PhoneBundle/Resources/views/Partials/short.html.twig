@@ -1,0 +1,5 @@
+<i class="icon-contact-{{ phone.phoneType|lower == 'mobile' ? 'cell' : 'phone' }}"></i>
+{% if (phone.phoneType|length > 0)  %}
+    ({{ phone.phoneType }})
+{% endif %}
+{{ phone }}

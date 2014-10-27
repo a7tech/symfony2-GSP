@@ -1,0 +1,51 @@
+{% extends 'AppSkillBundle:Category:layout.html.twig' %}
+
+{% set nav_title = 'Skill category overview' %}
+
+{% block actions_main %}
+    <h3 class="h3-form">Skill category overview</h3>
+    <div class="contact-card">
+        <dl class="dl-horizontal">
+            <dt>Id:</dt>
+            <dd>{{ entity.id }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Sector:</dt>
+            <dd>{{ entity.sector }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Speciality:</dt>
+            <dd>{{ entity.speciality }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Parent:</dt>
+            <dd>{{ entity.parent|default('Root') }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Title:</dt>
+            <dd>{{ entity.title }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Slug:</dt>
+            <dd>{{ entity.slug }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Description:</dt>
+            <dd>{{ entity.description|raw }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Use for evaluation:</dt>
+            <dd>
+                <i class="{{ entity.useForEvaluation ? 'icon-ok' : 'icon-ban-circle' }}"></i>
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Value:</dt>
+            <dd>{{ entity.value }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Position:</dt>
+            <dd>{{ entity.position }}</dd>
+        </dl>
+    </div>
+{% endblock %}

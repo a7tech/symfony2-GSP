@@ -1,0 +1,23 @@
+services:
+    app_skill.form.category:
+        class: App\SkillBundle\Form\CategoryType
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: app_skillbundle_categorytype }
+
+    app_skill.form.skill:
+        class: App\SkillBundle\Form\SkillType
+        arguments: [@app_skill.form.category_autocreate_listener]
+        tags:
+            - { name: form.type, alias: skill_form }
+
+    app_skill.form.category_autocomplete:
+        class: App\SkillBundle\Form\Type\CategoryAutocompleteType
+        arguments: [@security.context]
+        tags:
+            - { name: form.type, alias: skill_category_autocomplete }
+
+    app_skill.form.category_autocreate_listener:
+        class: App\SkillBundle\Form\EventListener\CategoryAutocreateListener
+        arguments: [@doctrine.orm.entity_manager, @security.context, @zenstruck.slugify]
+

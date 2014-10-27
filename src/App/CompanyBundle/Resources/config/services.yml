@@ -1,0 +1,33 @@
+parameters:
+#    app_company.example.class: App\CompanyBundle\Example
+
+services:
+    app_company.form.company_autocomplete:
+        class: App\CompanyBundle\Form\Type\CompanyAutocompleteType
+        tags:
+           -  { name: form.type, alias: company_autocomplete }
+
+    app_company.form.company_single_autocomplete:
+         class: App\CompanyBundle\Form\Type\CompanySingleAutocompleteType
+         tags:
+            -  { name: form.type, alias: company_single_autocomplete}
+
+    app_company.search.manager:
+        class: App\CompanyBundle\Manager\SearchManager
+        arguments: [ @service_container]
+
+    app_company.form.company_single_not_required_autocomplete:
+         class: App\CompanyBundle\Form\Type\CompanySingleNotRequiredAutocompleteType
+         tags:
+            -  { name: form.type, alias: company_single_not_required_autocomplete}
+            
+    app_company.filter.companyfilter:
+        class:  App\CompanyBundle\Filter\CompanyFilter
+        parent: app_core.filter.filter
+    app_company.filter.companytypefilter:
+        class:  App\CompanyBundle\Filter\CompanyTypeFilter
+        parent: app_core.filter.filter
+    app_company.filter.companygroupfilter:
+        class:  App\CompanyBundle\Filter\CompanyGroupFilter
+        parent: app_core.filter.filter
+

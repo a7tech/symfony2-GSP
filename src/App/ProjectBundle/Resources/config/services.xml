@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--<parameters>-->
+    <!--<parameter key="app_project.example.class">App\ProjectBundle\Example</parameter>-->
+    <!--</parameters>-->
+
+    <services>
+        <service id="app_project.project_manager" class="App\ProjectBundle\Entity\ProjectManager">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
+        <service id="app_project.form.type.project_choice" class="App\ProjectBundle\Form\Type\ProjectChoiceType">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+
+            <tag name="form.type" alias="project_choice"/>
+        </service>
+
+        <service id="app_project.form.type.project_milestone_type" class="App\ProjectBundle\Form\ProjectMilestoneType">
+            <argument type="service" id="app_status.translator"/>
+            <tag name="form.type" alias="project_milestone_type"/>
+        </service>
+
+        <service id="app_project.gantt_chart.tasks_transformer" class="App\ProjectBundle\Transformer\GanttTaskTransformer">
+            <argument type="service" id="app_status.translator" />
+            <argument type="service" id="templating.engine.twig" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="app_core.twig.extension.formatter" />
+        </service>
+        <service id="app_project.filter.projectfilter" class="App\ProjectBundle\Filter\ProjectFilter" parent="app_core.filter.filter">
+        </service>
+        <service id="app_project.filter.projectmilestonefilter"
+                 class="App\ProjectBundle\Filter\ProjectMilestoneFilter"
+                 parent="app_core.filter.filter"
+        />
+        <service id="app_project.filter.projectopportunityfilter"
+                 class="App\ProjectBundle\Filter\ProjectOpportunityFilter"
+                 parent="app_core.filter.filter"
+        />
+    </services>
+</container>

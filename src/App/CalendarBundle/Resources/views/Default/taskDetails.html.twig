@@ -1,0 +1,10 @@
+{{ task.tracker }} #{{ task.id }} {{ task.name|slice(0, 30) }}<br>
+<br>
+{{ 'project'|trans({}, 'Project') }} <a href="{{ path('backend_project_show', {'id': task.project.id}) }}">{{ task.project }}</a><br>
+{{ 'category'|trans({}, 'Project') }}: {{ task.category }}<br>
+{{ 'status'|trans({}, 'Project') }}: {{ task.status }}<br>
+{{ 'task.start_date'|trans({}, 'Project' ) }}: {{ task.startDate|date(date_format) }}<br>
+{{ 'task.end_date'|trans({}, 'Project' ) }}: {{ task.dueDate|date(date_format) }}<br>
+{{ 'task.assigned_to'|trans({}, 'Project' ) }}: {% for person in task.assignedTo  %}{{ person }}{% if not loop.last %}, {% endif %}{% endfor %}<br>
+{{ 'task.priority'|trans({}, 'Project') }}: {{ task.priority }}<br>
+{{ 'estimated_time'|trans({}, 'Tasks') }}: {{ task.estimatedTime is not null ? task.estimatedTime|interval(task.project.workingHours) : '-' }}

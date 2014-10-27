@@ -1,0 +1,9 @@
+services:
+    app_socialmedia.form.social_media:
+        class: App\SocialMediaBundle\Form\SocialMediaType
+        tags:
+            - { name: form.type, alias: social_media_form }
+            
+    app_socialmedia.filter.socialmediatypefilter:
+        class:  App\SocialMediaBundle\Filter\SocialMediaTypeFilter
+        parent: app_core.filter.filter

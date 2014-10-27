@@ -1,0 +1,42 @@
+{% extends 'AppPaymentBundle:Payment:layout.html.twig' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row">
+
+        {% if entities %}
+            <table id="datatable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Invoice #</th>
+                    <th>Amount</th>
+                    <th>Currency</th>
+                </tr>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for entity in entities %}
+                    <tr id="{{ entity.id }}">
+                        <td><a href="{{ path('backend_sale_order_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                        <td>{{ entity.invoice }}</td>
+                        <td>{{ entity.amount }}</td>
+                        <td>{{ entity.invoice.currency }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

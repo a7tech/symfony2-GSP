@@ -1,0 +1,13 @@
+{% extends 'AppPlaceBundle:Place:layout.html.twig' %}
+
+{% block actions_main %}
+    <form class="form-horizontal" action="" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="button_form_submit"></label>
+            <div class="col-xs-6">
+                <input class="btn btn-default" type="submit" value="Save">
+            </div>
+        </div>
+    </form>
+{% endblock %}

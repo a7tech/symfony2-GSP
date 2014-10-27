@@ -1,0 +1,18 @@
+{% extends 'AppPaymentBundle:Payment:layout.html.twig' %}
+
+{% set nav_title = entity.id ? 'Payment edit' : 'Payment new' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <form class="form-horizontal" id="product-form" action="" method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+
+                <div class="form-actions well">
+                    <input class="btn btn-primary" name="save" type="submit" value="Save">
+                </div>
+
+        </form>
+    </div>
+
+
+{% endblock %}

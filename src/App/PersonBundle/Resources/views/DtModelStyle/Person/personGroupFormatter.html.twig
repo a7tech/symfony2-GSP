@@ -1,0 +1,5 @@
+{% if entity.personGroup|length > 0 %}
+    {% for group in entity.personGroup %}
+        {{ group.name }}
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,60 @@
+.backend-login .form-control  {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #CCCCCC;
+    display: inline;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+.backend-login .input-group {
+    border-collapse: separate;
+    position: relative;
+}
+.backend-login .input-group-addon, .input-group-btn {
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 0;
+    padding: 8px 12px;
+}
+
+.form-horizontal {
+    margin-left: 80px;
+}
+
+
+.backend-login {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webit-border-radius: 5px;
+    border: 1px solid #049cdb;
+    padding: 20px;
+    width: 500px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.backend-login h4, .backend-login input, .backend-login .btn{
+
+}
+
+.backend-login input[type="email"]{
+    width: 280px;
+}
+.backend-login input[type="password"], .backend-login input[type="text"]  {
+    width: 150px;
+}
+
+.backend-login #show_pass {
+    margin-left: 0;
+}
+
+.remember {
+    vertical-align: middle;
+}

@@ -1,0 +1,43 @@
+{% extends 'AppBackendBundle:Dashboard:home.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Sale Orders') %}
+        {% set route_prefix = project is not null ? 'backend_project_sale_order' : 'backend_sale_order' %}
+        {% include 'AppBackendBundle:Settings:nav.html.twig' with {'print': true, 'route_params': {
+            'project_id': project is not null ? project.id : null
+        }} %}
+    {% endblock %}
+
+    {% if project is not null %}
+        <a href="{{ path('backend_project_show', {'id': project.id}) }}">{{ 'back_to'|trans({'%name%': project}, 'Backend') }}</a>
+    {% endif %}
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}
+
+{% block bottom %}
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <ul class="nav nav-pills">
+                <li class="
+                    {% if app.request.attributes.get('_route')|slice(0,18)=='backend_sale_order'%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_sale_order') }}">Sale Order</a></li>
+                <li class="
+                    {% if app.request.attributes.get('_route')|slice(0,27)=='backend_projects_sale_order'%}
+                        active
+                    {%endif%}"><a href="{{ path('backend_projects_sale_order') }}">All projects Sale Order</a></li>
+                {% if project is not null %}
+                    <li class="{% if app.request.attributes.get('_route')=='backend_project_sale_order_create_credit'%}active{%endif%}">
+                        <a href="{{ path('backend_project_sale_order_create_credit', {'project_id': project.id }) }}">
+                            {{ 'create_credit_invoice'|trans({}, 'Invoice') }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'AppProductBundle:BrandGroup:layout.html.twig' %}
+
+{% block actions_main %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th class="col-md-3">Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ entity.title }}</td>
+        </tr>
+        <tr>
+            <th>Coeff 1 (Purchase)</th>
+            <td>{{ entity.purchaseCoeff }}</td>
+        </tr>
+        <tr>
+            <th>Coeff 2 (Resell)</th>
+            <td>{{ entity.resellCoeff }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

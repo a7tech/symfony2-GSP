@@ -1,0 +1,31 @@
+{% extends 'AppTaskBundle:TaskTracker:layout.html.twig' %}
+{% set nav_title = 'Task tracker show' %}
+
+{% block actions_main %}
+
+    <table class="table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'name'|trans({}, 'Common') }}</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'description'|trans({}, 'Common') }}</th>
+            <td>{{ entity.description|raw }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'color'|trans({}, 'Status') }}</th>
+            <td style="background-color: #{{ entity.color }}">#{{ entity.color }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'value'|trans({}, 'Status') }}</th>
+            <td>{{ entity.value }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

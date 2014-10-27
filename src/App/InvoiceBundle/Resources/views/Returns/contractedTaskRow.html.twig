@@ -1,0 +1,8 @@
+{% extends '@AppInvoice/SaleOrder/contractedTaskRow.html.twig' %}
+
+{% block row %}
+    {{ parent() }}
+    <td>
+        <button class="btn add-task-refund"{% if invoice_task.refund is not null %} style="display: none;"{% endif %}>{{ 'add_return'|trans({}, 'Invoice') }}</button>
+    </td>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('bundles/lexiktranslation/ng-table/ng-table.min.css') }}">
+{% endblock %}
+
+{% block user_js %}
+    {% block javascript_footer %}
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+        <script src="{{ asset('bundles/lexiktranslation/ng-table/ng-table.min.js') }}"></script>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'AppProjectBundle:ProjectMilestone:layout.html.twig' %}
+
+{% set nav_title = 'Project milestone show' %}
+
+{% block actions_main %}
+
+    <table class="table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'name'|trans({}, 'Common') }}</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'description'|trans({}, 'Common') }}</th>
+            <td>{{ entity.description|raw }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'status'|trans({}, 'Project') }}</th>
+            <td>
+                {% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity), entity.status) %}
+                <span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ entity.status is not empty ? status_info.name : '' }}</span>
+            </td>
+        </tr>
+        <tr>
+            <th>{{ 'milestone.importance'|trans({}, 'Project') }}</th>
+            <td>{{ entity.value }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions %}
+    <div class="title-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 h3">
+                    <h3>Account Profiles create</h3>
+                </div>
+                <div class="col-md-4">
+                    <div class="crud-actions">
+                        <ul class="nav-crud">
+                            <li class="">
+                                <a href="{{ path('backend_settings_account_profile') }}" title="List">
+                                    <i class="icon-crud-list"></i>
+                                    <div>
+                                        <label>List</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="active" id="new">
+                                <a title="New">
+                                    <i class="icon-crud-new"></i>
+                                    <div>
+                                        <label>New</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="show">
+                                <a   title="Show">
+                                    <i class="icon-crud-show"></i>
+                                    <div>
+                                        <label>Show</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="edit">
+                                <a title="Edit">
+                                    <i class="icon-crud-edit"></i>
+                                    <div>
+                                        <label>Edit</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="delete">
+                                <a title="Delete">
+                                    <i class="icon-crud-delete"></i>
+                                    <div>
+                                        <label>Delete</label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3" id="copy_buttons">
+
+                </div>
+                <div class="col-md-2">
+                    <div class="form-search">
+                        <input type="text" class="form-control" id="search_filter" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+<div class="action-view">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <form class="form-horizontal" action="{{ path('backend_settings_account_profile_create') }}" method="post" {{ form_enctype(form) }}>
+                    {{ form_widget(form) }}
+                    <button class="btn btn-default" type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block user_js %}
+<script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appaddress/address_form.js') }}" type="text/javascript"></script>
+<script>
+
+    function initAddressWidgets() {
+        initAddressForm(
+                '{{ url('ajax_province', {'countryId': '__countryId__'}) }}',
+                '{{ url('ajax_region', {'provinceId': '__provinceId__'}) }}'
+        );
+    }
+    Admin.bindAdditionalWidgets = function() {
+        $("select[id$='_province']:last").attr('disabled', true);
+        $("select[id$='_region']:last").attr('disabled', true);
+
+        initAddressWidgets();
+    };
+
+    jQuery(document).ready(function() {
+        initAddressWidgets();
+
+        Admin.setup_collections(document);
+        if (jQuery('select[id$="_sector"]').find('option[selected="selected"]').length==0) {
+            var $speciality = jQuery('input[id*="_specialities"]');
+
+            /**
+             * Disable all needed selects
+             **/
+
+            $speciality.each(function() {
+                $(this).attr('disabled', true);
+            })
+        }
+
+        var $speciality = jQuery('input[id*="_specialities"]');
+        var $sector = jQuery('select[id$="_sector"]');
+
+        /**
+         * Onchange event
+         */
+
+        $sector.change(function() {
+
+            var $sectorId = $(this).find(":selected").attr('value');
+            var locale = '{{ app.request.attributes.all["_locale"] }}';
+            var baseUri = '{{ app.request.baseUrl }}';
+            var host = '{{ app.request.host }}'
+            var $url = 'http://'+host+baseUri+'/'+locale+'/backend/settings/industry_speciality/ajax_speciality/sectorId='+$sectorId
+            $.ajax({
+                url:$url
+            }).done(function(data) {
+                        var options = '';
+                        var dataO= data['res'];
+
+                        for (var i = 0; i < dataO.length; i++) {
+                            options += '<li><label><input id="app_companybundle_companytype_specialities' + dataO[i]['id'] +
+                                    '" value="'+dataO[i]['id']+'" type="checkbox" name="app_companybundle_companytype[specialities][]"><span>' +
+                                    dataO[i]['name'] + '</span></label></li>';
+                        }
+                        jQuery('ul[id*="_specialities"]').html('');
+                        jQuery('ul[id*="_specialities"]').html(options);
+                        $speciality.removeAttr('disabled');
+                    });
+        });
+    });
+
+</script>
+{% endblock %}

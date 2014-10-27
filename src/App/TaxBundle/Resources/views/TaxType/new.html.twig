@@ -1,0 +1,162 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions%}
+    <div class="title-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 h3">
+                    <h3>Tax type create</h3>
+                </div>
+                <div class="col-md-5">
+                    <div class="crud-actions">
+                        <ul class="nav-crud">
+                            <li class="">
+                                <a href="{{ path('backend_settings_taxes') }}" title="List">
+                                    <i class="icon-crud-list"></i>
+                                    <div>
+                                        <label>List</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="active" id="new">
+                                <a  title="New">
+                                    <i class="icon-crud-new"></i>
+                                    <div>
+                                        <label>New</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="show">
+                                <a   title="Show">
+                                    <i class="icon-crud-show"></i>
+                                    <div>
+                                        <label>Show</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="edit">
+                                <a title="Edit">
+                                    <i class="icon-crud-edit"></i>
+                                    <div>
+                                        <label>Edit</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="delete">
+                                <a title="Delete">
+                                    <i class="icon-crud-delete"></i>
+                                    <div>
+                                        <label>Delete</label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="left-menu">
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-9">
+
+                        <form action="" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+                            {{ form_errors(form) }}
+                            {{ form_widget(form) }}
+                            {{ form_rest(form) }}
+                            <div class="form-group">
+                                <label for="button_form_submit" class="control-label col-xs-3"></label>
+                                <div class="col-xs-6">
+                                    <input type="submit" value="Create" class="btn btn-default">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block user_js %}
+<script>
+
+    (function($) {
+        this.initAddressForm = function(ajax_province_url, ajax_region_url) {
+
+            $('select[id$="_country"]').change(function() {
+                var $parent = $(this).parent().parent().parent();
+                var $province = $parent.find('select[id$="_province"]');
+                var countryId = $(this).find(":selected").attr('value');
+
+                $.ajax({
+                    url: ajax_province_url.replace('__countryId__', countryId)
+                }).done(function(data) {
+                            var options = '';
+                            var dataO= data['res'];
+                            options += '<option >Choose an option</option>';
+                            for (var i = 0; i < dataO.length; i++) {
+                                options += '<option value="' + dataO[i]['id'] + '">' + dataO[i]['name'] + '</option>';
+                            }
+                            $province.html('');
+                            $province.html(options);
+                            $province.removeAttr('disabled');
+                        });
+            });
+
+            $('select[id$="_province"]').change(function() {
+                var $parent = $(this).parent().parent().parent();
+                var $province = $parent.find('select[id$="_region"]');
+                var provinceId = $(this).find(":selected").attr('value');
+
+                $.ajax({
+                    url: ajax_region_url.replace('__provinceId__', provinceId)
+                }).done(function(data) {
+                            var options = '';
+                            var dataO= data['res'];
+                            options += '<option >Choose an option</option>';
+                            for (var i = 0; i < dataO.length; i++) {
+                                options += '<option value="' + dataO[i]['id'] + '">' + dataO[i]['name'] + '</option>';
+                            }
+                            $province.html('');
+                            $province.html(options);
+                            $province.removeAttr('disabled');
+                        });
+            });
+        }
+    })(jQuery);
+
+
+    function initAddressWidgets() {
+
+        if (!$("select[id$='_country']").val()) {
+            $("select[id$='_province']").attr('disabled', true);
+            $("select[id$='_region']").attr('disabled', true);
+        }
+        initAddressForm(
+                '{{ url('ajax_province', {'countryId': '__countryId__'}) }}',
+                '{{ url('ajax_region', {'provinceId': '__provinceId__'}) }}'
+        );
+    }
+
+    jQuery(document).ready(function() {
+        initAddressWidgets();
+    });
+
+</script>
+{% endblock %}

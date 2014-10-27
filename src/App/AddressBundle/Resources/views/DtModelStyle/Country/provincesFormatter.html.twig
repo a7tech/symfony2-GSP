@@ -1,0 +1,7 @@
+{% if entity.provinces|length>0 %}
+    {% for province in entity.provinces %}
+        {% if province|length>0 %}
+            <a href="{{ path('backend_settings_province_show', {id: province.id}) }}">{{ province }}</a>
+        {% endif %}
+    {% endfor %}
+{% endif %}

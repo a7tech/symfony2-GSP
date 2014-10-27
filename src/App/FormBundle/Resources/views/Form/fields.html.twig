@@ -1,0 +1,173 @@
+{% extends 'AppFormBundle:Form:form_theme.html.twig' %}
+
+{% block form_widget_compound %}
+    {% if form.parent is empty %}
+        {{ form_errors(form) }}
+    {% endif %}
+    {% if form.vars.groups is defined %}
+        <div class="row form-group">
+            <div class="col-md-3">
+                <div class="left-menu">
+                    <ul id="{{ form.vars.id ~ '_tabs' }}" class="left-nav-tabs nav nav-pills nav-stacked">
+                        {% for group,items in form.vars.groups %}
+                            <li id="btn-{{ group|slugify }}">
+                                <a href="#tab-{{ group|slugify }}">{{ group }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                {% for group,items in form.vars.groups %}
+                    <h3 id="tab-{{ group|slugify }}" class="h3-form">{{ group }}</h3>
+                    {% for item in items %}
+                        {% if form[item].vars.embed_form is defined %}
+                            {{ form_widget(form[item]) }}
+                        {% else %}
+                              
+                            <div class="form-group">
+                                {{ form_label(form[item], null ) }}
+                               
+                                {{ form_errors(form[item]) }}
+                                {#% if form[item].vars.block_prefixes.1 == 'choice' %}
+                                    <div class="col-xs-6" {{ block('widget_container_attributes') }}>
+                                        {{ form_widget(form[item]) }}
+                                    </div>
+                                {% else %}
+                                {#<div class="form-group" {{ block('widget_container_attributes') }}>#}
+                                    {{ form_widget(form[item]) }}
+                                {#% endif %#}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                var $navbar = $("#{{ form.vars.id ~ '_tabs' }}");
+                var offset = $navbar.offset();
+                var $span3 = $navbar.parents('.col-md-3');
+
+                $(window).bind('scroll', function() {
+                    $navbar.width($span3.width());
+                    if ($(this).scrollTop() > offset.top) {
+                        $navbar.addClass('top-fixed col-md-3');
+                    }
+                    else {
+                        $navbar.removeClass('top-fixed col-md-3');
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+    {{ form_rest(form) }}
+{% endblock form_widget_compound %}
+
+{% block datepicker_widget %}
+    <div class="col-xs-6">
+    <div class="input-group">
+        <input type="text" id="{{ id }} " name="{{ full_name }}" {% if required %} required="required"{% endif %} class="form-control {{form.vars.attr.class}}" value="{{ form.vars.value}}">
+        {#{{ block('form_widget_simple') }}#}
+        <span class="input-group-addon">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </span>
+    </div>
+    </div>
+{% endblock datepicker_widget %}
+
+{% block filters_widget %}
+    <div class="form-filters">
+        <div class="filter-selector">
+        {{ form_label(form) }}
+            <!-select class="filters-selector"-->
+            <select class="filters-selector">
+                <option value=""></option>
+                {% for filter, name in filters %}
+                    <option value="{{ filter }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filters-wrapper">
+            {% for child_form in form %}
+                {% set filter_name = child_form.vars.filter_wrapper %}
+                {% if filter_name == 'user-wrapper' %}
+                <div class="{{ filter_name }} filter-section" style="display: none" data-filter="{{ filter_name }}">
+                    <div class="search-row">
+                        {{ form_label(child_form) }}
+                        <span class="search-input operation">
+                        <div class="form-group">
+                        {{ form_widget(child_form,{ 'attr' : { 'class' : 'form-control' }}) }}
+                        </div>
+                        </span>
+                    </div>
+                    <button class="clear-filter btn">Remove</button>
+                </div>
+                {% else %}
+                <div class="{{ filter_name }} filter-section" style="display: none" data-filter="{{ filter_name }}">
+                    {% if filter_name == 'doneRatio-wrapper' %}
+                    <div class="search-row">
+                    {% endif %}
+                    {{ form_row(child_form) }}
+                    {% if filter_name == 'doneRatio-wrapper' %}
+                    </div>
+                    {% endif %}
+                    <button class="clear-filter btn">Remove</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block interval_widget %}
+    <!-- div class="interval" -->
+    {# { form_widget(form.days, { 'attr': {'class': 'col-xs-2'} }) } #}
+    <div class="col-xs-2"><input type="text" class="form-control" id="{{form.days.vars.id}}" name="{{ form.days.vars.full_name }}"  /></div>
+    <label class="col-xs-1 control-label">{{ form.days.vars.label }}</label>
+    {# { form_widget(form.hours) }#}
+    <div class="col-xs-2"><input type="text" class="form-control" id="{{form.hours.vars.id}}" name="{{ form.hours.vars.full_name }}"  /></div>
+    <label class="col-xs-1 control-label">{{ form.hours.vars.label }}</label>
+    <!-- /div -->
+{% endblock %}
+
+{% block time_widget %}
+{% spaceless %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        {% set attr = attr|merge({'class': attr.class|default('')}) %}
+        {% spaceless %}
+        {{ form_widget(form.hour, { 'attr': {  'size': '1'}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-2')}) }}
+        {% if with_minutes %}
+        {{ form_widget(form.minute, { 'attr': { 'size': '1' }, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-2')}) }}
+        {% endif %}
+        {% if with_seconds %}
+            :{{ form_widget(form.second, { 'attr': { 'size': '1' } }) }}
+        {% endif %}
+        {% endspaceless %}
+        {{ block('form_message') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock time_widget %}
+
+{% block salary_info_form_widget %}
+{% spaceless %}
+        <div id="person_form" class="hr_slr_info">
+            {% for child in form %}
+                    {{ form_row(child) }}
+            {% endfor %}
+        </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block hr_info_form_widget %}
+{% spaceless %}
+        <div id="person_form" class="hr_slr_info">
+            {% for child in form %}
+                    {{ form_row(child) }}
+            {% endfor %}
+        </div>
+{% endspaceless %}
+{% endblock %}

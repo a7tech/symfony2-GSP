@@ -1,0 +1,242 @@
+{% extends 'AppProjectBundle:Project:layout.html.twig' %}
+
+{% set nav_title = entity.id ? 'Project edit' : 'Project new' %}
+
+{% block actions_main %}
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    {% if id is defined %}
+                    {{ include(
+                        'AppProjectBundle:Project:sideBar.html.twig',
+                        { 'id': id }
+                    ) }}
+                    {% endif %}
+                    <div class="col-md-9">
+                    <form class="form-horizontal" id="project-form" action="" method="post" {{ form_enctype(form) }} >
+
+                    {{ form_widget(form._token) }}
+
+                    {{ form_row(form.accountProfile, {'attr' : {'class' : 'form-control'} }) }}
+                    
+                     <div class="form-group">
+                        {{ form_label(form.opportunity,null,{ 'label_attr' :{ 'class' : 'col-xs-3' } }) }}
+                        <div class="form-group">{{ form_widget(form.opportunity,{ 'attr' :{ 'class' : 'form-control' } }) }} {{ form_errors(form.opportunity) }}</div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.startDate) }}
+                        <div class="form-group">{{ form_widget(form.startDate) }} {{ form_errors(form.startDate) }}</div>
+                    </div>
+                     <div class="form-group">
+                        {{ form_label(form.status) }}
+                        <div class="form-group">{{ form_widget(form.status,{ 'attr' :{ 'class' : 'form-control' } }) }} {{ form_errors(form.status) }}</div>
+                    </div>
+                    {{ form_row(form.places) }}
+                    <div class="form-group">
+                        {{ form_label(form.endDateOnLastTask) }}
+                        <div class="form-group">
+                            {{ form_widget(form.endDateOnLastTask) }} {{ form_errors(form.endDateOnLastTask) }}
+                        </div>
+                         <div class="form-group">Use the latest task ending date
+                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form_label(form.endDate) }}
+                        <div class="form-group">{{ form_widget(form.endDate) }} {{ form_errors(form.endDate) }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.currency) }}
+                        <div class="form-group">{{ form_widget(form.currency,{ 'attr' :{ 'class' : 'form-control' } }) }} {{ form_errors(form.currency) }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.depositAmount) }}
+                        <div class="form-group">{{ form_widget(form.depositAmount) }} {{ form_errors(form.depositAmount) }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.invoiceDeliveryType) }}
+                        <div class="form-group">
+                            {{ form_widget(form.invoiceDeliveryType,{ 'attr' :{ 'class' : 'form-control' } }) }}
+                            {{ form_errors(form.invoiceDeliveryType) }}
+                        </div>
+                    </div>
+
+                    {{ form_row(form.owner,{ 'attr' :{ 'class' : 'form-control' } }) }}
+
+                    <div class="form-group">
+                        {{ form_label(form.name) }}
+                        <div class="form-group">{{ form_widget(form.name,{ 'attr' :{ 'class' : 'form-control' } }) }} {{ form_errors(form.name) }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.description) }}
+                        <div class="form-group">{{ form_widget(form.description) }} {{ form_errors(form.description) }}</div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.termCondition) }}
+                        <div class="form-group">{{ form_widget(form.termCondition) }} {{ form_errors(form.termCondition) }}</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form_label(form.workingDays) }}
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <div class="checkbox">
+                                    {{ form_widget(form.workingDays) }} 
+                                    {{ form_errors(form.workingDays) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_row(form.startTime) }}
+                    {{ form_row(form.endTime) }}
+
+                    {{ form_widget(form) }}
+
+                    {% if presetTasks %}
+                    <div class="form-group">
+                        <label class="form-label form-label" for="project_form_preset" id="task-preset-slide-down">Task preset [+]</label>
+                        <label class="form-label form-label" for="project_form_preset" id="task-preset-slide-up">Task preset [-]</label>
+                        <br>
+                        <div id="task-preset-content" style="display: none; clear: both">
+                        
+                        <table class="table" >
+                            <tr style="background: #f9f9f9;">
+                                <th>Id</th>
+                                <th>{{ 'level'|trans({}, 'Tasks') }}</th>
+                                <th>{{ 'name'|trans({}, 'Common') }}</th>
+                                <th>{{ 'status'|trans({}, 'Tasks') }}</th>
+                                <th>{{ 'priority'|trans({}, 'Tasks') }}</th>
+                                <th>{{ 'duration'|trans({}, 'Tasks') }}</th>
+
+                                <th>{{ 'tracker'|trans({}, 'Tasks') }}</th>
+                                <th>{{ 'type'|trans({}, 'Tasks') }}</th>
+                                <th>{{ 'quantity'|trans({}, 'Tasks') }}</th>
+                                <th>{{ 'cost'|trans({}, 'Tasks') }}</th>
+                                <th>{{ 'mark_up'|trans({}, 'Tasks') }}</th>
+                                <th>Sell Price</th>
+                            </tr>
+                            <tr>
+                                <td colspan='13'></td>
+                            </tr>
+
+                            {% set catLevel = 0 %}
+
+                            {% for preset in presetTasks %}
+                            {% set level = preset['category'].level + 1 %}
+
+                            {% if preset['category'].level == 0 %}
+                                {% set catLevel = preset['category'].id %}
+                            {% endif %}
+                            
+                            <tr
+                                {% if preset['category'].level > 0 %}
+                                    class="cat{{ catLevel }}" style="display: none;"
+                                {% endif %}
+                                {% if preset['category'].level == 0 %}
+                                    style="background: #f9f9f9;"
+                                {% endif %}
+                            >
+                                <td>{{ preset['category'].id }}</td>
+                                <td>
+                                    {% if preset['category'].level == 0 and preset['hasTasks'] is defined  %}
+                                    <div id="show-cat{{ catLevel }}"><a href="#" onclick="showHideTr('cat{{ catLevel }}', 'show'); return false;">[+]</a></div>
+                                    <div id="hide-cat{{ catLevel }}" style="display: none;"><a href="#" onclick="showHideTr('cat{{ catLevel }}', 'hide'); return false;">[-]</a></div>
+                                    {% endif %}
+                                </td>
+                                <td colspan='10'>
+                                    {% if preset['category'].level > 0 %}
+                                        <img src="/images/spacer.png" width='{{preset['category'].level}}0' height='1'/> 
+                                        <b>{{ preset['category'].title}}</b>
+                                    {% else %}
+                                        <b>{{ preset['category'].title}}</b>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% if preset['tasks']|length > 0 %}
+                                {% for task in preset['tasks'] %}
+                                    <tr 
+                                        class="cat{{ catLevel }}" style="display: none"
+                                    >
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <img src="/images/spacer.png" width='{{level}}0' height='1'/>
+                                            <input type="checkbox" id="task_"{{ task.id }} name="preset_task[task_{{ task.id }}]"  value="{{ task.id }}" />
+                                            {{ task.name }}
+                                        </td>
+                                        <td>
+                                             {% set status_info = statusInfo(constant('STATUS_GROUP_NAME', task), task.status) %}
+                                             {{ status_info.name }}
+                                        </td>
+
+                                        <td>{% if task.priority|length > 0 %}{{ task.priority.name }}{% endif %}</td>
+
+                                        <td>{% if task.estimatedTime %}{{ task.estimatedTime|number_format }}h{% endif %}</td>
+                                        <td>{{ task.tracker }}</td>
+                                        {% set type_info = statusInfo(constant('TYPES_GROUP_NAME', task), task.type) %}
+                                        <td>{{ type_info.name }}</td>
+                                        <td>{{ task.unitQuantity }}</td>
+                                        <td class="number">{{ task.netPrice(false)|number_format(2) }}</td>
+                                        <td>{{ task.profit*100 }}%</td>
+                                        <td class="number">{{ task.netPrice(true)|number_format(2) }}</td>
+
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% endfor %}
+                        </table>
+                        
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="button_form_submit"></label>
+                        <div class="form-group">
+                            {% if entity.type != constant('TYPE_PROJECT', entity) %}
+                                <input class="btn btn-primary" type="submit" name="submit_estimate" value="Save as project estimate"/>
+                            {% endif %}
+                            <input class="btn btn-primary" type="submit" name="submit_project" value="Save as project"/>
+                        </div>
+                    </div>
+ 
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script src="{{ asset('js/jquery/plugins/select2/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appcore/js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery/plugins/jquery.dotimeout.js') }}" type="text/javascript"></script>
+    <script>
+        var projectId = {% if entity and entity.id > 0 %}{{entity.id}}{% else %}0{% endif %};
+
+        jQuery(function($) {
+            Admin.setup_collections(document);
+            Admin.bind_widgets();
+        });
+
+
+    </script>
+    <script src="{{ asset('bundles/appproject/js/project-edit.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block user_css %}
+
+    <link href="{{ asset('js/jquery/plugins/select2/select2.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('js/jquery/plugins/select2/select2-bootstrap.css') }}" type="text/css" rel="stylesheet">
+    {{ parent() }}
+{% endblock %}

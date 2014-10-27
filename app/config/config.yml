@@ -1,0 +1,111 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: bundles/fos_user_bundle.yml }
+    - { resource: bundles/spomky_role_bundle.yml }
+    - { resource: bundles/sonata_block.yml }
+    - { resource: bundles/assetic.yml }
+    - { resource: bundles/jms_i18n_routing.yml }
+    - { resource: bundles/doctrine-extensions.yml }
+#    - { resource: bundles/a2lix_translationform_bundle.yml }
+    - { resource: bundles/tinymce.yml }
+    - { resource: bundles/genemu_form.yml }
+    - { resource: bundles/slugify.yml }
+    - { resource: bundles/vlabs_media.yml }
+    - { resource: bundles/fos_elastica.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: %locale% }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig','php'] } #assets_version: SomeVersionScheme
+    default_locale:  %locale% # Should Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
+    session:         ~
+
+# Twig Configuration
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    globals:
+        date_format: %date_format%
+        datetime_format: %datetime_format%
+    form:
+        resources:
+            - 'AppFormBundle:Form:fields.html.twig'
+
+# Assetic Configuration
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #closure:
+        #    jar: %kernel.root_dir%/Resources/java/compiler.jar
+        #yui_css:
+        #    jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+
+
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+        metadata_cache_driver: array
+        query_cache_driver: array
+
+#        entity_managers:
+#            default:
+#                mappings:
+#                    SonataMediaBundle: ~
+
+doctrine_migrations:
+    dir_name: %kernel.root_dir%/DoctrineMigrations
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:     { type: memory }
+
+services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+egulias_security_debug_command:
+    user_class: App\UserBundle\Entity\User
+
+lexik_translation:
+    base_layout: LexikTranslationBundle::layout.html.twig
+    fallback_locale: en      # (required) default locale to use
+    managed_locales: [en]
+    use_yml_tree: false
+
+mopa_bootstrap:
+    form:
+        horizontal_label_class: col-xs-3
+        horizontal_input_wrapper_class: col-xs-6

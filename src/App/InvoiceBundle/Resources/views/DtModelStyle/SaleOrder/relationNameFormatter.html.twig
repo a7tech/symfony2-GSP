@@ -1,0 +1,10 @@
+{{ entity.relationName|humanize }}
+{% if entity.relation == constant('RELATION_CONTRACT', entity) %}
+    <br>({{ entity.projectCategory }})
+{% endif %}
+{% if entity.correctionOf is not null %}
+    <br><a href="{{ url('backend_sale_order_show', {'id': entity.correctionOf.id}) }}">{{ 'correction_invoice'|trans({'%id%': entity.correctionOf.id }, 'Invoice') }}</a>
+{% endif %}
+{% if entity.correctedBy is not null %}
+    <br><a href="{{ url('backend_sale_order_show', {id: entity.correctedBy.id }) }}">{{ 'corrected_by'|trans({'%id%': entity.correctedBy.id}, 'Invoice') }}</a>
+{% endif %}

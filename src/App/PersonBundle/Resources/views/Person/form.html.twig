@@ -1,0 +1,68 @@
+{% extends 'AppPersonBundle:Person:layout.html.twig' %}
+
+{% set nav_title = entity.id ? 'Contact edit' : 'Contact new' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        {% set save_url = entity.id ? path('backend_person_edit', { 'id': entity.id }) : path('backend_person_create') %}
+        <form class="form-horizontal" action="{{ save_url }}" method="post" {{ form_enctype(form) }}>
+
+            {{ form_widget(form) }}
+            <div class="row form-groups">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <div class="form-actions well">
+                        <input class="btn btn-primary" type="submit" value="Save">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appaddress/address_form.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appskill/skill_form.js') }}" type="text/javascript"></script>
+    <script>
+        function initAddressWidgets() {
+            initAddressForm(
+                '{{ url('ajax_province', {'countryId': '__countryId__'}) }}',
+                '{{ url('ajax_region', {'provinceId': '__provinceId__'}) }}'
+            );
+        }
+
+        Admin.bindAdditionalWidgets = function() {
+            var $contry = $("select[id$='_country']:last");
+            var $province = $("select[id$='_province']:last");
+            var $region = $("select[id$='_region']:last");
+            if (!$contry.val()) {
+                $province.attr('disabled', true);
+            }
+            if (!$province.val()) {
+                $region.attr('disabled', true);
+            }
+
+            var $sector = $("select[id$='_sector']:last");
+            var $speciality = $("select[id$='_speciality']:last");
+            var $category = $("input[id$='category_autocomplete']:last");
+            if (!$sector.val()) {
+                $speciality.attr('disabled', true);
+            }
+            if (!$speciality.val()) {
+                $category.attr('disabled', true);
+            }
+        };
+
+        jQuery(document).ready(function($) {
+            Admin.setup_collections(document);
+
+            initAddressWidgets();
+
+            initSkillForm(
+                '{{ url('ajax_speciality', {'sectorId': '__sectorId__'}) }}',
+                '{{ url('ajax_skill_category', {'specialityId': '__specialityId__'}) }}'
+            );
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% if pdf is not defined %}
+    {% set pdf = false %}
+{% endif %}
+
+{% if not pdf %}
+<div style="margin:10px;">
+    <div><b>{{ "terms_and_conditions"|trans({}, 'Project') }}:</b></div>
+    {{ entity.termCondition|raw }}
+</div>
+{% else %}
+<div style="margin:10px;">
+    <div><b>{{ "terms_and_conditions"|trans({}, 'Project') }}:</b></div>
+    {{ entity.termCondition|raw }}
+</div>
+
+{#<div style="margin:10px; width: 400px;">
+    <div style="width: 200px; line-height: 50%"><b>{{ "terms_and_conditions"|trans({}, 'Project') }}:</b></div>
+    <div style="width: 400px; font-size: 10px;">
+        <table style="width: 200px;">
+            <tr>
+                <td style="width: 200px;">
+                    {{ entity.termCondition|raw }}
+                </td>
+                
+            </tr>
+        </table>
+    </div>
+    
+</div>#}
+{#<div style="margin:10px;">
+<b>{{ "terms_and_conditions"|trans({}, 'Project') }}:</b>
+<table style="background-color: red; width: 250px; margin-right: 0px; font-size: 10px;">
+    <tr>
+        <td style="width: 250px;">
+            {{ entity.termCondition|raw }}
+        </td>
+    </tr>
+</table>
+</div>#}
+{% endif %}

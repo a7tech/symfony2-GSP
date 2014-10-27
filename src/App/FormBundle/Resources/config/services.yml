@@ -1,0 +1,63 @@
+parameters:
+#    app_form.example.class: App\FormBundle\Example
+
+services:
+    app_form.form.entity_sorted:
+        class: App\FormBundle\Form\Type\EntitySortedType
+        tags:
+            - { name: form.type, alias: entity_sorted }
+
+    app_form.form.tinymce:
+        class: App\FormBundle\Form\Type\TinymceType
+        tags:
+            - { name: form.type, alias: tinymce }
+
+    app_form.form.datepicker:
+        class: App\FormBundle\Form\Type\DatepickerType
+        tags:
+           -  { name: form.type, alias: datepicker }
+
+    app_form.form.fieldset_extension:
+        class: App\FormBundle\Form\Extension\FieldsetExtension
+        tags:
+            - { name: form.type_extension, alias: form }
+
+    app_form.form.exension.collection:
+        class: App\FormBundle\Form\Extension\CollectionExtension
+        tags:
+            - { name: form.type_extension, alias: collection }
+
+    app_form.form.exension.choice:
+            class: App\FormBundle\Form\Extension\ChoiceExtension
+            tags:
+                - { name: form.type_extension, alias: choice }
+
+    app_form.form.type.text_search:
+        class: App\FormBundle\Form\Type\Search\TextSearchType
+        tags:
+            - { name: form.type, alias: text_search }
+
+    app_form.form.type.entity_search:
+        class: App\FormBundle\Form\Type\Search\EntitySearchType
+        tags:
+            - { name: form.type, alias: entity_search }
+
+    app_form.form.type.number_search:
+        class: App\FormBundle\Form\Type\Search\NumberSearchType
+        tags:
+            - { name: form.type, alias: number_search }
+
+    app_form.form.type.filters:
+        class: App\FormBundle\Form\Type\FiltersType
+        tags:
+            - { name: form.type, alias: filters }
+
+    app_form.form.type.interval:
+        class: App\FormBundle\Form\Type\IntervalType
+        tags:
+            - { name: form.type, alias: interval }
+
+    app_form.form.extension.percent:
+        class: App\FormBundle\Form\Extension\PercentExtension
+        tags:
+            - { name: form.type_extension, alias: percent }

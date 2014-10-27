@@ -1,0 +1,88 @@
+{% extends 'AppProjectBundle:ProjectOpportunity:layout.html.twig' %}
+
+{% set nav_title = entity.id ? entity.name : 'Opportunity show' %}
+
+{% block actions_main %}
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ entity.id }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'name'|trans({}, 'Common') }}</th>
+                        <td>
+                            {% if entity.name|length>0 %}
+                                {{ entity.name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'vendor_company'|trans({}, 'AccountProfile') }}</th>
+                        <td>
+                            {% if entity.accountProfile|length>0 %}
+                                {{ entity.accountProfile.name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'opportunity.expected_close_date'|trans({}, 'Project') }}</th>
+                        <td>{% if entity.expectedDate %}{{ entity.expectedDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'opportunity.description'|trans({}, 'Project') }}</th>
+                        <td>{{ entity.description|raw }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'milestone'|trans({}, 'Project') }}</th>
+                        <td>
+                            {% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity.milestone), entity.milestone.status) %}
+                            <span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ entity.milestone.name }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'opportunity.expected_value'|trans({}, 'Project') }}</th>
+                        <td>{{ entity.expectedValue|number_format(2) }} </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'currency'|trans({}, 'Currency') }}</th>
+                        <td>{{ entity.currency.name }} {{ entity.currency.symbol }} {{ entity.currency.code }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'owner'|trans({}, 'Project') }}</th>
+                        <td>
+                            {% if entity.owner%}
+                                {{ entity.owner.person.firstName }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'opportunity.commision'|trans({}, 'Project') }}</th>
+                        <td>{{ entity.commision }}%</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'client'|trans({}, 'Project') }}</th>
+                        <td>
+                            {% if entity.client %}
+                                <a href="{{ path('backend_person_show', {'id': entity.client.id}) }}">{{ entity.client.firstName }} , {{ entity.client.lastName }} (Id {{ entity.client.id }})</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'opportunity.progress'|trans({}, 'Project') }}</th>
+                        <td>{{ entity.progress*100 }}%</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+

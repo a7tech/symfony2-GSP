@@ -1,0 +1,5 @@
+{% if not entity.isCredit %}
+    {% set total = entity.total %}
+    {% set paid = entity.paid %}
+    {{ (total - paid)|number_format(2) }}
+{% endif %}

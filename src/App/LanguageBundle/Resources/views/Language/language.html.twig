@@ -1,0 +1,84 @@
+{% extends "AppBackendBundle:Dashboard:settings.html.twig" %}
+
+
+{% block actions %}
+    <div class="title-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 h3">
+                    <h3>Languages list</h3>
+                </div>
+                <div class="col-md-5">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="form-search">
+                        <div class="col-xs-10 col-sm-5 col-md-7">
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <button type="submit" class="btn btn-default">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="action-view">
+        <div class="row">
+            {#<div class="col-md-12">
+                <div class="row">
+
+                    <div class="col-md-12">#}
+                        <table id="datatable" class="table table-bordered table-striped" 
+                               data-entity-list-route="{{ path('backend_language_datatables') }}">
+                            <thead>
+                            <tr>
+                                <th>{%trans%}Iso code{%endtrans%}</th>
+                                <th>{%trans%}Title{%endtrans%}</th>
+                                <th>{%trans%}Flag{%endtrans%}</th>
+                                <th>{%trans%}Enabled in Frontend{%endtrans%}</th>
+                                <th>{%trans%}Enabled in Backend{%endtrans%}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for lang in entities %}
+                                <tr>
+                                    <td>{{lang.iso}}</td>
+                                    <td>{{lang.iso | language}}</td>
+                                    <td><img width='16px' height='11px' src='{{asset(lang.getWebPath())}}'></td>
+                                    <td>{% if lang.frontend %}
+                                            Yes
+                                            {% if lang.iso != 'en' %}
+                                                , <a href='{{path('backend_settings_language_deactivate', {'type': 'frontend', 'locale': lang.iso}) }}'>{% trans %}Deactivate{% endtrans%}</a>
+                                            {% endif %}
+                                        {%else%}
+                                            No, <a href='{{path('backend_settings_language_activate', {'type': 'frontend', 'locale': lang.iso}) }}'>{% trans %}Activate{% endtrans%}</a>{% endif %}</td>
+                                    <td>
+                                        {% if lang.backend %}
+                                            Yes
+                                            {% if lang.iso != 'en' %}
+                                                , <a href='{{path('backend_settings_language_deactivate', {'type': 'backend', 'locale': lang.iso}) }}'>{% trans %}Deactivate{% endtrans%}</a>
+                                            {% endif %}
+                                        {%else%}
+                                            No, <a href='{{path('backend_settings_language_activate', {'type': 'backend', 'locale': lang.iso}) }}'>{% trans %}Activate{% endtrans%}</a>{% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <a href="{{ path('backend_settings_language_add') }}">{% trans %}Add a new language{% endtrans%}</a>
+                    {#</div>
+                </div>
+            </div>#}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

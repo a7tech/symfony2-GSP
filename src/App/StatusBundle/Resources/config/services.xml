@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <parameters>
+        <parameter key="statuses.classes" type="collection">
+            <parameter>App\InvoiceBundle\Entity\SaleOrder</parameter>
+            <parameter>App\PurchaseBundle\Entity\Purchase</parameter>
+            <parameter>App\TaskBundle\Entity\Task</parameter>
+            <parameter>App\ProjectBundle\Entity\Project</parameter>
+            <parameter>App\ProjectBundle\Entity\ProjectMilestone</parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+        <service id="app_status.translator" class="App\StatusBundle\Utils\StatusTranslator">
+            <argument>%kernel.cache_dir%/statuses</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="app_status.twig.extension.status" class="App\StatusBundle\Twig\Extension\StatusExtension">
+            <argument type="service" id="app_status.translator" />
+            <tag name="twig.extension" alias="status" />
+        </service>
+        <service id="app_status.filter.settingsstatusfilter"
+                 class="App\StatusBundle\Filter\GroupFilter"
+                 parent="app_core.filter.filter"
+        />
+    </services>
+</container>

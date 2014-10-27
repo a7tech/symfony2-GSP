@@ -1,0 +1,15 @@
+parameters:
+
+services:
+    app_email.form.email_autocomplete:
+            class: App\UserBundle\Form\Type\EmailUserAutocompleteType
+            tags:
+                - { name: form.type, alias: email_autocomplete }
+    
+    app_user.filter.userfilter:
+        class:  App\UserBundle\Filter\UserFilter
+        parent: app_core.filter.filter
+    
+    app_user.filter.groupfilter:
+        class:  App\UserBundle\Filter\GroupFilter
+        parent: app_core.filter.filter

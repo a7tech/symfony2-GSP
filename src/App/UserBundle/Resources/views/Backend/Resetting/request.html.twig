@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}GSP Admin{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main/login.css') }}">
+</head>
+<body>
+{% block body %}
+    <div class="form-horizontal backend-login">
+        <h4>Having trouble singing in?</h4>
+
+        <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                        I don't know my password
+                    </a>
+                </div>
+                <div id="collapseOne" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <p>
+                            To reset your password, enter the email address .
+                        </p>
+
+                        <form action="{{ path('backend_resetting_send_email') }}" method="POST">
+
+                            {% if invalid_username is defined %}
+                                <div class="alert alert-error">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</div>
+                            {% endif %}
+                            <div class="form-group">
+                                <input type="text" id="username" name="username" required="required"
+                                       placeholder="Email"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input class="btn submit btn-primary" type="submit"
+                                       value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                        I'm having other problems to sign in
+                    </a>
+                </div>
+                <div id="collapseTwo" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        Please contact support team by email <a
+                                href="mailto:support@gsp.people-commerce.com?Subject=Problem with Sign in">Send Mail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/jquery/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+{% endblock %}
+</body>
+</html>

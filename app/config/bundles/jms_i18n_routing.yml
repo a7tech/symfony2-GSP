@@ -1,0 +1,5 @@
+# JMS I18N Routing Configuration
+jms_i18n_routing:
+    default_locale: en
+    locales: [en]
+    strategy: prefix

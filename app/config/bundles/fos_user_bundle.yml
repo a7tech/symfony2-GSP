@@ -1,0 +1,19 @@
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: App\UserBundle\Entity\User
+    group:
+       group_class: App\UserBundle\Entity\PermissionsGroup
+
+    registration:
+
+        confirmation:
+            from_email: # Use this node only if you don't want the global email address for the confirmation email
+                address:        ...
+                sender_name:    ...
+            enabled:    true # change to true for required email confirmation
+            template:   FOSUserBundle:Registration:email.txt.twig
+            from_email:
+                address: noreply@gsp.com
+                sender_name: GSP
+

@@ -1,0 +1,25 @@
+parameters:
+#    app_category.example.class: App\CategoryBundle\Example
+
+services:
+    app_category.form.category:
+        class: App\CategoryBundle\Form\CategoryType
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: app_categorybundle_categorytype }
+
+    app_category.form.select.category:
+        class: App\CategoryBundle\Form\SelectCategoryType
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: select_category }
+
+    app_category.twig.category_extension:
+        class: App\CategoryBundle\Twig\CategoryExtension
+        tags:
+            - { name: twig.extension }
+
+    app_category.form.category_tree:
+        class: App\CategoryBundle\Form\Type\CategoryTreeType
+        tags:
+            - { name: form.type, alias: category_tree }

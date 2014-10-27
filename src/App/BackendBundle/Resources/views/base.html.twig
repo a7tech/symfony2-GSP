@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}GSP - Backend{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block stylesheets %}
+
+            {#<link rel="stylesheet" type="text/css" href="{{ asset('js/jquery/css/jquery.dataTables.css') }}">#}
+
+            {% stylesheets filter='cssrewrite' output='resources/css/*.css' 
+                'components/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css'
+                '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle.less'
+                '@MopaBootstrapBundle/Resources/public/less/eyecon-datepicker.less'
+                'tabletools/css/TableTools.css'
+                'css/main/sprite-top-nav.css'
+                'css/main/sprite-nav.css'
+                'css/main/sprite-crud.css'
+                'css/main/sprite-contact.css'
+                'css/jquery/jquery-ui-1.10.3.custom.css'
+                'js/jquery/plugins/select2/select2.css'
+                'css/main/dashboard.css'
+                'css/main/forms.css'
+            %}
+            
+            <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
+        {% endstylesheets %}
+        {% endblock %}
+        {% block user_css %}{% endblock %}
+
+        {% block user_head %}
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('components/jquery/jquery.min.js') }}"></script>
+            <script src="{{ asset('components/bootstrap/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('components/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
+            <script src="{{ asset('components/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js') }}"></script>
+            <script src="{{ asset('js/jquery/jquery.dataTables.min.js') }}"></script>
+            <script src="{{ asset('components/underscore/underscore-min.js') }}"></script>
+            <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'Backend' }) }}"></script>
+            <script src="{{ asset('bundles/appcore/js/app.js') }}"></script>
+            
+
+            {% javascripts output='resources/js/*.js'
+
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+
+    </head>
+    <body data-spy="scroll" data-target=".left-menu">
+        {% block overlay %}
+            <div id="overlay" class="overlay" style="display: none">
+                <div class="ajax-wheel" id="ajax-wheel"></div>
+            </div>
+        {% endblock %}
+        {% block body %}
+
+            <div class="container">
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-right system-menu">
+						<li><a>User: {{app.user.email}}</a></li>
+						<li class="dropdown" style="padding:0;">
+								<a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ app.request.locale|language }}<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									{% for locale in languages() %}
+										<li>
+											<a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': locale})) }}">
+												{{ locale|language }}
+											</a>
+										</li>
+									{% endfor %}
+								</ul>
+					   </li>
+						<li class="last" ><a href="{{ path('backend_logout') }}"><i class="sprite-nav sprite-nav-connect_16h"></i>Logout</a></li>
+					</ul>
+				</div>
+            </div>
+
+            {% block content_wrap %}
+            <div class="container"> <!-- Only required for left/right tabs -->
+                <ul class="nav nav-tabs main-menu">
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 18)=='backend_dashboard'%}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_dashboard') }}" data-toggle="tabDashboard" title="Dashboard">
+                            <div class="icon-dashboard"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if ( app.request.attributes.get('_route')|slice(0,16)=='backend_project' or 
+                                app.request.attributes.get('_route')|slice(0,22)=='backend_project_owner' or 
+                                app.request.attributes.get('_route')|slice(0,22)=='backend_project_task' or 
+                                app.request.attributes.get('_route')|slice(0,30)=='backend_project_task_assigned' or 
+                                app.request.attributes.get('_route')|slice(0,27)=='backend_project_task_owner')
+                        %}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_project') }}" data-toggle="tabProject" title="Project">
+                            <div class="icon-project"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 13)=='backend_tasks'%}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_tasks') }}" data-toggle="tabTasks" title="Tasks">
+                            <div class="icon-ticket"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 17)=='backend_calendar'%}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_calendar') }}" data-toggle="tabCalendar" title="Calendar">
+                            <div class="icon-calendar"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 15)=='backend_company'%}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_company') }}" data-toggle="tabCompany" title="Company">
+                            <div class="icon-company"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 14)=='backend_person'%}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_person') }}" data-toggle="tabContact" title="Contact">
+                            <div class="icon-contact"></div>
+                        </a>
+                    </li>
+                    <li class="{% if app.request.attributes.get('_route')|slice(0, 18)=='backend_sale_order' %}active{%endif%}">
+                        <a href="{{ path('backend_sale_order') }}" data-toggle="tabInvoice" title="Invoice">
+                            <div class="icon-invoice"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 15)=='backend_charts'%}
+                            active
+                        {%endif%}">
+                        <a href="#tab2" data-toggle="tab" title="Charts">
+                            <div class="icon-charts"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 16)=='backend_products' or
+                            app.request.attributes.get('_route')|slice(0, 23)=='backend_account_product'
+                        %}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_products') }}" data-toggle="tabProduct" title="Product">
+                            <div class="icon-product"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 16)=='backend_purchase'%}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_purchase') }}" data-toggle="tabOrder" title="Order">
+                            <div class="icon-order"></div>
+                        </a>
+                    </li>
+                    <li class="
+                        {% if app.request.attributes.get('_route')|slice(0, 18)=='backend_deliveries'%}
+                            active
+                        {%endif%}">
+                        <a href="#tab2" data-toggle="tab" title="Delivery">
+                            <div class="icon-deliverry"></div>
+                        </a>
+                    </li>
+                    <li class="navbar-right
+                        {% if app.request.attributes.get('_route')|slice(0,16)=='backend_settings'%}
+                            active
+                        {%endif%}">
+                        <a href="{{ path('backend_settings') }}" data-toggle="tabSettings" title="Settings"><div class="icon-settings"></div> </a></li>
+                    <li class="navbar-right"><a href="#tab4" data-toggle="tab" title="Configure"><div class="icon-configure"></div> </a></li>
+
+                </ul>
+
+                {% block bottom %}
+
+                {% endblock %}
+
+                {% block messages %}
+                    {% include "AppBackendBundle::messages.html.twig" with {messages: app.session.flashBag.get('backend_message')} %}
+                {% endblock %}
+
+                <div class="actions">
+                    {% block content %}
+                        {% block actions %}
+
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            </div>
+            {% endblock %}
+
+        {% endblock %}
+
+        <script>
+            $(document).ready(function() {
+                //TODO: remove this!
+                $('.datepicker').datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    onSelect: function() {
+                        $(this).trigger('change');
+                    }
+                });
+                $('.datetimepicker').datetimepicker({
+                    timeFormat: 'HH:mm',
+                    dateFormat: 'dd-mm-yy',
+                    onSelect: function() {
+                        $(this).trigger('change');
+                    }
+                });
+            });
+        </script>
+        {{ tinymce_init() }}
+
+        {% block user_js %}
+        {% endblock %}
+		{% block foot_script %}
+			{# To only use a subset or add more js overwrite and copy paste this block
+			To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
+			Otherwise the regeneration is done on every load in dev more with use_controller: true
+			 #}
+			{% block foot_script_assetic %}
+			{% javascripts
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/affix.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/alert.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/button.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/carousel.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/collapse.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/dropdown.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/modal.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/popover.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/scrollspy.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/tab.js'
+				'@MopaBootstrapBundle/Resources/public/bootstrap/js/transition.js'
+				'@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+				'@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+				'@MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js'
+			%}
+			<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+		{% endblock foot_script_assetic %}
+
+			<script type="text/javascript">
+				$(document).ready(function () {
+					$('[data-toggle="tooltip"]').tooltip();
+					$('[data-toggle="popover"]').popover();
+					$(".dropdown-toggle").dropdown('toggle');
+					$(".dropdown").removeClass("open");
+				});
+			</script>
+		{% endblock foot_script %}
+
+        
+    </body>
+</html>

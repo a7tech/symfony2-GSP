@@ -1,0 +1,5 @@
+{% if entity.phones|length > 0 %}
+    {% for phone in entity.phones %}
+        {% include "@AppPhone/Partials/short.html.twig" with {phone: phone} %}<br/>
+    {% endfor %}
+{% endif %}

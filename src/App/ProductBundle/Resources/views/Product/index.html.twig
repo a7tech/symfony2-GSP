@@ -1,0 +1,88 @@
+{% extends 'AppProductBundle:Product:layout.html.twig' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row" style="padding-left: 20px; width: 98%">
+                <!-- Search Filter -->
+                <div class="search-container">
+                    <div class="search-filter-container inactive">
+                        <form class="form-horizontal" id="search-filter" method="get" action=".">
+                            {{ form_rest(form) }}
+                            <input class="btn btn-primary" type="submit"  name="submit-filter" value="Filter"/>
+                            <input class="btn" type="reset" id="search-filter-reset"  name="reset-filter" value="Reset"/>
+                            <input class="btn search-filter-hide" type="button"  name="hide-filter" value="Hide"/>
+                        </form>
+                    </div>
+                </div>
+                
+                    <table id="datatable" class="table table-bordered table-striped" data-entity-list-route="{{ path('backend_product_datatables') }}">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Product Code</th>
+                            <th>Brand</th>
+                            <th>List Price</th>
+                            <th>Sale price</th>
+                            <th>Category</th>
+                            <th>Account Profiles</th>
+                        </tr>
+                        </thead>
+                {% if entities %}
+                        <tbody>
+                        {% for entity in entities %}
+                            {% set link = path('backend_products_show', {id: entity.id}) %}
+                            <tr id="{{ entity.id }}">
+                                <td><a href="{{ link }}">{{ entity.id }}</a></td>
+                                <td>
+                                    {#{% if entity.product.images|length>0 %}#}
+                                        {#{{ entity.product.images[0].image|vlabs_filter('resize', {'width': 50, 'height': 50 })|vlabs_media('image') }}#}
+                                    {#{% endif %}#}
+                                </td>
+                                <td><a href="{{ link }}">{{ entity.title }}</a></td>
+                                <td>{{ entity.productCode }}</td>
+                                <td> {% for br in entity.brandGroup  %}
+                                        {{ br }}<br/>
+                                    {% endfor %}
+                                </td>
+                                {% if entity.price|length>0 %}
+                                <td>
+                                    {{ entity.price.listPrice }}
+                                </td>
+                                <td>
+                                     {{ entity.price.sellPrice }}
+                                </td>
+                                {% else %}
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                {% endif %}
+                                
+                                <td>
+                                    {% for cat in entity.categories %}
+                                        {{ cat.title }}{% if not loop.last %},{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for pr in entity.accProducts %}
+                                        {{ pr.account }}<br/>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                {% endif %}
+                    </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/searchFilter.js') }}"></script>
+{% endblock %}

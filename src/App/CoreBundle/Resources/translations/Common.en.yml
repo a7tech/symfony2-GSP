@@ -1,0 +1,20 @@
+name: Name
+type: Type
+email: Email
+description: Description
+telephone: Telephone
+date: Date
+add_filter: 'Add filter'
+next: Next
+save: Save
+draft: Draft
+file.image: Image/File
+interval.days: days
+interval.hours: hours
+interval.minutes: minutes
+interval.short.days: d
+interval.short.hours: h
+interval.short.minutes: m
+yes: Yes
+no: No
+

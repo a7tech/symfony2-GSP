@@ -1,0 +1,53 @@
+parameters:
+#    app_company.example.class: App\CompanyBundle\Example
+
+services:
+
+    app_invoice.form.invoice:
+                class: App\InvoiceBundle\Form\SaleOrderType
+                tags:
+                   -  { name: form.type, alias: invoice }
+
+    app_invoice.form.invoice_product:
+            class: App\InvoiceBundle\Form\InvoiceProductType
+            tags:
+               -  { name: form.type, alias: invoice_product }
+
+    app_invoice.form.invoice_task:
+        class: App\InvoiceBundle\Form\Type\TaskType
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: invoice_task }
+
+    app_invoice.form.invoice_not_invoiced_tasks:
+        class: App\InvoiceBundle\Form\Type\NotInvoicedTasks
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: invoice_not_invoiced_tasks }
+
+    app_invoice.form.invoice_not_credited_tasks:
+        class: App\InvoiceBundle\Form\Type\NotCreditedTasks
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: invoice_not_credited_tasks }
+    
+    app_invoice.form.product_return:
+        class: App\InvoiceBundle\Form\Type\Returns\ProductReturnType
+        tags:
+            - { name: form.type, alias: backend_invoice_product_return }
+    app_invoice.form.task_return:
+            class: App\InvoiceBundle\Form\Type\Returns\TaskReturnType
+            tags:
+                - { name: form.type, alias: backend_invoice_task_return }
+    app_invoice.form.return:
+        class: App\InvoiceBundle\Form\Type\InvoiceReturnType
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: form.type, alias: backend_invoice_return }
+
+
+    app_invoice.filter.taskfilter:
+        class:  App\InvoiceBundle\Filter\SaleOrderFilter
+        calls:
+             - [setStatusTranslator, ["@app_status.translator"]]
+        parent: app_core.filter.filter

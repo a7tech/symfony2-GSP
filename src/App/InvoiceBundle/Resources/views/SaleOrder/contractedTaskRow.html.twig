@@ -1,0 +1,36 @@
+{% block row %}
+    {% set link = path('backend_tasks_show', {'id': task.id}) %}
+    <td><a href="{{ link }}">{{ task.id }}</a></td>
+    <td colspan="4">
+        {# stupid TCPDF workaround for padding... #}
+        <table class="raw{% if not pdf %} no-colors{% endif %}">
+            <tr>
+                <td {% if not pdf %} style="border-left: {{ indent_size }}px solid transparent" {% endif %}>
+                    - <a href="{{ link }}">{{ task.name }}</a>
+                    {% if not pdf %}
+                        <br>
+                    {% endif %}
+                    {% if task.taskDescription is not null %}
+                        {# stupid TCPDF workaround for padding... #}
+                        {% if not pdf %}
+                            <table>
+                            <tr><td {% if not pdf %}style="padding: 0 0 0 8px"{% endif %} class="task-description">
+                        {% endif %}
+                    {% if pdf %}
+                        <font style="font-size: 10px;">
+                    {% endif %}
+
+                        {{ task.taskDescription|raw }}
+                    {% if pdf %}
+                        </font>
+                    {% endif %}
+                        {% if not pdf %}
+                            </td></tr>
+                            </table>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </td>
+{% endblock %}

@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="app.calendarbundle.calendar_listener" class="App\CalendarBundle\EventListener\CalendarEventListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="router" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="security.context" />
+            <argument type="service" id="templating.engine.twig" />
+
+            <tag name="kernel.event_listener" event="calendar.load_events" method="loadEvents" />
+        </service>
+    </services>
+</container>

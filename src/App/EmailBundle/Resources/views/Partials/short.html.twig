@@ -1,0 +1,4 @@
+<a class="nowrap" href="mailto:{{ email.email }}">{{ email }}</a>
+{% if (email.emailType|length > 0)  %}
+    ({{ email.emailType }})
+{% endif %}

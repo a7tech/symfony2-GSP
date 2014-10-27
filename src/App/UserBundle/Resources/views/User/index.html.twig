@@ -1,0 +1,20 @@
+{% extends 'AppUserBundle:User:layout.html.twig' %}
+
+{% set nav_title = 'Users list' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row">
+        <div class="row-align">
+                {% include 'AppUserBundle:User:indexBase.html.twig' %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block user_js %}
+<script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+<script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+<script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,568 @@
+{% extends 'AppPersonBundle:Person:layout.html.twig' %}
+
+{% set nav_title = 'Contact overview' %}
+
+{% block actions_main %}
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="left-menu">
+                            <ul id="person-tabs" class="left-nav-tabs nav nav-pills nav-stacked">
+                                <li id="btn-contact-info"><a href="#tab-contact-info">Contact info</a></li>
+                                {% if entity.skills|length > 0 %}
+                                    <li id="btn-skills"><a href="#tab-skills">Skills</a></li>
+                                {% endif %}
+                                {% if not entity.isEmptyCv() %}
+                                    <li id="btn-cv"><a href="#tab-cv">CV</a></li>
+                                {% endif %}
+                                {% if entity.hrInfo or entity.salaryInfo %}
+                                    <li id="btn-hr"><a href="#tab-hr">HR</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="contact-card">
+                            <div class="top-card">
+                                <div class="row">
+                                    <div class="col-md-2 contact-card">
+                                        {% if entity.image|length>0 %}
+                                            {{ entity.image.image|vlabs_filter('resize', {'width': 100, 'height': 70})|vlabs_media('image') }}
+                                        {% else %}
+                                            <img src="/images/people_100px_grey_979797.png">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div id="tab-contact-info" class="col-md-5">
+                                                <strong>ID: {{ entity.id }} - {{ entity.firstName }} {{ entity.lastName }}</strong>
+                                            </div>
+                                            <div class="col-md-3">
+                                                {% if entity.birthDate|length>0 %}
+                                                    <i class="icon-contact-birthday"></i>{{ entity.birthDate|date('d F Y')  }}
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-2">
+                                                <i class="icon-contact-actif_yes"></i>Active
+                                            </div>
+                                            <div class="col-md-2">
+                                                {% if entity.gender=='m' %}
+                                                    <i class="icon-contact-sex_male"></i>Male
+                                                {% elseif entity.gender=='f' %}
+                                                    <i class="icon-contact-sex_female"></i>Female
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-12">
+                                                {% if entity.employments|length>0 %}
+                                                    {% for empl in entity.employments %}
+                                                    <em>{{ empl.company.name }}
+                                                        {% if empl.department|length>0 %}
+                                                        , {{ empl.department }}
+                                                        {% endif %}
+                                                        {% if empl.role|length>0 %}
+                                                        , {{ empl.role }}
+                                                        {% endif %}
+                                                    </em><br/>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rest-card">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row emails">
+                                                {% if entity.emails|length>0 %}
+                                                    <i class="icon-contact-e-mail"></i>
+                                                    {% for email in entity.emails %}
+                                                        {{ email.email }}
+                                                        {% if email.emailType|length>0 %}
+                                                            ({{ email.emailType }})
+                                                        {% endif %}
+                                                            <br/>
+                                                    {% endfor %}
+                                                {% endif %}
+                                                </div>
+                                                <div class="row phones">
+                                                    {% if entity.phones|length>0 %}
+                                                        {% for email in entity.phones %}
+                                                            {% if email.phoneType=='Mobile' or email.phoneType=='mobile' %}
+                                                                <i class="icon-contact-cell"></i>
+                                                            {% else %}
+                                                                <i class="icon-contact-phone"></i>
+                                                            {% endif %}
+                                                            {{ email }}
+                                                            {% if (email.phoneType|length>0)  %}
+                                                                ({{ email.phoneType }})
+                                                            {% endif %}
+                                                            <br/>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row addresses">
+                                                    {% if entity.addresses|length>0 %}
+                                                        {% set suite_label = 'suite'|trans({}, 'Address')~':' %}
+
+                                                        {% for address in entity.addresses %}
+                                                            <i class="icon-contact-address"></i>
+                                                            {{ address.formatted(suite_label)|raw }}
+                                                            <br>
+                                                            <i class="icon-contact-google_maps"></i> <a href="">Show address in the map</a><br><br>
+                                                        {% endfor %}
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if entity.skills|length > 0 %}
+                                <div>
+                                    <h3 id="tab-skills" class="h3-form">Skills</h3>
+                                    {% set skillsGrouped = entity.getSkillsGrouped() %}
+                                    {% set skillsGrouped, specialities = skillsGrouped[0], skillsGrouped[1] %}
+                                    {% for specId, skills in skillsGrouped %}
+                                        <h4>{{ specialities[specId] }} skills</h4>
+                                        {% for skill in skills %}
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="4">{{ skill.category }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Proficiency</td>
+                                                        <td>Experience</td>
+                                                        <td>Last Used</td>
+                                                        <td>Interest</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ skill.proficiency }}</td>
+                                                        <td>{{ skill.experience }}</td>
+                                                        <td>{{ skill.lastUsed }}</td>
+                                                        <td>{{ skill.interest }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if not entity.isEmptyCv() %}
+                                <div>
+                                    <h3 id="tab-cv" class="h3-form">CV</h3>
+                                    {% if entity.educations|length > 0 %}
+                                        <h4>Educations</h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Institution</th>
+                                                    <th>Degree</th>
+                                                    <th>Education Level</th>
+                                                    <th>GPA</th>
+                                                    <th>Other information</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Diploma in progress</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for education in entity.educations %}
+                                                <tr>
+                                                    <td>{{ education.institution }}</td>
+                                                    <td>{{ education.degree }}</td>
+                                                    <td>{{ education.educationLevel }}</td>
+                                                    <td>{{ education.gpa }}</td>
+                                                    <td>{{ education.description|raw }}</td>
+                                                    <td>{{ education.startDate|date('d-m-Y') }}</td>
+                                                    <td>{{ education.endDate ? education.endDate|date('d-m-Y') : '' }}</td>
+                                                    <td>
+                                                        {% if education.current %}
+                                                            <i class="icon-ok"></i>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    {% if entity.languages|length > 0 %}
+                                        <h4>Languages</h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Language</th>
+                                                    <th>Read</th>
+                                                    <th>Write</th>
+                                                    <th>Speak</th>
+                                                    <th>Proficiency</th>
+                                                    <th>Experience</th>
+                                                    <th>Last Used</th>
+                                                    <th>Interest</th>
+                                                    <th>Comments</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for lang_info in entity.languages %}
+                                                <tr>
+                                                    <td>{{ lang_info.language }}</td>
+                                                    <td>
+                                                        {% if lang_info.read %}
+                                                            <i class="icon-ok"></i>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if lang_info.write %}
+                                                            <i class="icon-ok"></i>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if lang_info.speak %}
+                                                            <i class="icon-ok"></i>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ lang_info.proficiency }}</td>
+                                                    <td>{{ lang_info.experience }}</td>
+                                                    <td>{{ lang_info.lastUsed }}</td>
+                                                    <td>{{ lang_info.interest }}</td>
+                                                    <td>{{ lang_info.description|raw }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    {% if entity.certifications|length > 0 %}
+                                        <h4>Certifications</h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>First Issued Date</th>
+                                                    <th>Organization</th>
+                                                    <th>Number/ID</th>
+                                                    <th>Description</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for certification in entity.certifications %}
+                                                <tr>
+                                                    <td>{{ certification.name }}</td>
+                                                    <td>{{ certification.firstDate|date('d-m-Y') }}</td>
+                                                    <td>{{ certification.organization }}</td>
+                                                    <td>{{ certification.number }}</td>
+                                                    <td>{{ certification.description|raw }}</td>
+                                                    <td>{{ certification.fromDate|date('d-m-Y') }}</td>
+                                                    <td>{{ certification.toDate ? certification.toDate|date('d-m-Y') : '' }}</td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    {% if entity.workExperiences|length > 0 %}
+                                        <h4>Work expirience</h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Employer</th>
+                                                    <th>Job Title</th>
+                                                    <th>Job Function</th>
+                                                    <th>Description</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>My current position</th>
+                                                    <th>Manager Name</th>
+                                                    <th>Manager Email</th>
+                                                    <th>Manager Work Phone</th>
+                                                    <th>Manager Mobile Phone </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for workExperience in entity.workExperiences %}
+                                                <tr>
+                                                    <td>{{ workExperience.employer }}</td>
+                                                    <td>{{ workExperience.title }}</td>
+                                                    <td>{{ workExperience.jobFunction }}</td>
+                                                    <td>{{ workExperience.description|raw }}</td>
+                                                    <td>{{ workExperience.startDate|date('d-m-Y') }}</td>
+                                                    <td>{{ workExperience.endDate ? workExperience.endDate|date('d-m-Y') : '' }}</td>
+                                                    <td>
+                                                        {% if workExperience.current %}
+                                                            <i class="icon-ok"></i>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ workExperience.managerName }}</td>
+                                                    <td>{{ workExperience.managerEmail }}</td>
+                                                    <td>{{ workExperience.managerWorkPhone }}</td>
+                                                    <td>{{ workExperience.managerMobilePhone }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    {% if entity.associations|length > 0 %}
+                                        <h4>Associations</h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Link</th>
+                                                    <th>Role</th>
+                                                    <th>Comments</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for association in entity.associations %}
+                                                <tr>
+                                                    <td>{{ association.name }}</td>
+                                                    <td>{{ association.link }}</td>
+                                                    <td>{{ association.role }}</td>
+                                                    <td>{{ association.description|raw }}</td>
+                                                    <td>{{ association.startDate|date('d-m-Y') }}</td>
+                                                    <td>{{ association.endDate|date('d-m-Y') }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    {% if entity.militaryHistories|length > 0 %}
+                                        <h4>Military History</h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Country</th>
+                                                    <th>Division</th>
+                                                    <th>Unit</th>
+                                                    <th>Rank</th>
+                                                    <th>Campaign</th>
+                                                    <th>Expertise</th>
+                                                    <th>Recognition</th>
+                                                    <th>Disciplinary Action</th>
+                                                    <th>Discharge Status</th>
+                                                    <th>Service Status</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for militaryHistory in entity.militaryHistories %}
+                                                <tr>
+                                                    <td>{{ militaryHistory.country }}</td>
+                                                    <td>{{ militaryHistory.division }}</td>
+                                                    <td>{{ militaryHistory.unit }}</td>
+                                                    <td>{{ militaryHistory.rank }}</td>
+                                                    <td>{{ militaryHistory.campaign }}</td>
+                                                    <td>{{ militaryHistory.expertise }}</td>
+                                                    <td>{{ militaryHistory.recognition }}</td>
+                                                    <td>{{ militaryHistory.disciplinaryAction }}</td>
+                                                    <td>{{ militaryHistory.dischargeStatus }}</td>
+                                                    <td>{{ militaryHistory.serviceStatus }}</td>
+                                                    <td>{{ militaryHistory.description|raw }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    {% if entity.references|length > 0 %}
+                                        <h4>References</h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Middle Name</th>
+                                                    <th>Title</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Organization</th>
+                                                    <th>Relationship</th>
+                                                    <th>Length Of Time (months)</th>
+                                                    <th>Comment</th>
+                                                    <th>Can Contact?</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for reference in entity.references %}
+                                                <tr>
+                                                    <td>{{ reference.firstName }}</td>
+                                                    <td>{{ reference.lastName }}</td>
+                                                    <td>{{ reference.middleName }}</td>
+                                                    <td>{{ reference.title }}</td>
+                                                    <td>{{ reference.email }}</td>
+                                                    <td>{{ reference.phone }}</td>
+                                                    <td>{{ reference.organization }}</td>
+                                                    <td>{{ reference.relationship }}</td>
+                                                    <td>{{ reference.lengthTime }}</td>
+                                                    <td>{{ reference.description|raw }}</td>
+                                                    <td>
+                                                        {% if reference.canContact %}
+                                                            <i class="icon-ok"></i>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if entity.hrInfo or entity.salaryInfo %}
+                                <div>
+                                    <h3 id="tab-hr" class="h3-form">HR</h3>
+                                    {% if entity.hrInfo %}
+                                        {% set hrInfo = entity.hrInfo %}
+                                        <h4>HR Information</h4>
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="col-md-4">Receive commissions</th>
+                                                    <td>
+                                                        <i class="{{ hrInfo.receiveCommissions ? 'icon-ok' : 'icon-ban-circle' }}"></i>
+                                                    </td>
+                                                </tr>
+                                                {% if hrInfo.nationality %}
+                                                    <tr>
+                                                        <th class="col-md-4">Nationality</th>
+                                                        <td>{{ hrInfo.nationality }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if hrInfo.idNumber %}
+                                                    <tr>
+                                                        <th class="col-md-4">Id No</th>
+                                                        <td>{{ hrInfo.idNumber }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if hrInfo.socialSecurityNumber %}
+                                                    <tr>
+                                                        <th class="col-md-4">Social Security No</th>
+                                                        <td>{{ hrInfo.socialSecurityNumber }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if hrInfo.drivingLicence %}
+                                                    <tr>
+                                                        <th class="col-md-4">Driving licence</th>
+                                                        <td>{{ hrInfo.drivingLicence }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if hrInfo.otherId %}
+                                                    <tr>
+                                                        <th class="col-md-4">Other Id</th>
+                                                        <td>{{ hrInfo.otherId }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    {% if entity.salaryInfo %}
+                                        {% set salaryInfo = entity.salaryInfo %}
+                                        <h4>Salary Information</h4>
+                                        <table class="table table-striped">
+                                            <tbody>
+                                            {% if salaryInfo.currency %}
+                                                <tr>
+                                                    <th class="col-md-4">Currency</th>
+                                                    <td>{{ salaryInfo.currency }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.salaryType %}
+                                                <tr>
+                                                    <th class="col-md-4">Salary</th>
+                                                    <td>{{ salaryInfo.salaryType }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.amount %}
+                                                <tr>
+                                                    <th class="col-md-4">Amount</th>
+                                                    <td>{{ salaryInfo.amount }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.monday %}
+                                                <tr>
+                                                    <th class="col-md-4">Monday</th>
+                                                    <td>{{ salaryInfo.monday }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.tuesday %}
+                                                <tr>
+                                                    <th class="col-md-4">Tuesday</th>
+                                                    <td>{{ salaryInfo.tuesday }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.wednesday %}
+                                                <tr>
+                                                    <th class="col-md-4">Wednesday</th>
+                                                    <td>{{ salaryInfo.wednesday }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.thursday %}
+                                                <tr>
+                                                    <th class="col-md-4">Thursday</th>
+                                                    <td>{{ salaryInfo.thursday }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.friday %}
+                                                <tr>
+                                                    <th class="col-md-4">Friday</th>
+                                                    <td>{{ salaryInfo.friday }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.saturday %}
+                                                <tr>
+                                                    <th class="col-md-4">Saturday</th>
+                                                    <td>{{ salaryInfo.saturday }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if salaryInfo.sunday %}
+                                                <tr>
+                                                    <th class="col-md-4">Sunday</th>
+                                                    <td>{{ salaryInfo.sunday }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+
+            var $navbar = $("#person-tabs");
+            var offset = $navbar.offset();
+            var $span3 = $navbar.parents('.col-md-3');
+            $(window).bind('scroll', function() {
+                $navbar.width($span3.width());
+                if ($(this).scrollTop() > offset.top) {
+                    $navbar.addClass('top-fixed col-md-3');
+                }
+                else {
+                    $navbar.removeClass('top-fixed col-md-3');
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

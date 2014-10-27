@@ -1,0 +1,51 @@
+{% extends 'AppCalendarBundle::layout.html.twig' %}
+{% set nav_title = 'Calendar show event' %}
+
+{% block calendercontent %}
+<div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-9">
+    <table class="record_properties table table-condensed" >
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ entity.url }}</td>
+            </tr>
+            <tr>
+                <th>Bgcolor</th>
+                <td>{{ entity.bgColor }}</td>
+            </tr>
+            <tr>
+                <th>Fgcolor</th>
+                <td>{{ entity.fgColor }}</td>
+            </tr>
+            <tr>
+                <th>Cssclass</th>
+                <td>{{ entity.cssClass }}</td>
+            </tr>
+            <tr>
+                <th>Startdatetime</th>
+                <td>{{ entity.startDatetime|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Enddatetime</th>
+                <td>{{ entity.endDatetime|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Allday</th>
+                <td>{{ entity.allDay }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+ {% endblock %}

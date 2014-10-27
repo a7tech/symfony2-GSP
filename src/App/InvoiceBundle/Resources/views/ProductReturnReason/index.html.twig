@@ -1,0 +1,35 @@
+{% extends 'AppInvoiceBundle:ProductReturnReason:layout.html.twig' %}
+{% set nav_title = 'product_return_reason.title.list'|trans({}, 'Invoice') %}
+{% block actions_main %}
+<div class="action-view">
+    {% if entities %}
+        <table id="datatable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>{{ 'product_return_reason.name'|trans({}, 'Invoice') }}</th>
+                    <th>{{ 'product_return_reason.is_stock_increased'|trans({}, 'Invoice') }}</th>
+                    <th>{{ 'product_return_reason.is_stock_blocked'|trans({}, 'Invoice') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr id="{{ entity.id }}" >
+                    <td><a href="{{ path('backend_sale_order_product_return_reasons_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.isStockIncreased ? 'yes'|trans({}, "Common") : '-' }}</td>
+                    <td>{{ entity.isStockBlocked ? 'yes'|trans({}, "Common") : '-' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+{% endblock %}
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

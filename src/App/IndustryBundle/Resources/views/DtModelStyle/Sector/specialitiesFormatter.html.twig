@@ -1,0 +1,5 @@
+{% if entity.specialities|length>0 %}
+    {% for spec in entity.specialities %}
+        <a href="{{ path('backend_settings_industry_speciality_show', {'id': spec.id}) }}">{{ spec }}</a>
+    {% endfor %}
+{% endif %}

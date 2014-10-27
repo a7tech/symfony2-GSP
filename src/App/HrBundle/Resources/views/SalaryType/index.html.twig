@@ -1,0 +1,49 @@
+{% extends 'AppHrBundle:SalaryType:layout.html.twig' %}
+
+{% set nav_title = 'Salary type list' %}
+
+{% block actions_main %}
+
+        <table id="datatable" class="table table-bordered table-striped"
+            data-entity-list-route="{{ path('backend_salary_type_datatables') }}"
+           >
+            <thead>
+            <tr>
+                <th class="col-md-1"></th>
+                <th class="col-md-1">#</th>
+                <th class="col-md-6">{{ 'name'|trans({}, 'Common') }}</th>
+            </tr>
+            </thead>
+            {% if entities %}
+            <tbody>
+            {% for entity in entities %}
+                {% set link = path('backend_settings_custom_salary_type_show', {id: entity.id}) %}
+                <tr data-id="{{ entity.id }}">
+                    <td><input type="checkbox" id="salary_type_{{ entity.id }}"></td>
+                    <td><a href="{{ link }}">{{ entity.id }}</a></td>
+                    <td><a href="{{ link }}">{{ entity.name }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            {% else %}
+                {#<div class="well text-center">
+                    No data available
+                </div>#}
+            {% endif %}
+        </table>
+
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+    <script src="{{ asset('bundles/appbackend/js/list_crud.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var inputIdPrefix = 'salary_type_';
+            initListCrud(inputIdPrefix);
+        });
+    </script>
+{% endblock %}

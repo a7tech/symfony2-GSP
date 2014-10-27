@@ -1,0 +1,3 @@
+{% for email in entity.emails %}
+    {% include "@AppEmail/Partials/short.html.twig" with {email: email} %}<br/>
+{% endfor %}

@@ -1,0 +1,36 @@
+status: Statut
+cost_type: 'Type de coût'
+type: 'Type de tâche'
+done_ratio: '% Effectué'
+start_date: 'Date de début'
+due_date: 'Date d''échéance'
+update_date: 'Mise à jour'
+estimated_cost: 'Coût estimé'
+estimated_time: 'Temps estimé'
+parent: 'Tâche parente'
+assigned_to: 'Assigé à'
+assignee: Assigé
+cost: Coût
+cost_without_profit: 'Coût moins profit'
+duration: Durée
+files: Fichiers
+mark_up: Marge
+parent_task: 'Tâche parente'
+position_in_category: 'Position dans la catégorie'
+priority: Priorité
+profit: Profit
+quantity: Quantité
+selling_price: 'Prix de vente'
+tasks: Tâche
+task: Tâche
+task_details: 'Détails de la tâche'
+unit_price: 'Prix Coûtant'
+unit_price_without_profit: 'Coût unitaire avant profit'
+level: Niveau
+tracker: 'Famille de tâche'
+price: Prix
+name: 'Nom de la tâche'
+contracted_category: 'Catégorie contractée'
+dependency.type: 'Type de dépendance'
+dependency.lag: 'Délai (heures)'
+gantt.scale.week: Semaine

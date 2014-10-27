@@ -1,0 +1,3 @@
+{% if entity.project %}
+    <a href="{{ path('backend_project_show', {'id': entity.project.id}) }}">{{ entity.project }}</a>
+{% endif %}

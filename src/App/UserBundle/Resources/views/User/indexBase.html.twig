@@ -1,0 +1,50 @@
+
+<table 
+{% if hideDataTable is defined and hideDataTable == true %}
+    id="none"
+{% else %}
+    id="datatable" 
+{% endif %}
+class="table table-bordered table-striped"
+data-entity-list-route="{{ path('backend_user_datatables') }}"
+>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Enabled</th>
+            <th>Last Login</th>
+            <th>Locked</th>
+            <th>Expired</th>
+            <th>Groups</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+    {% if entities and entities|length > 0  %}
+        {% for entity in entities %}
+        <tr id="{{ entity.id }}">
+            <td><a href="{{ path('backend_settings_user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            {% if entity.person is defined and entity.person != null %}
+            <td><a href="{{ path('backend_person_show', { 'id': entity.person.id }) }}">{{ entity.person.firstName }} {{ entity.person.lastName }}</a></td>
+            {% else %}
+            <td>N/A</td>
+            {% endif %}
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.enabled }}</td>
+            <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.locked }}</td>
+            <td>{{ entity.expired }}</td>
+            <td>
+                {% for rol in entity.groups %}
+                    {{ rol }}<br/>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+

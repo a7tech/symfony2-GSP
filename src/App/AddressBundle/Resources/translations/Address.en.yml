@@ -1,0 +1,6 @@
+address: Address
+city: City
+postal_code: 'Postal Code'
+suite: Suite
+shipping_address: 'Shipping address'
+billing_address: 'Billing address'

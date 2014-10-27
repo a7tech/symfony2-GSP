@@ -1,0 +1,79 @@
+{% import _self as macros %}
+
+{% if pdf is not defined %}
+    {% set pdf = false %}
+{% endif %}
+
+{% if pdf %}
+    <style type="text/css">
+        {{ file('css/main/dashboard.css') }}
+        {{ file('css/main/forms.css') }}
+        {{ file('css/main/pdf.css') }}
+    </style>
+{% endif %}
+
+{#<table style="margin-top: 0px;">
+<tr>
+    <td></td>
+</tr>
+</table>#}
+<table class="font-size-project" cellspacing="0" style="float: left; border-spacing: 0px 0px;">
+{% for category in entity.categories() %}
+<tr style="margin-top: 0px;">
+    <td style="margin-left: 0px; width: 100%; float: left;">
+        <img src="/images/circle.gif" />
+        <span class="category-summary">{{ category.category.title }} - {{ category.cost.net|number_format(2) }}$</span>
+        {{ macros.subcategories(category, pdf) }}
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+{% macro subcategories(category, pdf) %}
+    {% import _self as macros %}
+    {% if category.without_place|length > 0 %}
+        <ul style="list-style-type: square; color: #484848; margin-top: 0px;">
+            {% for task in category.without_place %}
+                <li class="" data-order="{{ task.order }}" data-id="{{ task.id }}" style="margin-top: 0px;">
+                    <a style="text-decoration: none;" href="{{ path('backend_tasks_show', {'id': task.id}) }}">{{ task.name }} <font style="color: #484848;">(Id {{ task.id }})</font></a>
+                    a{% if task.taskDescription is not null %}
+                        <span class="task-description" style="line-height: 90%; margin-top: 0px; font-style:italic; font-size: 10px;">
+                            {{ task.taskDescription|raw }}
+                        </span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if category.children|length > 0 %}
+    <ul class="project-categories" style="margin-top: 0px;">
+        {% for child_category in category.children %}
+            <li class="project-category-wrapper" style="margin-top: 0px;">
+                <span class="project-category">{{ child_category.category.title }}</span>
+                {{ macros.subcategories(child_category, pdf) }}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if category.places|length > 0 %}
+    <ul class="" style="{% if pdf %}list-style-type:img|png|3|3|images/star-bullet.png{% else %}list-style-image: url('/images/star-bullet.png'){% endif %}">
+    {% for place_array in category.places %}
+        <li style="margin-top: 0px;">
+            <span class="project-category">{{ place_array.place }}</span>
+            <ul class="project-tasks sortable-list" style="list-style-type: square; color: #484848; margin-top: 0px;">
+                {% for task in place_array.tasks %}
+                    <li class="task-sortable-item" data-order="{{ task.order }}" data-id="{{ task.id }}" style="margin-top: 0px;">
+                        <a style="text-decoration: none;" href="{{ path('backend_tasks_show', {'id': task.id}) }}">{{ task.name }} <font style="color: #484848;">(Id {{ task.id }})</font></a>
+                        {% if task.taskDescription is not null %}
+                            <span class="task-description" style="line-height: 90%; margin-top: 0px; font-style:italic; font-size: 10px;">
+                                {{ task.taskDescription|raw }}
+                            </span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}    
+{% endmacro %}

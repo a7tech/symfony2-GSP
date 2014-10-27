@@ -1,0 +1,36 @@
+parameters:
+#    app_task.example.class: App\TaskBundle\Example
+
+services:
+    task.manager:
+        class: App\TaskBundle\Manager\TaskManager
+        arguments: [ @doctrine.orm.entity_manager ]
+        calls:
+            - [setGanttTransformer, [@app_project.gantt_chart.tasks_transformer]]
+
+    task_presets.manager:
+        class: App\TaskBundle\Manager\TaskPresetManager
+        arguments: [ @doctrine.orm.entity_manager ]
+
+    app_task.form.type.filters:
+        class: App\TaskBundle\Form\TasksFiltersType
+        tags:
+            - { name: form.type, alias: backend_tasks_filters }
+
+    app_task.form.type.task:
+        class: App\TaskBundle\Form\TaskType
+        arguments: [ @app_status.translator ]
+        tags:
+            - { name: form.type, alias: task }
+            
+    app_tasks.filter.taskfilter:
+        class:  App\TaskBundle\Filter\TaskFilter
+        parent: app_core.filter.filter
+        
+    app_tasks.filter.tasktrackerfilter:
+        class:  App\TaskBundle\Filter\TaskTrackerFilter
+        parent: app_core.filter.filter
+        
+    app_tasks.filter.taskpriorityfilter:
+        class:  App\TaskBundle\Filter\TaskPriorityFilter
+        parent: app_core.filter.filter

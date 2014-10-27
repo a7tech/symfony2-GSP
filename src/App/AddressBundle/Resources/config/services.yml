@@ -1,0 +1,24 @@
+services:
+    app_address.form.address:
+        class: App\AddressBundle\Form\AddressType
+        arguments: [@doctrine.orm.entity_manager, @translator]
+        tags:
+            - { name: form.type, alias: address_form }
+    app_address.form.type.adresses:
+        class: App\AddressBundle\Form\AdressesType
+        arguments: { entityManager: @doctrine.orm.entity_manager }
+        tags:
+            - { name: form.type, alias: backend_addresses }
+            
+    app_address.filter.countryfilter:
+        class:  App\AddressBundle\Filter\CountryFilter
+        parent: app_core.filter.filter
+    app_address.filter.provincefilter:
+        class:  App\AddressBundle\Filter\ProvinceFilter
+        parent: app_core.filter.filter
+    app_address.filter.regionfilter:
+        class:  App\AddressBundle\Filter\RegionFilter
+        parent: app_core.filter.filter
+    app_address.filter.addresstypefilter:
+        class:  App\AddressBundle\Filter\AddressTypeFilter
+        parent: app_core.filter.filter

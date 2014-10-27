@@ -1,0 +1,13 @@
+{% block row %}
+<td></td>
+<td colspan="4">
+    {# stupid TCPDF workaround for padding... #}
+    <table class="raw{% if not pdf %} no-colors{% endif %}">
+        <tr>
+            <td {% if not pdf %} style="border-left: {{ indent_size }}px solid transparent" {% endif %}>
+                {{ child_category.category.title }}
+            </td>
+        </tr>
+    </table>
+</td>
+{% endblock %}

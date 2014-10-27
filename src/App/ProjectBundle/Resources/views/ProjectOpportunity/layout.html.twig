@@ -1,0 +1,18 @@
+{% extends 'AppBackendBundle:Settings:layout.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Opportunity list') %}
+        {% set route_prefix = 'backend_project_opportunity' %}
+		{% include 'AppBackendBundle:Settings:nav.html.twig' %}
+
+    {% endblock %}
+
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}
+
+{% block bottom %}
+    {% include 'AppProjectBundle:Project:bottom.html.twig' %}
+{% endblock %}

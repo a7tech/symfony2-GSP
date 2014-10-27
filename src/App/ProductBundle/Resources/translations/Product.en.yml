@@ -1,0 +1,12 @@
+barcode: Barcode
+quantity: Quantity
+price: Price
+discount: Discount
+taxes: Taxes
+product: Product
+products: Products
+product_id: 'Product ID'
+name: 'Product name'
+qunatiy_shortcut: 'Quantity Increment'
+unit_price: 'Unit price'
+total: Total

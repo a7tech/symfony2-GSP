@@ -1,0 +1,7 @@
+parameters:
+#    app_email.example.class: App\EmailBundle\Example
+
+services:
+    app_email.filter.emailtypefilter:
+        class:  App\EmailBundle\Filter\EmailTypeFilter
+        parent: app_core.filter.filter

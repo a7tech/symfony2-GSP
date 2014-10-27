@@ -1,0 +1,34 @@
+{% extends 'AppInvoiceBundle:SaleOrder:invoiceBody.html.twig' %}
+
+{% block grey_font %}
+<strong>{{ status.name|upper }}</strong>
+<br/>
+<span class="">
+{{ entity.invoiceDate|date(date_format) }}
+</span>
+<br/>
+<span class="font-size-smaller grey">
+    {{ 'sale_date'|trans({}, 'Invoice') }}
+</span>
+{% endblock grey_font %}
+
+{% block table_column_logo %}
+<td class="invoice-center" {% if pdf %} style="text-align: left; float: left;" {% endif %}>
+{% set vendor_main_image = vendorCompany.mainImage %}
+{% if vendor_main_image is not null %}
+    {{ vendor_main_image|vlabs_filter('resize', {'height': 150})|vlabs_media('image') }}
+    <br />
+{% else %}
+    <table style="width: 100%; border-spacing: 0 10px;">
+        <tr>
+            <td>
+                <span class="font-size-smaller grey">
+                {{ 'company_logo'|trans({}, 'Invoice') }}
+                </span>
+                
+            </td>
+        </tr>
+    </table>
+{% endif %}
+</td>
+{% endblock table_column_logo %}

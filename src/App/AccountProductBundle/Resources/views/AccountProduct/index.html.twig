@@ -1,0 +1,79 @@
+{% extends 'AppAccountProductBundle:AccountProduct:layout.html.twig' %}
+
+{% block actions_main %}
+<div class="action-view">
+    <div class="row" style="padding-left: 20px; width: 98%">
+                <table id="datatable" class="table table-bordered table-striped" 
+                       data-entity-list-route="{{ path('backend_account_product_datatables') }}"
+                       {% if profile_id is not null %}
+                            data-profile-id="{{ profile_id }}"
+                       {% endif %}
+                >
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Product Code</th>
+                        <th>Brand</th>
+                        <th>List Price</th>
+                        <th>Sale price</th>
+                        <th>Category</th>
+                        <th>Suppliers</th>
+                    </tr>
+                    </thead>
+            {% if entities %}
+                    <tbody>
+                    {% for entity in entities %}
+                        {% set link = path('backend_products_show', {id: entity.product.id}) %}
+                        {% set aclink = path('backend_account_product_show', {id: entity.id, profileId: profile_id}) %}
+                        <tr id="{{ entity.id }}">
+                            <td><a href="{{ aclink }}">{{ entity.id }}</a></td>
+                            <td>
+                                {% if entity.product.images|length>0 %}
+                                {{ entity.product.images[0].image|vlabs_filter('resize', {'width': 50, 'height': 50 })|vlabs_media('image') }}
+                                {% endif %}
+                            </td>
+                            <td><a href="{{ link }}">{{ entity.product.title }}</a></td>
+                            <td>{{ entity.product.productCode }}</td> {# {{ entity.productCode }} #}
+                            <td> {{ entity.product.brandGroup }} </td>
+                            {% if entity.price|length>0 %}
+                                <td>
+                                     {{ entity.price.listPrice }}
+                                </td>
+                                <td>
+                                     {{ entity.price.sellPrice }}
+                                </td>
+                            {% else %}
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            {% endif %}
+
+                            <td>
+                                {% for cat in entity.product.categories %}
+                                    {{ cat.title }}{% if not loop.last %},{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for pr in entity.suppliers %}
+                                {{ pr.name }}<br/>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+            {% endif %} 
+                </table>
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

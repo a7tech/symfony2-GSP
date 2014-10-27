@@ -1,0 +1,41 @@
+level: Level
+status: Status
+priority: Priority
+duration: Duration
+tracker: Tracker
+type: 'Task Type'
+quantity: 'Quantity (items, surface, time)'
+cost: Cost
+cost_without_profit: 'Cost without profit'
+selling_price: 'Selling price'
+price: Price
+cost_type: 'Cost type'
+unit_price: 'Cost price'
+unit_price_without_profit: 'Unit cost price without profit'
+mark_up: Markup
+profit: Profit
+task: Task
+tasks: Tasks
+name: 'Task name'
+assignee: Assigee
+assigned_to: 'Assigned to'
+done_ratio: '% Done'
+start_date: 'Start Date'
+due_date: 'Due Date'
+update_date: Updated
+estimated_cost: 'Estimated Cost'
+estimated_time: 'Estimated Time'
+parent: 'Parent task'
+dependency_on_cancelled_task_warning: Dependency is based on cancelled task, please fix it
+position_in_category: 'Position in category'
+files: Files
+task_details: 'Task details'
+parent_task: 'Parent task'
+contracted_category: 'Contracted category'
+lag_not_respected_start: 'Lag will not be respected, because start date is set'
+lag_not_respected_end: 'Lag will not be respected, because due date is set'
+dependency.type: 'Dependency type'
+dependency.lag: 'Lag (hours)'
+gantt.scale.week: Week
+gantt.task_type: Type
+dependant_tasks_warning: This task has dependant tasks

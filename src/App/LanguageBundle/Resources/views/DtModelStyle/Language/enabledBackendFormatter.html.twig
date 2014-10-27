@@ -1,0 +1,7 @@
+{% if lang.backend %}
+    Yes
+    {% if lang.iso != 'en' %}
+        , <a href='{{path('backend_settings_language_deactivate', {'type': 'backend', 'locale': lang.iso}) }}'>{% trans %}Deactivate{% endtrans%}</a>
+    {% endif %}
+{%else%}
+    No, <a href='{{path('backend_settings_language_activate', {'type': 'backend', 'locale': lang.iso}) }}'>{% trans %}Activate{% endtrans%}</a>{% endif %}

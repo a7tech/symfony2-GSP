@@ -1,0 +1,217 @@
+fos_elastica :
+    clients :
+        default : { host: %elastica.host% , port: %elastica.port% }
+    indexes :
+        gsp :
+            client : default
+            settings :
+                index :
+                  analysis :
+                        analyzer :
+                            default_analyzer :
+                                language : [English, french]
+                                type : standard
+                            lowercase_analyzer :
+                                language : [English, french]
+                                type : custom
+                                tokenizer : standard
+                                filter : [standard, lowercase]
+                            phrase_prefix_analyzer :
+                                language : [English, french]
+                                type : phrase_prefix
+                                tokenizer : standard
+                                filter : [standard, lowercase, asciifolding]
+                            keyword_analyzer :
+                                language : [English, french]
+                                type : custom
+                                tokenizer : whitespace
+                                filter : [lowercase]
+
+            types :
+
+                contact :
+                    mappings :
+                        id : { type : integer }
+                        firstName : { type : string, analyzer: keyword_analyzer }
+                        lastName : { type : string, analyzer: keyword_analyzer }
+                        addresses: 
+                            type: nested
+                            properties:
+                                country :
+                                    type: nested
+                                    properties:
+                                        id : { type : integer }
+                                        name : { type : string }
+                                city : { type : string }
+                                postcode : { type : string }
+                                street : { type : string }
+                        languages:
+                            type: nested
+                            properties:
+                                language :
+                                    type: nested
+                                    properties:
+                                        id : { type : integer }
+                                        name : { type : string }
+                        emails: 
+                            type: nested
+                            properties:
+                                email : { type : string }
+
+                        gender : { type : string }
+                        birthDate : { type : date }
+                        created_at : { type : date }
+                        updated_at : { type : date }
+                        personGroup :
+                            type: nested
+                            properties:
+                                id : { type : integer }
+                                name : { type : string }
+                        phones :
+                            type: nested
+                            properties:
+                                phoneType : { type : string }
+                                number : { type : string }
+                        employments :
+                            type: nested
+                            properties:
+                                id : { type : integer }
+                                role: { type : string }
+                                company :
+                                    type: nested
+                                    properties:
+                                        id : { type : integer }
+                                        name: { type: string}
+
+                    persistence:
+                        driver: orm
+                        model: App\PersonBundle\Entity\Person
+                        identifier: id
+                        provider: ~
+                        finder: ~
+                        listener:
+                            insert: true
+                            update: true
+                            delete: true
+                        elastica_to_model_transformer:
+                            ignore_missing: true
+
+                company :
+                    mappings :
+                        id : { type : integer }
+                        name: { type: string, analyzer: keyword_analyzer}
+                        description : { type : string }
+                        companyType :
+                            type: nested
+                            properties:
+                                id: { type : integer }
+                                name: { type: string }
+                        sector : 
+                            type: nested
+                            properties:
+                                id: { type : integer }
+                                title: { type: string }
+                        phones :
+                            type: nested
+                            properties:
+                                phoneType : { type : string }
+                                number : { type : string }
+                        createdAt : { type : date }
+                        updatedAt : { type : date }
+                        addresses :
+                            type: nested
+                            properties :
+                                id : { type : integer }
+                                isMain : { type : boolean }
+                                addressType :
+                                    type: nested
+                                    properties :
+                                        id : { type : integer }
+                                        name : { type : string }
+                                country :
+                                    type: nested
+                                    properties :
+                                        id : { type : integer }
+                                        name : { type : string }
+                                province :
+                                    type: nested
+                                    properties :
+                                        id : { type : integer }
+                                        name : { type : string }
+                                region :
+                                    type: nested
+                                    properties :
+                                        id : { type : integer }
+                                        name : { type : string }
+                                city : { type : string }
+                                postcode : { type : string }
+                                street : { type : string }
+                                building : { type : string }
+                        socialMedias:
+                            type: nested
+                            properties :
+                                socialMediaType:
+                                    type: nested
+                                    properties:
+                                        id : { type : integer }
+                                        name: { type : string }
+                        specialities:
+                            type: nested
+                            properties :
+                                id : { type : integer }
+                                title: { type : string }
+                        languages:
+                            type: nested
+                            properties :
+                                id : { type : integer }
+                                name: { type : string }
+
+                    persistence:
+                        driver: orm
+                        model: App\CompanyBundle\Entity\Company
+                        identifier: id
+                        provider: ~
+                        finder: ~
+                        listener:
+                            insert: true
+                            update: true
+                            delete: true
+                        elastica_to_model_transformer:
+                            ignore_missing: true
+
+                product :
+                    mappings :
+                        id : { type : integer }
+                        title : { type : string, analyzer: keyword_analyzer }
+                        productCode : { type : string, analyzer: keyword_analyzer }
+                        brandGroup : 
+                            type: nested
+                            properties :
+                                id : { type : integer}
+                                title: { type : string }
+                        price :
+                            type: nested
+                            properties :
+                                listPrice : { type : float }
+                                sellPrice : { type : float }
+                        categories :
+                            type: nested
+                            properties :
+                                id : { type : integer }
+                                title : { type : string }
+                        createdAt : { type : date }
+                        isActive : { type : boolean }
+
+                    persistence:
+                        driver: orm
+                        model: App\ProductBundle\Entity\Product
+                        identifier: id
+                        provider: ~
+                        finder: ~
+                        listener:
+                            insert: true
+                            update: true
+                            delete: true
+                        elastica_to_model_transformer:
+                            ignore_missing: true
+

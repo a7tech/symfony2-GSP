@@ -1,0 +1,107 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions%}
+    <div class="title-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 h3">
+                    <h3>Email type show</h3>
+                </div>
+                <div class="col-md-5">
+                    <div class="crud-actions">
+                        <ul class="nav-crud">
+                            <li class="">
+                                <a href="{{ path('backend_settings_custom_email_type') }}" title="List">
+                                    <i class="icon-crud-list"></i>
+                                    <div>
+                                        <label>List</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="" id="new">
+                                <a href="{{ path('backend_settings_custom_email_type_new') }}" title="New">
+                                    <i class="icon-crud-new"></i>
+                                    <div>
+                                        <label>New</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud active" id="show">
+                                <a  title="Show">
+                                    <i class="icon-crud-show"></i>
+                                    <div>
+                                        <label>Show</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud" id="edit">
+                                <a href="{{ path('backend_settings_custom_email_type_edit', {'id':entity.id}) }}"  title="Edit">
+                                    <i class="icon-crud-edit"></i>
+                                    <div>
+                                        <label>Edit</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud " id="delete">
+                                <a href="{{ path('backend_settings_custom_email_type_delete', {'id': entity.id}) }}" title="Delete">
+                                    <i class="icon-crud-delete"></i>
+                                    <div>
+                                        <label>Delete</label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-search">
+                        <div class="col-xs-10 col-sm-5 col-md-7">
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <button type="submit" class="btn btn-default">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="left-menu">
+                            {% block left_menu %}
+                                {{ include(
+                                'AppBackendBundle::custom_left_menu.html.twig'
+                                ) }}
+                            {% endblock %}
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-9">
+
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <td>{{ entity.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ entity.name }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

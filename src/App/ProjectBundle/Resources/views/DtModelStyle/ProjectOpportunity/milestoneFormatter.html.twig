@@ -1,0 +1,3 @@
+{% set status_info = statusInfo(constant('STATUS_GROUP_NAME', entity.milestone), entity.milestone.status) %}
+<span {% if status_info.color is not empty %}style="color: {{ status_info.color }}"{% endif %}>{{ entity.milestone.name }}</span>
+                            

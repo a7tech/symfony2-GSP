@@ -1,0 +1,2 @@
+{% set aclink = path('backend_account_product_show', {id: entity.id, profileId: entity.account.id}) %}
+<a href="{{ aclink }}">{{ entity.id }}</a>

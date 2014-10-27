@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="app_payment.form.type.payment" class="App\PaymentBundle\Form\PaymentType">
+            <tag name="form.type" alias="payment" />
+        </service>
+        <service id="app_payment.filter.paymentmethodfilter"
+                 class="App\PaymentBundle\Filter\PaymentMethodFilter"
+                 parent="app_core.filter.filter"
+        />
+    </services>
+</container>

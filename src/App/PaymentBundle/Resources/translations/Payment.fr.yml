@@ -1,0 +1,4 @@
+amount: Montant
+payment_method: 'Mode de paiement'
+payment_deadline: 'Date d''expiration du paiement'
+payment_date: 'Date de paiement'

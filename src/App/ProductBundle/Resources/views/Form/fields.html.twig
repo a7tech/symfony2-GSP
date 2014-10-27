@@ -1,0 +1,11 @@
+{% block product_type_widget %}
+    <select {{ block('widget_attributes') }}>
+        {% if empty_value is not none %}
+            <option value=""{% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+        {% endif %}
+        {% for choice in choices %}
+            {% set obj = choice.label %}
+            <option value="{{ obj.id }}"{% if value == obj.id %} selected="selected"{% endif %} data-stockable="{{ obj.isStockable ? 1 : 0 }}">{{ obj.name }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}

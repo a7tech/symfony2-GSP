@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}GSP Admin{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main/login.css') }}">
+</head>
+<body>
+
+<div class="form-horizontal backend-login">
+
+    <div class="row">
+        <div class="form border col-md-6 offset3">
+            <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }}
+                  method="POST" class="fos_user_resetting_reset">
+                {{ form_widget(form) }}
+                <div>
+                    <input class="btn submit" type="submit"
+                           value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

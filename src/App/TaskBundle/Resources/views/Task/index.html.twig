@@ -1,0 +1,42 @@
+{% extends 'AppTaskBundle:Task:layout.html.twig' %}
+{% set nav_title = 'Task list' %}
+
+{% block actions_main %}
+ <div class="action-view">
+        <div class="row">
+            <div class="row-align">
+                {% include 'AppTaskBundle:Task:indexBase.html.twig' with {'isTaskList': true} %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block tasks_filter %}
+
+{{ form_widget(filters_form) }}
+
+{% end block%}
+
+ 
+{% block user_js %}
+{{ parent() }}
+    <script src="{{ asset('js/jquery/plugins/select2/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/appform/form_admin.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function(){
+            Admin.bind_widgets();
+        });
+    </script>
+
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}
+
+
+{% block user_css %}
+    <link href="{{ asset('js/jquery/plugins/select2/select2.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('js/jquery/plugins/select2/select2-bootstrap.css') }}" type="text/css" rel="stylesheet">
+    {{ parent() }}
+{% endblock %}

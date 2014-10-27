@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="app_purchase.form.type.purchase_item" class="App\PurchaseBundle\Form\Type\Purchase\ItemType">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+
+            <tag name="form.type" alias="backend_purchase_item"/>
+        </service>
+
+        <service id="app_purchase.form.type.payments" class="App\PurchaseBundle\Form\Type\Purchase\PaymentsType">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+
+            <tag name="form.type" alias="backend_purchase_payments" />
+        </service>
+
+        <service id="app_purchase.form.type.purchase" class="App\PurchaseBundle\Form\Type\PurchaseType">
+            <argument type="service" id="app_status.translator" />
+
+            <tag name="form.type" alias="backend_purchase" />
+        </service>
+        <service id="app_purchase.filter.purchasefilter"
+                 class="App\PurchaseBundle\Filter\PurchaseFilter"
+                 parent="app_core.filter.filter"
+        />
+    </services>
+</container>

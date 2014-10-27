@@ -1,0 +1,13 @@
+{% extends 'AppBackendBundle:Settings:layout.html.twig' %}
+
+{% block actions %}
+
+    {% block actions_nav_block %}
+	    {% set nav_title = nav_title|default('Project milestone list') %}
+	    {% set route_prefix = 'backend_settings_custom_project_milestone' %}
+	    {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+	{% endblock %}
+
+    {% block actions_main %}{% endblock %}
+
+{% endblock %}

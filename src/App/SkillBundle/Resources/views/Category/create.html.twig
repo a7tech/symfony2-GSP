@@ -1,0 +1,45 @@
+{% extends 'AppSkillBundle:Category:layout.html.twig' %}
+
+{% set nav_title = entity.id ? 'Skill category edit' : 'Skill category new' %}
+
+{% block actions_main %}
+    <form class="form-horizontal" action="" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <label for="button_form_submit" class="control-label col-xs-3"></label>
+            <div class="col-xs-6">
+                <input type="submit" value="Save" class="btn btn-default">
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block user_js %}
+    <script>
+        jQuery(document).ready(function($) {
+            var $sector = $("select[id$='_sector']");
+            var $speciality = $("select[id$='_speciality']");
+
+            $sector.change(function() {
+                var sectorId = $(this).val();
+                if (sectorId) {
+                    var url = '{{ url('ajax_speciality', {'sectorId': '__sectorId__'}) }}';
+                    url = url.replace('__sectorId__', sectorId);
+                    $.getJSON(url, function(data) {
+                        var options = '<option value="">Choose a speciality</option>';
+                        options += createOptions(data.res);
+                        $speciality.html(options);
+                    });
+                }
+            });
+
+            function createOptions(choices) {
+                var options = '';
+                choices.forEach(function(item) {
+                    options += '<option value="'+item.id+'">'+item.name+'</option>';
+                });
+                return options;
+            }
+        });
+    </script>
+{% endblock %}

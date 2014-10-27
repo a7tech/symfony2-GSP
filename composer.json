@@ -1,0 +1,160 @@
+{
+    "name": "symfony/framework-standard-edition",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+
+    "repositories": {
+        "arendjantetteroo/calendar-bundle": {
+            "type": "vcs",
+             "url": "git@github.com:arendjantetteroo/calendar-bundle.git"
+        },
+        "arshaw/fullcalendar": {
+            "type": "package",
+            "package": {
+                "name": "components/fullcalendar",
+                "type": "component",
+                "version": "1.6.4",
+                "dist": {
+                    "type": "zip",
+                    "url": "http://arshaw.com/fullcalendar/downloads/fullcalendar-1.6.4.zip"
+                },
+                "extra": {
+                    "component": {
+                        "scripts": [
+                            "fullcalendar/fullcalendar.min.js"
+                        ],
+                        "styles": [
+                            "fullcalendar/fullcalendar.css"
+                        ]
+                    }
+                },
+                "require": {
+                    "robloach/component-installer": "*"
+                }
+            }
+        },
+        "kachkaev": {
+            "type": "vcs",
+            "url": "https://github.com/Webility/JMSI18nRoutingBundle"
+        }
+    },
+    "require" : {
+        "php" : ">=5.4",
+
+        "symfony/swiftmailer-bundle" : "2.3.*",
+        "symfony/monolog-bundle" : "2.3.*",
+        "symfony/assetic-bundle" : "2.3.*",
+        "symfony/symfony" : "2.3.*",
+
+        "friendsofsymfony/user-bundle" : "2.0.*@dev",
+        "friendsofsymfony/jsrouting-bundle" : "~1.1",
+        "friendsofsymfony/elastica-bundle": "dev-master#a227a3f076af4086a0442de0c0bd38e390cfb2a0",
+
+        "doctrine/orm" : "2.3.4",
+        "doctrine/doctrine-fixtures-bundle" : "dev-master",
+        "doctrine/data-fixtures" : "dev-master",
+        "doctrine/doctrine-bundle" : "1.2.*",
+        "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+
+        "stof/doctrine-extensions-bundle" : "dev-master",
+        "gedmo/doctrine-extensions" : "dev-master",
+
+        "jms/security-extra-bundle" : "1.5.*@dev",
+        "jms/serializer-bundle" : "0.12.0",
+        "jms/i18n-routing-bundle" : "1.1.*@dev",
+        "jms/di-extra-bundle" : "1.4.*@dev",
+
+        "lexik/translation-bundle": "2.*@dev",
+        "willdurand/js-translation-bundle": "2.1.*",
+
+        "knplabs/gaufrette" : "0.1.*",
+        "knplabs/knp-menu" : "1.1.x-dev",
+        "knplabs/knp-menu-bundle" : "1.1.*@dev",
+        "knplabs/knp-gaufrette-bundle" : "0.1.*",
+        "knplabs/knp-paginator-bundle" : "2.3.*@dev",
+
+        "sensio/generator-bundle" : "2.3.*",
+        "sensio/framework-extra-bundle" : "2.3.*",
+        "sensio/distribution-bundle" : "2.3.*",
+
+        "sonata-project/cache-bundle": "2.2.*@dev",
+        "sonata-project/doctrine-extensions": "dev-master",
+        "sonata-project/intl-bundle": "2.2.*@dev",
+        "sonata-project/block-bundle": "2.2.*@dev",
+
+        "vlabs/media-bundle": "dev-master",
+        "twig/extensions" : "1.0.*",
+       
+        "gregwar/captcha-bundle" : "dev-master",
+        
+        "stfalcon/tinymce-bundle" : "v0.2.1",
+        "zenstruck/slugify-bundle" : "1.*@dev",
+        
+        "cbsi/doctrine2-nestedset" : "dev-master",
+        "a2lix/translation-form-bundle" : "0.4.0",
+
+        "spomky-labs/role-hierarchy-bundle": "dev-master",
+        "egulias/security-debug-command-bundle": "0.4.*",
+
+        "adesigns/calendar-bundle": "dev-master",
+        "components/fullcalendar": "1.6.4",
+
+        "components/jquery": "1.10.*",
+        "components/jqueryui": "1.10.*",
+        "components/underscore": "1.5.1",
+        "components/bootstrap": "2.3.2",
+        "trentrichardson/jquery-timepicker-addon": "1.4.*",
+        "robloach/component-installer": "*",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "whiteoctober/tcpdf-bundle": "dev-master",
+        "mopa/bootstrap-bundle": "v3.0.0-beta3",
+        "twbs/bootstrap": "v3.0.0"
+    },
+    "require-dev": {
+        "elao/web-profiler-extra-bundle" : "dev-master",
+        "phpmd/phpmd" : "1.4.*",
+        "squizlabs/php_codesniffer": "1.*",
+        "sonata-project/doctrine-extensions": "dev-master",
+        "genemu/form-bundle": "2.1.*@dev",
+        "dvelopment/firephp-bundle": "dev-master",
+        "phpunit/phpunit": "3.7.*",
+        "mopa/bootstrap-bundle": "v3.0.0-beta3",
+        "twbs/bootstrap": "v3.0.0"
+
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin",
+        "component-dir": "web/components",
+        "component-baseurl": "/components"
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        }
+    }
+}

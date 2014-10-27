@@ -1,0 +1,29 @@
+{% extends 'AppInvoiceBundle:ProductReturnReason:layout.html.twig' %}
+{% import _self as show %}
+
+{% set nav_title = 'Invoice status overview' %}
+
+{% block actions_main %}
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'product_return_reason.name'|trans({}, 'Invoice') }}</th>
+                    <td>{{ entity.name }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'product_return_reason.is_stock_increased'|trans({}, 'Invoice') }}</th>
+                    <td>{{ (entity.isStockIncreased ? 'yes' : 'no')|trans({}, 'Common') }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'product_return_reason.is_stock_blocked'|trans({}, 'Invoice') }}</th>
+                    <td>{{ (entity.isStockBlocked ? 'yes' : 'no')|trans({}, 'Common') }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+{% endblock %}

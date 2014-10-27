@@ -1,0 +1,4 @@
+{% if not entity.isCredit %}
+    {% set paid = entity.paid %}
+    {{ paid|number_format(2) }}
+{% endif %}

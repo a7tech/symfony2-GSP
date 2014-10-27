@@ -1,0 +1,16 @@
+{% extends 'AppTaskBundle:Task:layout.html.twig' %}
+{% set nav_title = 'Task overview' %}
+{% set curr_path = 'backend_tasks' %}
+{% block actions_main %}
+<div class="action-view">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-9">
+                    {% include 'AppTaskBundle:Task:showBase.html.twig' with {'showAll': true} %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

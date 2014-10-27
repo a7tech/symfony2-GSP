@@ -1,0 +1,49 @@
+sonata_admin:
+    templates:
+        layout: SonataAdminBundle::my_standard_layout.html.twig
+    title: GSP
+
+
+#    dashboard:
+#        groups:
+#            users:
+#                label: Users
+#                items:
+#                    - re.admin.users
+#                    - re.admin.company_users
+#                    - re.admin.jobseeker_users
+#                    - re.admin.groups
+#
+#            companies:
+#                label: Companies
+#                items:
+#                    - re.admin.company
+#                    - re.admin.language
+#                    - re.admin.company_group
+#                    - re.admin.industry
+#                    - re.admin.joboffer
+#                    - re.admin.application
+#
+#            provinces_regions:
+#                label: Provinces & Regions
+#                items:
+#                    - re.admin.province
+#                    - re.admin.region
+#
+#            frontend:
+#                label: Frontend
+#                items:
+#                    - re.admin.career_day
+#                    - re.admin.doors_open
+#                    - re.admin.student_resources
+#                    - re.admin.interactive_tools
+#                    - re.admin.virtual
+#                    - re.admin.ad
+#                    - re.admin.carousel
+#                    - re.admin.static_pages
+#
+#            contact:
+#              label: Contact
+#              items:
+#                    - re.admin.contacts
+#

@@ -1,0 +1,124 @@
+.high{
+    border:2px solid #d96c49;
+    color: #d96c49;
+    background: #d96c49;
+}
+.high .gantt_task_progress{
+    background: #db2536;
+}
+
+.medium{
+    border:2px solid #34c461;
+    color:#34c461;
+    background: #34c461;
+}
+.medium .gantt_task_progress{
+    background: #23964d;
+}
+
+.low{
+    border:2px solid #6ba8e3;
+    color:#6ba8e3;
+    background: #6ba8e3;
+}
+.low .gantt_task_progress{
+    background: #547dab;
+}
+
+.gantt-project{
+    background-color: #fff;
+    border-color: #febf00;
+}
+
+.gantt-project .gantt_task_progress{
+    background-color: #fee04a;
+}
+
+.gantt-category {
+    background-color: #fff;
+    border-color: #0088CC;
+}
+
+.gantt-category .gantt_task_progress{
+    background-color: #7ce3fd;
+}
+
+.gantt-task {
+    background-color: #fff;
+    border-color: #a2e783;
+}
+
+.gantt-hidden{
+    display: none;
+}
+
+.gantt-task .gantt_task_progress{
+    background-color: #C5FF4B;
+}
+
+.gantt_task_progress {
+    overflow: visible;
+    text-align: left;
+}
+
+.gantt_task_progress span{
+    position: absolute;
+    left: -30px;
+    top: -2px;
+}
+
+.gantt-weekend {
+    background-color: #edecec;
+}
+
+.gantt_task_scale, .gantt_grid_head_cell {
+    background-color: #fff;
+}
+
+.gantt_scale_line:nth-child(1) .gantt_scale_cell, .gantt_scale_line:nth-child(2) .gantt_scale_cell{
+    background-color: #fff !important;
+}
+
+.gantt_side_content.gantt_right {
+    top: 0;
+    padding-left: 10px;
+    padding-right: 1px;
+}
+
+.gantt-current-date{
+    border-left: 1px solid #fe0000 !important;
+}
+
+.gantt_tooltip{
+    margin: 10px 0 0 10px;
+    max-width: 300px;
+    white-space: normal;
+}
+
+.gantt_line_wrapper div{
+    background-color: #14a4ec;
+}
+
+.gantt_task_link:hover .gantt_line_wrapper div {
+    box-shadow: 0 0 5px 0 #14a4ec;
+}
+
+.gantt_link_arrow_right {
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #14a4ec;
+}
+
+.gantt_link_arrow_left {
+    border-color: rgba(0, 0, 0, 0) #14a4ec rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+}
+
+.dhx_section_time select{
+    width: 69px;
+}
+
+.dhx_cal_light_wide .dhx_section_time{
+    height: 35px !important;
+}
+
+.dhx_cal_light select{
+    padding: 6px 4px;
+}

@@ -1,0 +1,104 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions%}
+    <div class="title-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 h3">
+                    <h3>Industry sector new</h3>
+                </div>
+                <div class="col-md-5">
+                    <div class="crud-actions">
+                        <ul class="nav-crud">
+                            <li class="">
+                                <a href="{{ path('backend_settings_industry_sector') }}" title="List">
+                                    <i class="icon-crud-list"></i>
+                                    <div>
+                                        <label>List</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="active" id="new">
+                                <a  title="New">
+                                    <i class="icon-crud-new"></i>
+                                    <div>
+                                        <label>New</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="show">
+                                <a   title="Show">
+                                    <i class="icon-crud-show"></i>
+                                    <div>
+                                        <label>Show</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="edit">
+                                <a title="Edit">
+                                    <i class="icon-crud-edit"></i>
+                                    <div>
+                                        <label>Edit</label>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="crud disabled" id="delete">
+                                <a title="Delete">
+                                    <i class="icon-crud-delete"></i>
+                                    <div>
+                                        <label>Delete</label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-search">
+                        <div class="col-xs-10 col-sm-5 col-md-7">
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <button type="submit" class="btn btn-default">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="action-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="left-menu">
+                            {% block left_menu %}
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li class="active"><a >Industry Sector</a></li>
+                                    <li><a href="{{ path('backend_settings_industry_speciality') }}">Industry Speciality</a></li>
+                                </ul>
+                            {% endblock %}
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-9">
+                        <form class="form-horizontal" action="{{ path('backend_settings_industry_sector_create') }}" method="post" {{ form_enctype(form) }}>
+                            {{ form_widget(form) }}
+                            <div class="form-group">
+                                <label for="button_form_submit" class="control-label col-xs-3"></label>
+                                <div class="col-xs-6">
+                                    <input type="submit" value="Create" class="btn btn-default">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

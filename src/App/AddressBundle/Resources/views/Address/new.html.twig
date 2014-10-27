@@ -1,0 +1,23 @@
+{% extends 'AppBackendBundle::base.html.twig' %}
+
+{% block body -%}
+    <h1>Address creation</h1>
+
+    <form action="{{ path('backend_settings_address_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <label for="button_form_submit" class="control-label col-xs-3"></label>
+            <div class="col-xs-6">
+                <input type="submit" value="Create" class="btn btn-default">
+            </div>
+        </div>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_settings_address') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

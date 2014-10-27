@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}GSP Admin{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% block stylesheets %} 
+
+            {% stylesheets filter='cssrewrite' output='resources/css/*.css' 
+
+                '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle.less'
+            %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main/bootstrap-custom.css') }}">
+    <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
+
+    {% endstylesheets %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    {% block fos_user_content %}
+        <div class="row">
+                <div class="backend-login">
+                <form class="form-horizontal" action="{{  path('backend_login_check') }}" method="post">
+                    <h4>Login</h4>
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error|trans({}, 'FOSUserBundle') }}
+                        </div>
+                    {% endif %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="Email" style="width: 295px;"/>
+                        <a href="{{ path('backend_resetting_request') }}">I forgot</a>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="appendedInput" name="_password" placeholder="Password">
+                            <span class="input-group-addon">
+                                <input type="checkbox" id="show_pass" value="on" /> Show password
+                            </span>
+                            <a href="{{ path('backend_resetting_request') }}" style="margin-left: 4px;">I forgot</a>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                              <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> Remember me
+                            </label>
+                        </div>                        
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-primary submit" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endblock fos_user_content %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/jquery/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var $passChange = $('input[id=show_pass]'),
+                $password = $('input[name=_password]');
+            $passChange.click(function(){
+                if($(this).is(':checked')){
+                    $password.attr('type','text');
+                } else {
+                    $password.attr('type','password');
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+</body>
+</html>

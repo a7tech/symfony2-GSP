@@ -1,0 +1,355 @@
+ISO 3166-1 Country Name,ISO 4217 Currency Name,ISO 3166-1 Country Char 2 Code,ISO 3166-1 Country Char 3 Code,ISO 3166-1 Country Number Code,ISO 4217 Currency Char 3 Code,ISO 4217 Currency Number Code,CDH Currency ID,CDH Country ID
+Afghanistan,Afghani,AF,AFG,4,AFN,971,77,2
+Afghanistan,Afghani,AF,AFG,4,AFA,4,266,2
+Albania,Albanian old lek,AL,ALB,8,ALK,,267,4
+Albania,Lek,AL,ALB,8,ALL,8,157,4
+Algeria,Algerian Dinar,DZ,DZA,12,DZD,12,78,5
+American Samoa,US Dollar,AS,ASM,16,USD,840,236,6
+Andorra,Andorran Franc (1:1 peg to the french franc),AD,AND,20,ADF,,250,7
+Andorra,Andorran Peseta (1:1 peg to the Spanish Peseta),AD,AND,20,ADP,20,249,7
+Andorra,Euro,AD,AND,20,EUR,978,125,7
+Angola,Angolan Kwanza Readjustado,AO,AGO,24,AOR,982,269,8
+Angola,Angolan New Kwanza,AO,AGO,24,AON,24,268,8
+Angola,Kwanza,AO,AGO,24,AOA,973,152,8
+Anguilla,East Caribbean Dollar,AI,AIA,660,XCD,951,121,9
+Antigua and Barbuda,East Caribbean Dollar,AG,ATG,28,XCD,951,121,11
+Argentina,Argentine austral,AR,ARG,32,ARA,,273,12
+Argentina,Argentine Peso,AR,ARG,32,ARS,32,79,12
+Argentina,Argentine peso ley,AR,ARG,32,ARL,,271,12
+Argentina,Argentine peso moneda nacional,AR,ARG,32,ARM,,270,12
+Argentina,Peso argentino,AR,ARG,32,ARP,,272,12
+Armenia,Armenian Dram,AM,ARM,51,AMD,51,80,13
+Aruba,Aruban Florin,AW,ABW,533,AWG,533,81,14
+Australia,Australian Dollar,AU,AUS,36,AUD,36,82,15
+Austria,Austrian Schilling,AT,AUT,40,ATS,40,251,16
+Austria,Euro,AT,AUT,40,EUR,978,125,16
+Azerbaijan,Azerbaijani manat,AZ,AZE,31,AZM,31,274,17
+Azerbaijan,Azerbaijanian Manat,AZ,AZE,31,AZN,944,83,17
+Bahamas,Bahamian Dollar,BS,BHS,44,BSD,44,84,18
+Bahrain,Bahraini Dinar,BH,BHR,48,BHD,48,85,21
+Bangladesh,Taka,BD,BGD,50,BDT,50,224,22
+Barbados,Barbados Dollar,BB,BRB,52,BBD,52,88,23
+Belarus,Belarussian Ruble,BY,BLR,112,BYR,974,89,24
+Belgium,Belgian Franc (convertible),BE,BEL,56,BEC,993,275,25
+Belgium,Belgian Franc (currency union with LUF),BE,BEL,56,BEF,56,252,25
+Belgium,Belgian Franc (financial),BE,BEL,56,BEL,992,276,25
+Belgium,Euro,BE,BEL,56,EUR,978,125,25
+Belize,Belize Dollar,BZ,BLZ,84,BZD,84,90,26
+Benin,CFA Franc BCEAO,BJ,BEN,204,XOF,952,101,27
+Bermuda,Bermudian Dollar,BM,BMU,60,BMD,60,91,28
+Bhutan,Indian Rupee,BT,BTN,64,INR,356,140,29
+Bhutan,Ngultrum,BT,BTN,64,BTN,64,186,29
+"Bolivia, Plurinational State Of",Bolivian peso,BO,BOL,68,BOP,,280,30
+"Bolivia, Plurinational State Of",Boliviano,BO,BOL,68,BOB,68,93,30
+"Bolivia, Plurinational State Of",Mvdol,BO,BOL,68,BOV,984,175,30
+"Bonaire, Sint Eustatius and Saba",US Dollar,BQ,BES,535,USD,840,236,700
+Bosnia and Herzegovina,Convertible Mark,BA,BIH,70,BAM,977,107,31
+Botswana,Pula,BW,BWA,72,BWP,72,197,32
+Bouvet Island,Norwegian Krone,BV,BVT,74,NOK,578,188,33
+Brazil,Brazilian cruzado,BR,BRA,76,BRC,,282,34
+Brazil,Brazilian cruzeiro,BR,BRA,76,BRB,,281,34
+Brazil,Brazilian Real,BR,BRA,76,BRL,986,94,34
+British Indian Ocean Territory,US Dollar,IO,IOT,86,USD,840,236,35
+Brunei Darussalam,Brunei Dollar,BN,BRN,96,BND,96,95,36
+Bulgaria,Bulgarian Lev,BG,BGR,100,BGN,975,96,37
+Bulgaria,Bulgarian lev A/52,BG,BGR,100,BGJ,,277,37
+Bulgaria,Bulgarian lev A/62,BG,BGR,100,BGK,,278,37
+Bulgaria,Bulgarian lev A/99,BG,BGR,100,BGL,100,279,37
+Burkina Faso,CFA Franc BCEAO,BF,BFA,854,XOF,952,101,38
+Burundi,Burundi Franc,BI,BDI,108,BIF,108,97,39
+Cambodia,Riel,KH,KHM,116,KHR,116,202,40
+Cameroon,CFA Franc BEAC,CM,CMR,120,XAF,950,102,41
+Canada,Canadian Dollar,CA,CAN,124,CAD,124,98,42
+Cape Verde,Cape Verde Escudo,CV,CPV,132,CVE,132,99,43
+Cayman Islands,Cayman Islands Dollar,KY,CYM,136,KYD,136,100,44
+Central African Republic,CFA Franc BEAC,CF,CAF,140,XAF,950,102,45
+Chad,CFA Franc BEAC,TD,TCD,148,XAF,950,102,46
+Chile,Chilean Peso,CL,CHL,152,CLP,152,104,47
+Chile,Unidades de fomento,CL,CHL,152,CLF,990,234,47
+China,Chinese People's Bank dollar,CN,CHN,156,CNX,,284,48
+China,Yuan Renminbi,CN,CHN,156,CNY,156,246,48
+Christmas Island,Australian Dollar,CX,CXR,162,AUD,36,82,49
+Cocos (Keeling) Islands,Australian Dollar,CC,CCK,166,AUD,36,82,50
+Colombia,Colombian Peso,CO,COL,170,COP,170,105,51
+Colombia,Unidad de Valor real,CO,COL,170,COU,970,233,51
+Comoros,Comoro Franc,KM,COM,174,KMF,174,106,52
+Congo,CFA Franc BEAC,CG,COG,178,XAF,950,102,53
+"Congo, The Democratic Republic Of The",Congolais Franc,CD,COD,180,CDF,976,129,54
+Cook Islands,New Zealand Dollar,CK,COK,184,NZD,554,185,55
+Costa Rica,Costa Rican Colon,CR,CRI,188,CRC,188,109,56
+Croatia,Croatian Kuna,HR,HRV,191,HRK,191,110,58
+Cuba,Cuban Peso,CU,CUB,192,CUP,192,111,59
+Cuba,Peso Convertible,CU,CUB,192,CUC,931,355,59
+Curaçao,Netherlands Antillean Guilder,CW,CUW,531,ANG,532,180,701
+Cyprus,Cyprus Pound,CY,CYP,196,CYP,196,112,60
+Cyprus,Euro,CY,CYP,196,EUR,978,125,60
+Czech Republic,Czech Koruna,CZ,CZE,203,CZK,203,113,61
+Czechoslovak Socialist Republic,Czechoslovak koruna,CS,CSK,200,CSK,200,287,270
+Czechoslovak Socialist Republic,Czechoslovak koruna A/53,CS,CSK,200,CSJ,,286,270
+Côte D'Ivoire,CFA Franc BCEAO,CI,CIV,384,XOF,952,101,57
+Denmark,Danish Krone,DK,DNK,208,DKK,208,115,62
+Djibouti,Djibouti Franc,DJ,DJI,262,DJF,262,117,63
+Dominica,East Caribbean Dollar,DM,DMA,212,XCD,951,121,64
+Dominican Republic,Dominican Peso,DO,DOM,214,DOP,214,119,65
+Ecuador,Ecuador sucre,EC,ECU,218,ECS,218,289,66
+Ecuador,US Dollar,EC,ECU,218,USD,840,236,66
+Egypt,Egyptian Pound,EG,EGY,818,EGP,818,122,67
+El Salvador,El Salvador Colon,SV,SLV,222,SVC,222,123,68
+El Salvador,Salvadoran colón,SV,SLV,222,SVC,316,333,68
+El Salvador,US Dollar,SV,SLV,222,USD,840,236,68
+Equatorial Guinea,CFA Franc BEAC,GQ,GNQ,226,XAF,950,102,69
+Equatorial Guinea,Equatorial Guinean ekwele,GQ,GNQ,226,EQE,,291,69
+Eritrea,Nakfa,ER,ERI,232,ERN,232,177,70
+Estonia,Euro,EE,EST,233,EUR,978,125,71
+Estonia,Kroon,EE,EST,233,EEK,233,148,71
+Ethiopia,Ethiopian Birr,ET,ETH,231,ETB,230,124,73
+Falkland Islands (Malvinas),Falkland Islands Pound,FK,FLK,238,FKP,238,126,74
+Faroe Islands,Danish Krone,FO,FRO,234,DKK,208,115,75
+Fiji,Fiji Dollar,FJ,FJI,242,FJD,242,127,76
+Finland,Euro,FI,FIN,246,EUR,978,125,77
+Finland,Finnish Markka,FI,FIN,246,FIM,246,255,77
+France,Euro,FR,FRA,250,EUR,978,125,78
+France,French Franc,FR,FRA,250,FRF,250,256,78
+France,Gold-Franc,FR,FRA,250,XFO,,342,78
+French Guiana,Euro,GF,GUF,254,EUR,978,125,80
+French Polynesia,CFP Franc,PF,PYF,258,XPF,953,103,81
+French Southern Territories,Euro,TF,ATF,260,EUR,978,125,82
+Gabon,CFA Franc BEAC,GA,GAB,266,XAF,950,102,83
+Gambia,Dalasi,GM,GMB,270,GMD,270,114,84
+Georgia,Lari,GE,GEO,268,GEL,981,154,1
+German Democratic Republic,East German Mark of the GDR (East Germany),DD,DDR,278,DDM,278,288,268
+Germany,Deutsche Mark,DE,DEU,276,DEM,276,253,85
+Germany,Euro,DE,DEU,276,EUR,978,125,85
+Ghana,Ghana Cedi,GH,GHA,288,GHS,936,130,86
+Ghana,Ghanaian cedi,GH,GHA,288,GHC,,295,86
+Gibraltar,Gibraltar Pound,GI,GIB,292,GIP,292,131,87
+Greece,Euro,GR,GRC,300,EUR,978,125,88
+Greece,Greek Drachma,GR,GRC,300,GRD,300,257,88
+Greenland,Danish Krone,GL,GRL,304,DKK,208,115,89
+Grenada,East Caribbean Dollar,GD,GRD,308,XCD,951,121,90
+Guadeloupe,Euro,GP,GLP,312,EUR,978,125,91
+Guam,US Dollar,GU,GUM,316,USD,840,236,92
+Guatemala,Quetzal,GT,GTM,320,GTQ,320,199,93
+Guernsey,Pound Sterling,GG,GGY,831,GBP,826,196,94
+Guinea,Guinea Franc,GN,GIN,324,GNF,324,134,95
+Guinea,Guinean syli,GN,GIN,324,GNE,,294,95
+Guinea-Bissau,CFA Franc BCEAO,GW,GNB,624,XOF,952,101,96
+Guinea-Bissau,Guinea-Bissau Peso,GW,GNB,624,GWP,624,135,96
+Guyana,Guyana Dollar,GY,GUY,328,GYD,328,136,97
+Haiti,Gourde,HT,HTI,332,HTG,332,132,98
+Haiti,US Dollar,HT,HTI,332,USD,840,236,98
+Heard Island and McDonald Islands,Australian Dollar,HM,HMD,334,AUD,36,82,99
+Holy See (Vatican City State),Euro,VA,VAT,336,EUR,978,125,100
+Honduras,Lempira,HN,HND,340,HNL,340,158,101
+Hong Kong,Hong Kong Dollar,HK,HKG,344,HKD,344,137,102
+Hungary,Forint,HU,HUN,348,HUF,348,128,103
+Iceland,Iceland Krona,IS,ISL,352,ISK,352,139,104
+Iceland,Icelandic old krona,IS,ISL,352,ISJ,,298,104
+India,Indian Rupee,IN,IND,356,INR,356,140,105
+Indonesia,Rupiah,ID,IDN,360,IDR,360,204,106
+"Iran, Islamic Republic Of",Iranian Rial,IR,IRN,364,IRR,364,141,107
+Iraq,Iraqi Dinar,IQ,IRQ,368,IQD,368,142,108
+Ireland,Euro,IE,IRL,372,EUR,978,125,109
+Ireland,Irish Pound (Punt in Irish language),IE,IRL,372,IEP,372,258,109
+Isle of Man,Pound Sterling,IM,IMN,833,GBP,826,196,110
+Israel,Israeli lira,IL,ISR,376,ILP,,296,111
+Israel,Israeli old sheqel,IL,ISR,376,ILR,,297,111
+Israel,New Israeli Sheqel,IL,ISR,376,ILS,376,181,111
+Italy,Euro,IT,ITA,380,EUR,978,125,112
+Italy,Italian Lira,IT,ITA,380,ITL,380,259,112
+Jamaica,Jamaican Dollar,JM,JAM,388,JMD,388,143,113
+Japan,Yen,JP,JPN,392,JPY,392,245,114
+Jersey,Pound Sterling,JE,JEY,832,GBP,826,196,115
+Jordan,Jordanian Dinar,JO,JOR,400,JOD,400,144,116
+Kazakhstan,Tenge,KZ,KAZ,398,KZT,398,227,117
+Kenya,Kenyan Shilling,KE,KEN,404,KES,404,145,118
+Kiribati,Australian Dollar,KI,KIR,296,AUD,36,82,119
+"Korea, Democratic People's Republic Of",North Korean Won,KP,PRK,408,KPW,408,187,121
+"Korea, Republic of",Won,KR,KOR,410,KRW,410,243,120
+Kuwait,Kuwaiti Dinar,KW,KWT,414,KWD,414,149,122
+Kyrgyzstan,Som,KG,KGZ,417,KGS,417,215,123
+Lao People's Democratic Republic,Kip,LA,LAO,418,LAK,418,147,124
+Lao People's Democratic Republic,Lao kip,LA,LAO,418,LAJ,,299,124
+Latvia,Latvian Lats,LV,LVA,428,LVL,428,155,125
+Lebanon,Lebanese Pound,LB,LBN,422,LBP,422,156,126
+Lesotho,Loti,LS,LSO,426,LSL,426,164,127
+Lesotho,Rand,LS,LSO,426,ZAR,710,200,127
+Liberia,Liberian Dollar,LR,LBR,430,LRD,430,160,128
+Libya,Libyan Dinar,LY,LBY,434,LYD,434,161,129
+Liechtenstein,Swiss Franc,LI,LIE,438,CHF,756,222,130
+Lithuania,Lithuanian Litas,LT,LTU,440,LTL,440,163,131
+Luxembourg,Euro,LU,LUX,442,EUR,978,125,132
+Luxembourg,Luxembourg Franc (currency union with BEF),LU,LUX,442,LUF,442,260,132
+Macao,Pataca,MO,MAC,446,MOP,446,193,133
+"Macedonia, the Former Yugoslav Republic Of",Denar,MK,MKD,807,MKD,807,116,134
+"Macedonia, the Former Yugoslav Republic Of",Former Yugoslav Republic of Macedonia denar A/93,MK,MKD,807,MKN,,302,134
+Madagascar,Malagasy Ariary,MG,MDG,450,MGA,969,165,135
+Madagascar,Malagasy franc,MG,MDG,450,MGF,450,301,135
+Malawi,Kwacha,MW,MWI,454,MWK,454,150,136
+Malaysia,Malaysian Ringgit,MY,MYS,458,MYR,458,166,137
+Maldives,Maldive rupee,MV,MDV,462,MVQ,,303,138
+Maldives,Rufiyaa,MV,MDV,462,MVR,462,203,138
+Mali,CFA Franc BCEAO,ML,MLI,466,XOF,952,101,139
+Mali,Mali franc,ML,MLI,466,MAF,,300,139
+Malta,Euro,MT,MLT,470,EUR,978,125,140
+Malta,Maltese Lira,MT,MLT,470,MTL,470,167,140
+Marshall Islands,US Dollar,MH,MHL,584,USD,840,236,141
+Martinique,Euro,MQ,MTQ,474,EUR,978,125,142
+Mauritania,Ouguiya,MR,MRT,478,MRO,478,190,143
+Mauritius,Mauritius Rupee,MU,MUS,480,MUR,480,169,144
+Mayotte,Euro,YT,MYT,175,EUR,978,125,145
+Mexico,Mexican peso,MX,MEX,484,MXP,,304,146
+Mexico,Mexican Peso,MX,MEX,484,MXN,484,171,146
+Mexico,Mexican Unidad de Inversion (UDI),MX,MEX,484,MXV,979,172,146
+"Micronesia, Federated States Of",US Dollar,FM,FSM,583,USD,840,236,147
+"Moldova, Republic of",Moldovan Leu,MD,MDA,498,MDL,498,173,148
+Monaco,Euro,MC,MCO,492,EUR,978,125,149
+Monaco,Monegasque franc (currency union with FRF),MC,MCO,492,MCF,,261,149
+Mongolia,Tugrik,MN,MNG,496,MNT,496,229,150
+Montenegro,Euro,ME,MNE,499,EUR,978,125,151
+Montserrat,East Caribbean Dollar,MS,MSR,500,XCD,951,121,152
+Morocco,Moroccan Dirham,MA,MAR,504,MAD,504,174,153
+Mozambique,Mozambican metical,MZ,MOZ,508,MZM,508,305,154
+Mozambique,Mozambique Metical,MZ,MOZ,508,MZN,943,170,154
+Myanmar,Kyat,MM,MMR,104,MMK,104,153,155
+Namibia,Namibia Dollar,NA,NAM,516,NAD,516,178,156
+Namibia,Rand,NA,NAM,516,ZAR,710,200,156
+Nauru,Australian Dollar,NR,NRU,520,AUD,36,82,157
+Nepal,Nepalese Rupee,NP,NPL,524,NPR,524,179,158
+Netherlands,Euro,NL,NLD,528,EUR,978,125,159
+Netherlands,Netherlands Guilder,NL,NLD,528,NLG,528,262,159
+Netherlands Antilles,Netherlands Antillean Guilder,AN,ANT,530,ANG,532,180,160
+New Caledonia,CFP Franc,NC,NCL,540,XPF,953,103,161
+New Zealand,New Zealand Dollar,NZ,NZL,554,NZD,554,185,162
+Nicaragua,Cordoba Oro,NI,NIC,558,NIO,558,108,163
+Niger,CFA Franc BCEAO,NE,NER,562,XOF,952,101,164
+Nigeria,Naira,NG,NGA,566,NGN,566,176,165
+Niue,New Zealand Dollar,NU,NIU,570,NZD,554,185,166
+Norfolk Island,Australian Dollar,NF,NFK,574,AUD,36,82,167
+Northern Mariana Islands,US Dollar,MP,MNP,580,USD,840,236,168
+Norway,Norwegian Krone,NO,NOR,578,NOK,578,188,169
+Oman,Rial Omani,OM,OMN,512,OMR,512,201,170
+Pakistan,Pakistan Rupee,PK,PAK,586,PKR,586,192,171
+Palau,US Dollar,PW,PLW,585,USD,840,236,172
+Panama,Balboa,PA,PAN,590,PAB,590,87,174
+Panama,Balboa,PA,PAN,591,PAB,590,87,175
+Panama,US Dollar,PA,PAN,590,USD,840,236,174
+Panama,US Dollar,PA,PAN,591,USD,840,236,175
+Papua New Guinea,Kina,PG,PNG,598,PGK,598,146,176
+Paraguay,Guarani,PY,PRY,600,PYG,600,133,177
+People's Democratic Republic of Yemen,South Yemeni dinar,YD,YMD,720,YDD,720,322,267
+Peru,Nuevo Sol,PE,PER,604,PEN,604,189,178
+Peru,Peruvian inti,PE,PER,604,PEI,,307,178
+Peru,Peruvian sol,PE,PER,604,PEH,,306,178
+Philippines,Philippine Peso,PH,PHL,608,PHP,608,195,180
+Pitcairn,New Zealand Dollar,PN,PCN,612,NZD,554,185,182
+Poland,Polish zloty A/94,PL,POL,616,PLZ,616,308,183
+Poland,Zloty,PL,POL,616,PLN,985,248,183
+Portugal,Euro,PT,PRT,620,EUR,978,125,184
+Portugal,Portuguese Escudo,PT,PRT,620,PTE,620,263,184
+Portugal,Portuguese Timorese escudo,PT,PRT,620,TPE,626,316,184
+Puerto Rico,US Dollar,PR,PRI,630,USD,840,236,185
+Qatar,Qatari Rial,QA,QAT,634,QAR,634,198,186
+Romania,New Romanian Leu,RO,ROU,642,RON,946,182,189
+Romania,Romanian leu A/05,RO,ROU,642,ROL,642,310,189
+Romania,Romanian leu A/52,RO,ROU,642,ROK,,309,189
+Russian Federation,Russian Ruble,RU,RUS,643,RUB,643,205,190
+Rwanda,Rwanda Franc,RW,RWA,646,RWF,646,206,191
+Réunion,Euro,RE,REU,638,EUR,978,125,187
+Saint Barthélemy,Euro,BL,BLM,652,EUR,978,125,300
+"Saint Helena, Ascension and Tristan Da Cunha",Saint Helena Pound,SH,SHN,654,SHP,654,207,192
+Saint Kitts And Nevis,East Caribbean Dollar,KN,KNA,659,XCD,951,121,193
+Saint Lucia,East Caribbean Dollar,LC,LCA,662,XCD,951,121,194
+Saint Martin (French Part),Euro,MF,MAF,663,EUR,978,125,301
+Saint Pierre And Miquelon,Euro,PM,SPM,666,EUR,978,125,181
+Saint Vincent And The Grenadines,East Caribbean Dollar,VC,VCT,670,XCD,951,121,195
+Samoa,Tala,WS,WSM,882,WST,882,225,196
+San Marino,Euro,SM,SMR,674,EUR,978,125,197
+Sao Tome and Principe,Dobra,ST,STP,678,STD,678,118,198
+Saudi Arabia,Saudi Riyal,SA,SAU,682,SAR,682,208,199
+Senegal,CFA Franc BCEAO,SN,SEN,686,XOF,952,101,200
+Serbia,Serbian Dinar,RS,SRB,688,CSD,,285,201
+Serbia,Serbian Dinar,RS,SRB,688,RSD,941,210,201
+Seychelles,Seychelles Rupee,SC,SYC,690,SCR,690,211,202
+Sierra Leone,Leone,SL,SLE,694,SLL,694,159,203
+Singapore,Singapore Dollar,SG,SGP,702,SGD,702,212,205
+Sint Maarten (Dutch part),Netherlands Antillean Guilder,SX,SXM,534,ANG,532,180,702
+Slovakia,Euro,SK,SVK,703,EUR,978,125,206
+Slovakia,Slovak Koruna,SK,SVK,703,SKK,703,213,206
+Slovenia,Euro,SI,SVN,705,EUR,978,125,207
+Slovenia,Slovenian Tolar,SI,SVN,705,SIT,705,264,207
+Solomon Islands,Solomon Islands Dollar,SB,SLB,90,SBD,90,214,208
+Somalia,Somali Shilling,SO,SOM,706,SOS,706,216,209
+South Africa,Rand,ZA,ZAF,710,ZAR,710,200,210
+South Africa,South African financial rand (Funds code) (discont,ZA,ZAF,710,ZAL,991,325,210
+South Sudan,South Sudanese Pound,SS,SSD,728,SSP,728,356,703
+Spain,Euro,ES,ESP,724,EUR,978,125,212
+Spain,Spanish Peseta,ES,ESP,724,ESP,724,254,212
+Spain,Spanish peseta (account A),ES,ESP,724,ESA,996,292,212
+Spain,Spanish peseta (account B),ES,ESP,724,ESB,995,293,212
+Sri Lanka,Sri Lanka Rupee,LK,LKA,144,LKR,144,218,213
+Sudan,Sudanese Dinar,SD,SDN,729,SDD,736,312,214
+Sudan,Sudanese Pound,SD,SDN,729,SDG,938,219,214
+Sudan,Sudanese Pound,SD,SDN,729,SDP,,352,214
+Suriname,Surinam Dollar,SR,SUR,740,SRD,968,220,215
+Suriname,Suriname guilder,SR,SUR,740,SRG,740,313,215
+Svalbard And Jan Mayen,Norwegian Krone,SJ,SJM,744,NOK,578,188,216
+Swaziland,Lilangeni,SZ,SWZ,748,SZL,748,162,217
+Sweden,Swedish Krona,SE,SWE,752,SEK,752,221,218
+Switzerland,Swiss Franc,CH,CHE,756,CHF,756,222,219
+Switzerland,WIR Euro,CH,CHE,756,CHE,947,241,219
+Switzerland,WIR Franc,CH,CHE,756,CHW,948,242,219
+Syrian Arab Republic,Syrian Pound,SY,SYR,760,SYP,760,223,220
+"Taiwan, Province Of China",New Taiwan Dollar,TW,TWN,158,TWD,901,183,221
+Tajikistan,Somoni,TJ,TJK,762,TJS,972,217,222
+Tajikistan,Tajikistan ruble,TJ,TJK,762,TJR,762,315,222
+"Tanzania, United Republic of",Tanzanian Shilling,TZ,TZA,834,TZS,834,226,223
+Thailand,Baht,TH,THA,764,THB,764,86,224
+Timor-Leste,US Dollar,TL,TLS,626,USD,840,236,226
+Togo,CFA Franc BCEAO,TG,TGO,768,XOF,952,101,227
+Tokelau,New Zealand Dollar,TK,TKL,772,NZD,554,185,228
+Tonga,Pa’anga,TO,TON,776,TOP,776,191,229
+Trinidad and Tobago,Trinidad and Tobago Dollar,TT,TTO,780,TTD,780,228,230
+Tunisia,Tunisian Dinar,TN,TUN,788,TND,788,230,231
+Turkey,Turkish Lira,TR,TUR,792,TRY,949,184,232
+Turkey,Turkish lira A/05,TR,TUR,792,TRL,792,317,232
+Turkmenistan,Manat,TM,TKM,795,TMM,795,168,233
+Turkmenistan,Turkmenistan New Manat,TM,TKM,795,TMT,934,353,233
+Turks and Caicos Islands,US Dollar,TC,TCA,796,USD,840,236,234
+Tuvalu,Australian Dollar,TV,TUV,798,AUD,36,82,235
+U.S.S.R.,Russian rubleA/97,SU,SUN,810,RUR,810,311,269
+U.S.S.R.,Soviet Union ruble,SU,SUN,810,SUR,,314,269
+Uganda,Uganda Shilling,UG,UGA,800,UGX,800,232,236
+Uganda,Ugandan shilling A/87,UG,UGA,800,UGS,,319,236
+Ukraine,Hryvnia,UA,UKR,804,UAH,980,138,237
+Ukraine,Ukrainian karbovanets,UA,UKR,804,UAK,804,318,237
+United Arab Emirates,UAE Dirham,AE,ARE,784,AED,784,231,238
+United Kingdom,Pound Sterling,GB,GBR,826,GBP,826,196,239
+United States,US Dollar,US,USA,840,USD,840,236,240
+United States,US Dollar (Next Day),US,USA,840,USN,997,237,240
+United States,US Dollar (Same Day),US,USA,840,USS,998,238,240
+United States Minor Outlying Islands,US Dollar,UM,UMI,581,USD,840,236,241
+Uruguay,Peso Uruguayo,UY,URY,858,UYU,858,194,242
+Uruguay,Uruguay old peso,UY,URY,858,UYN,,320,242
+Uruguay,Uruguay Peso en Unidades Indexadas,UY,URY,858,UYI,940,235,242
+Uzbekistan,Uzbekistan Sum,UZ,UZB,860,UZS,860,239,243
+Vanuatu,Vatu,VU,VUT,548,VUV,548,240,244
+"Venezuela, Bolivarian Republic of",Bolivar Fuerte,VE,VEN,862,VEF,937,92,245
+"Venezuela, Bolivarian Republic of",Venezuelan Bolivar,VE,VEN,862,VEB,862,350,245
+Viet Nam,Dong,VN,VNM,704,VND,704,120,247
+Viet Nam,Vietnamese old dong,VN,VNM,704,VNC,,321,247
+"Virgin Islands, British",US Dollar,VG,VGB,92,USD,840,236,248
+"Virgin Islands, U.S.",US Dollar,VI,VIR,850,USD,840,236,249
+Wallis and Futuna,CFP Franc,WF,WLF,876,XPF,953,103,250
+Western Sahara,Moroccan Dirham,EH,ESH,732,MAD,504,174,251
+Yemen,Yemeni Rial,YE,YEM,887,YER,886,244,252
+Yugoslavia,Yugoslav Dinar,YU,YUG,891,YUD,,323,254
+Yugoslavia,Yugoslav dinar (new),YU,YUG,891,YUM,891,324,254
+Zaire,Zairean New Zaire,ZR,ZAR,,ZRN,180,326,272
+Zaire,Zairean Zaire,ZR,ZAR,,ZRZ,,327,272
+Zambia,New Zambian Kwacha,ZM,ZMB,894,ZMW,,359,255
+Zambia,Zambian Kwacha,ZM,ZMB,894,ZMK,894,151,255
+Zimbabwe,Zimbabwe Dollar,ZW,ZWE,716,ZWD,716,247,256
+Zimbabwe,Zimbabwe Dollar,ZW,ZWE,716,ZWL,932,354,256
+Zimbabwe,Zimbabwe Rhodesian dollar,ZW,ZWE,716,ZWC,,328,256
+Åland Islands,Euro,AX,ALA,248,EUR,978,125,3

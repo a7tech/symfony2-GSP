@@ -1,0 +1,4 @@
+amount: Amount
+payment_method: 'Payment method'
+payment_deadline: 'Payment Deadline'
+payment_date: 'Payment date'

@@ -1,0 +1,11 @@
+parameters:
+#    app_barcode.example.class: App\BarcodeBundle\Example
+
+services:
+    app_barcode.form.barcode:
+        class: App\BarcodeBundle\Form\BarcodeType
+        tags:
+            - { name: form.type, alias: barcode_form }
+    app_barcode.filter.barcodetypefilter:
+        class:  App\BarcodeBundle\Filter\BarcodeTypeFilter
+        parent: app_core.filter.filter

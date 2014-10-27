@@ -1,0 +1,152 @@
+{% extends 'AppBackendBundle:Dashboard:settings.html.twig' %}
+
+{% block actions%}
+<div class="title-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3 h3">
+                <h3>Countries list</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="crud-actions">
+                    <ul class="nav-crud">
+                        <li class="active">
+                            <a title="List">
+                                <i class="icon-crud-list"></i>
+                                <div>
+                                    <label>List</label>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="" id="new">
+                            <a href="{{ path('backend_settings_country_new') }}" title="New">
+                                <i class="icon-crud-new"></i>
+                                <div>
+                                    <label>New</label>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="crud disabled" id="show">
+                            <a   title="Show">
+                                <i class="icon-crud-show"></i>
+                                <div>
+                                    <label>Show</label>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="crud disabled" id="edit">
+                            <a title="Edit">
+                                <i class="icon-crud-edit"></i>
+                                <div>
+                                    <label>Edit</label>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="crud disabled" id="delete">
+                            <a title="Delete">
+                                <i class="icon-crud-delete"></i>
+                                <div>
+                                    <label>Delete</label>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3" id="copy_buttons">
+
+                </div>
+                <div class="col-md-2">
+                    <div class="form-search">
+                        <input type="text" class="form-control" id="search_filter" placeholder="Search">
+                    </div>
+                </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="action-view">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="left-menu">
+                        {% block left_menu %}
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active"><a href="">Countries</a></li>
+                                <li><a href="{{ path('backend_settings_province') }}">Provinces</a></li>
+                                <li><a href="{{ path('backend_settings_region') }}">Regions</a></li>
+                            </ul>
+                        {% endblock %}
+
+                    </div>
+
+                </div>
+                <div class="col-md-9">
+
+                    <table id="datatable" class="table table-bordered table-striped"
+                            data-entity-list-route="{{ path('backend_country_datatables') }}"
+                           >
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>Alternative name</th>
+                                <th>
+                                    2 Char Code
+                                </th>
+                                <th>
+                                    3 Char Code
+                                </th>
+                                <th>
+                                    Provinces
+                                </th>
+
+                                <th>Phone Iso Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for entity in entities %}
+                            <tr id="{{entity.id}}">
+                                <td><a href="{{ path('backend_settings_country_show', {'id':entity.id}) }}">{{ entity.id }}</a></td>
+                                <td>{{ entity.name }}</td>
+                                <td>{{ entity.alterName }}</td>
+                                <td>{{ entity.twoCharCode }}</td>
+                                <td>{{ entity.threeCharCode }}</td>
+                                <td>
+                                    {% if entity.provinces|length>0 %}
+                                        {% for province in entity.provinces %}
+                                            {% if province|length>0 %}
+                                                <a href="{{ path('backend_settings_province_show', {id: province.id}) }}">{{ province }}</a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if entity.isoCode|length>0 %}
+                                        +{{ entity.isoCode.prefix }}
+                                    {% endif %}
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% endblock %}
+{% block user_js %}
+    <script type="text/javascript" src="{{ asset('tabletools/js/ZeroClipboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/TableTools.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('tabletools/js/paging.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/appbackend/js/table.js') }}"></script>
+{% endblock %}

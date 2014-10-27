@@ -1,0 +1,18 @@
+{% extends 'AppBackendBundle:Dashboard:home.html.twig' %}
+
+{% block left_column '' %}
+{% block content_class '' %}
+
+{% block actions %}
+
+
+    {% block actions_nav_block %}
+        {% set nav_title = nav_title|default('Orders') %}
+        {% set route_prefix = 'backend_purchase' %}
+        {% include 'AppBackendBundle:Settings:nav.html.twig' %}
+    {% endblock %}
+
+    {% block actions_main %}{% endblock %}
+{% endblock %}
+
+{% block create_action %}{% endblock %}

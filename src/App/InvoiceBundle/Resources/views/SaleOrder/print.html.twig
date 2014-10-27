@@ -1,0 +1,7 @@
+<style type="text/css">
+
+    {{ file('css/main/dashboard.css') }}
+    {{ file('css/main/forms.css') }}
+    {{ file('css/main/pdf.css') }}
+</style>
+{{ include("AppInvoiceBundle:SaleOrder:invoicePrintBody.html.twig",  {pdf: true}) }}
